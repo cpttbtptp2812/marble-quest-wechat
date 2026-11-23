@@ -134,28 +134,93 @@ const injectWechatNavigatorAtEntry: Plugin = {
 
     const filePath = join(chunksDir, targets[0])
     const navigatorGetter = /([A-Za-z_$][\w$]*\.N\.get\(\)\.getNavigator\(\))/g
-    let code = readFileSync(filePath, 'utf8')
-    const getterMatches = code.match(navigatorGetter) || []
+    let pixiCode = readFileSync(filePath, 'utf8')
+    const getterMatches = pixiCode.match(navigatorGetter) || []
     if (getterMatches.length < 2) {
-      const context = code.match(/.{0,80}getNavigator.{0,120}/g) || []
+      const context = pixiCode.match(/.{0,80}getNavigator.{0,120}/g) || []
       this.error(
         'Unexpected Pixi navigator feature-detection code in ' +
         targets[0] + ': ' + context.join(' | '),
       )
     }
 
-    code = code.replace(
+    pixiCode = pixiCode.replace(
       navigatorGetter,
       '($1 || { userAgent: "" })',
     )
-    const fallbackCount = (code.match(/\|\| \{ userAgent: "" \}/g) || []).length
+    const fallbackCount = (pixiCode.match(/\|\| \{ userAgent: "" \}/g) || []).length
     if (fallbackCount < getterMatches.length) {
       this.error('Unable to guard every Pixi navigator getter in ' + targets[0])
     }
-    writeFileSync(filePath, code, 'utf8')
+    writeFileSync(filePath, pixiCode, 'utf8')
     console.log(
       '[wechat-user-agent] guarded ' + getterMatches.length +
       ' Pixi navigator reads in ' + targets[0],
+    )
+
+    // Both Pixi's Ticker and Sapling's WeChat adapter call the free identifier
+    // requestAnimationFrame from inside their own CommonJS chunk. Setting a
+    // property on globalThis/GameGlobal is not reliable in every WeChat runtime.
+    // Give each affected module its own lexical scheduler so those bare calls
+    // always resolve to a callable function.
+    const moduleFrameShim = `/* MARBLEQUEST_MODULE_RAF */
+var __mqFrameApi = null;
+if (typeof GameGlobal !== 'undefined' &&
+    typeof GameGlobal.requestAnimationFrame === 'function' &&
+    typeof GameGlobal.cancelAnimationFrame === 'function') {
+  __mqFrameApi = GameGlobal;
+} else if (typeof globalThis !== 'undefined' &&
+    typeof globalThis.requestAnimationFrame === 'function' &&
+    typeof globalThis.cancelAnimationFrame === 'function') {
+  __mqFrameApi = globalThis;
+}
+var requestAnimationFrame = __mqFrameApi
+  ? function (callback) {
+      return __mqFrameApi.requestAnimationFrame.call(__mqFrameApi, callback);
+    }
+  : function (callback) {
+      return setTimeout(function () {
+        var timestamp = typeof performance !== 'undefined' &&
+          performance && typeof performance.now === 'function'
+          ? performance.now()
+          : Date.now();
+        callback(timestamp);
+      }, 16);
+    };
+var cancelAnimationFrame = __mqFrameApi
+  ? function (requestId) {
+      return __mqFrameApi.cancelAnimationFrame.call(__mqFrameApi, requestId);
+    }
+  : function (requestId) {
+      clearTimeout(requestId);
+    };
+`
+
+    const chunkFiles = readdirSync(chunksDir).filter((name) => name.endsWith('.js'))
+    const frameChunks: string[] = []
+    for (const name of chunkFiles) {
+      const chunkPath = join(chunksDir, name)
+      let chunkCode = readFileSync(chunkPath, 'utf8')
+      if (!/\brequestAnimationFrame\b|\bcancelAnimationFrame\b/.test(chunkCode)) {
+        continue
+      }
+      if (!chunkCode.includes('MARBLEQUEST_MODULE_RAF')) {
+        if (/\b(?:var|let|const|function)\s+requestAnimationFrame\b/.test(chunkCode)) {
+          this.error('Unexpected local requestAnimationFrame declaration in ' + name)
+        }
+        chunkCode = moduleFrameShim + chunkCode
+        writeFileSync(chunkPath, chunkCode, 'utf8')
+      }
+      frameChunks.push(name)
+    }
+    if (frameChunks.length !== 2) {
+      this.error(
+        'Expected Pixi and Sapling frame-scheduler chunks; found ' +
+        frameChunks.length + ': ' + frameChunks.join(', '),
+      )
+    }
+    console.log(
+      '[wechat-frame] injected module-scoped RAF/CAF into ' + frameChunks.join(', '),
     )
   },
 }
