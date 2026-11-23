@@ -87,7 +87,7 @@ const injectWechatNavigatorAtEntry: Plugin = {
     }
 
     if (chunk.isEntry && chunk.fileName === 'game.js') {
-      return `${wechatNavigatorBootstrap}\\n${code}`
+      return `${wechatNavigatorBootstrap}\n${code}`
     }
     return null
   },
