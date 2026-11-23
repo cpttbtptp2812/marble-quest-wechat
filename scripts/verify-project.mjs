@@ -6,6 +6,12 @@ const read = async (path) => JSON.parse(await readFile(new URL(path, root), 'utf
 const project = await read('package.json');
 assert.equal(project.creator.version, '3.8.9');
 
+const engine = await read('settings/v2/packages/engine.json');
+assert.ok(engine.modules.includeModules.includes('physics-2d-box2d'), 'Box2D backend must be included');
+assert.equal(engine.modules.cache['physics-2d']._option, 'physics-2d-box2d');
+assert.equal(engine.modules.cache['physics-2d-box2d']._value, true);
+assert.equal(engine.modules.cache['physics-2d-builtin']._value, false);
+
 const scene = await read('assets/scenes/Main.scene');
 const scriptMeta = await read('assets/scripts/GameController.ts.meta');
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
@@ -32,4 +38,4 @@ for (const path of ['pixi-spike', 'wechat-release', 'src', 'test', 'game.js', 'g
 }
 const assets = await readdir(new URL('assets/scripts/', root));
 assert.deepEqual(new Set(assets), new Set(['GameController.ts', 'GameController.ts.meta', 'aim-math.js', 'aim-math.js.meta']));
-console.log('Project structure OK: Cocos Creator 3.8.9, scene/script link valid, legacy engine files removed.');
+console.log('Project structure OK: Cocos Creator 3.8.9, Box2D enabled, scene/script link valid, legacy engine files removed.');
