@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
+import ts from 'typescript'
 
 const outDir = resolve(process.cwd(), 'dist-wechat')
 const gameFile = resolve(outDir, 'game.js')
@@ -13,13 +14,35 @@ for (const file of [gameFile, configFile, gameJsonFile]) {
 
 const config = JSON.parse(readFileSync(configFile, 'utf8'))
 if (config.compileType !== 'game') throw new Error('Expected compileType=game')
-if (config.setting?.es6 !== true) throw new Error('Expected ES6->ES5 transpilation enabled in project.config.json')
+if (config.setting?.es6 !== false) throw new Error('ES6->ES5 must be disabled in DevTools; final bundle is already ES5-transpiled')
 
 const game = readFileSync(gameFile, 'utf8')
 if (!game.includes('2026-11-23-R3')) throw new Error('Build stamp missing from game.js')
 if (/\?\.(?=\d)/.test(game)) throw new Error('Ambiguous optional-chain / ternary token remains')
 if (/^\s*(import|export)\s/m.test(game)) throw new Error('game.js must be a single CommonJS bundle')
 
+const sourceFile = ts.createSourceFile('game.js', game, ts.ScriptTarget.ES5, true, ts.ScriptKind.JS)
+if (sourceFile.parseDiagnostics.length) throw new Error('Final ES5 game.js has TypeScript parser errors')
+
+const unsupported = { arrow: 0, class: 0, async: 0, await: 0, template: 0, privateField: 0, optionalChain: 0, spread: 0, constLet: 0, generator: 0 }
+function inspect(node) {
+  if (ts.isArrowFunction(node)) unsupported.arrow++
+  if (ts.isClassDeclaration(node) || ts.isClassExpression(node)) unsupported.class++
+  if (ts.isAwaitExpression(node)) unsupported.await++
+  if (ts.isTemplateExpression(node) || ts.isNoSubstitutionTemplateLiteral(node)) unsupported.template++
+  if (node.kind === ts.SyntaxKind.PrivateIdentifier) unsupported.privateField++
+  if (node.questionDotToken) unsupported.optionalChain++
+  if (ts.isSpreadElement(node) || ts.isSpreadAssignment(node)) unsupported.spread++
+  if (ts.isVariableDeclarationList(node) && (node.flags & (ts.NodeFlags.Let | ts.NodeFlags.Const))) unsupported.constLet++
+  if ((ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isMethodDeclaration(node)) &&
+      node.modifiers && node.modifiers.some((m) => m.kind === ts.SyntaxKind.AsyncKeyword)) unsupported.async++
+  if ((ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isMethodDeclaration(node)) && node.asteriskToken) unsupported.generator++
+  ts.forEachChild(node, inspect)
+}
+inspect(sourceFile)
+const leftovers = Object.entries(unsupported).filter(([, count]) => count > 0)
+if (leftovers.length) throw new Error('Unsupported modern JS remains: ' + leftovers.map(([k, n]) => k + '=' + n).join(', '))
+
 const bytes = statSync(gameFile).size
 if (bytes >= 4 * 1024 * 1024) throw new Error('game.js exceeds WeChat main-package size budget')
-console.log('[wechat-package-check] OK; ES6->ES5 enabled; game.js=' + bytes + ' bytes')
+console.log('[wechat-package-check] ES5 syntax OK; es6=false; game.js=' + bytes + ' bytes')
