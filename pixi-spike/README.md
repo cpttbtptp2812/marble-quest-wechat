@@ -40,6 +40,16 @@ npm install
 npm run dev
 ```
 
+
+## Mobile performance work
+
+The WeChat renderer keeps its existing 2x device-pixel-ratio render budget; this optimization does not lower the design canvas size or apply a lower-resolution render pass. To reduce frame work while keeping the same visual scale:
+
+- Static ambient stars and orbit geometry are tessellated once and animated with transforms instead of clearing and rebuilding Graphics every frame.
+- Marble trails sample at 30 Hz, are redrawn only when a new sample arrives, and use a single stroke rather than dozens of separate segments and circles.
+- Nape remains at a fixed 60 Hz; the contact solver uses 8 velocity and 8 position iterations instead of 10/10 to reduce CPU work while preserving the fixed simulation cadence.
+- The WeChat entry continues to expose FPS, CPU and GPU frame statistics in the diagnostics line.
+
 ## 自动物理冒烟测试
 
 ```bash
