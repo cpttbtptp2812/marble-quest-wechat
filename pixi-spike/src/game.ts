@@ -2,7 +2,7 @@ import {
   CanvasLayer, circle, CollisionShape2D, ColorRect, Ease, Label, Node, Node2D, rect,
   RigidBody2D, Scene, StaticBody2D, rectangle, v, type Vector2,
 } from 'sapling2d'
-import { AimArt, BackdropArt, CannonArt, ELEMENTS, FusionArt, MothArt, OrbArt, PillarArt, type Element, type FusionStyle } from './art'
+import { AimArt, AmbientArt, BackdropArt, CannonArt, ELEMENTS, FusionArt, MothArt, MuzzleFlashArt, OrbArt, PillarArt, TrailArt, type Element, type FusionStyle } from './art'
 
 const WIDTH = 1440
 const HEIGHT = 810
@@ -43,7 +43,7 @@ class Marble extends RigidBody2D {
   age = 0
   fused = false
   hitBoss = false
-  constructor(readonly arena: ArenaScene, readonly element: Element, position: Vector2, velocity: Vector2) {
+  constructor(readonly arena: ArenaScene, readonly element: Element, position: Vector2, velocity: Vector2, readonly trail: TrailArt) {
     const spec = ELEMENTS[element]
     super({
       name: `Marble-${element}`, groups: ['marbles'], position, mass: spec.mass,
@@ -64,7 +64,9 @@ class Marble extends RigidBody2D {
   }
   override process(dt: number): void {
     this.age += dt
+    this.trail.addPoint(this.position)
     if (this.age > 8 || this.x < -100 || this.x > WIDTH + 100 || this.y > HEIGHT + 100) {
+      this.trail.queueFree()
       this.arena.forgetMarble(this)
       this.queueFree()
     }
@@ -169,6 +171,7 @@ export class ArenaScene extends Scene {
 
   override ready(): void {
     this.add(new BackdropArt({ zIndex: -100 }))
+    this.add(new AmbientArt({ zIndex: -80 }))
     // Physical bounds and a few bumpers keep trajectories legible.
     this.add(makeWall(v(WIDTH / 2, 714), WIDTH + 100, 44))
     this.add(makeWall(v(-8, 360), 42, 680))
@@ -365,7 +368,9 @@ export class ArenaScene extends Scene {
     const spec = ELEMENTS[this.selected], speed = spec.speed * power
     const origin = this.aimSide === 'left' ? v(128, 650) : v(1312, 650)
     const spawn = origin.add(v(ux * 67, uy * 67))
-    this.marbles.push(this.add(new Marble(this, this.selected, spawn, v(ux * speed, uy * speed))))
+    const trail = this.add(new TrailArt(spec.color, { zIndex: 2 }))
+    this.add(new MuzzleFlashArt(spec.color, { position: spawn, rotation: Math.atan2(uy, ux), zIndex: 5 }))
+    this.marbles.push(this.add(new Marble(this, this.selected, spawn, v(ux * speed, uy * speed), trail)))
     if (this.aimSide === 'left') this.leftCannon.recoil = 1
     else this.rightCannon.recoil = 1
     this.setMessage(`${spec.name} 已发射。飞行中点击空白处，或直接点中弹珠，让它停在空中。`)
@@ -389,6 +394,7 @@ export class ArenaScene extends Scene {
     const anchor = this.add(new FrozenOrb(this, marble.element, marble.position, velocity))
     this.anchors.push(anchor)
     this.marbles = this.marbles.filter((x) => x !== marble)
+    marble.trail.queueFree()
     marble.queueFree()
     this.floatText(anchor.position.add(v(0, -36)), '时空定身', 0xe1d6ff)
     this.setMessage(`${ELEMENTS[anchor.element].name} 已定身！从任意一侧发射另一颗球，主动撞击它。`)
@@ -397,7 +403,8 @@ export class ArenaScene extends Scene {
     if (anchor.triggered) return
     this.anchors = this.anchors.filter((x) => x !== anchor)
     const velocity = anchor.savedVelocity.length() > 80 ? anchor.savedVelocity : v(0, -380)
-    this.marbles.push(this.add(new Marble(this, anchor.element, anchor.position, velocity)))
+    const trail = this.add(new TrailArt(ELEMENTS[anchor.element].color, { zIndex: 2 }))
+    this.marbles.push(this.add(new Marble(this, anchor.element, anchor.position, velocity, trail)))
     anchor.queueFree()
     this.setMessage('定身解除，弹珠恢复运动。')
   }
@@ -438,7 +445,7 @@ export class ArenaScene extends Scene {
   setDiagnostics(text: string): void { this.diagnosticLabel.text = text }
   resetTrial(): void {
     this.anchors.forEach((x) => x.queueFree())
-    this.marbles.forEach((x) => x.queueFree())
+    this.marbles.forEach((x) => { x.trail.queueFree(); x.queueFree() })
     this.anchors = []
     this.marbles = []
     this.boss.hp = 100
