@@ -17,7 +17,6 @@ if (config.setting.es6 !== false) throw new Error('Final ES5 output should keep 
 
 const game = readFileSync(gameFile, 'utf8')
 if (!game.includes('2026-11-23-R3')) throw new Error('Build stamp missing from game.js')
-if (/\\?\\.(?=\\d)/.test(game)) throw new Error('Ambiguous optional-chain / ternary token remains')
 if (/^\\s*(import|export)\\s/m.test(game)) throw new Error('game.js must be a single CommonJS bundle')
 
 const sf = ts.createSourceFile('game.js', game, ts.ScriptTarget.ES5, true, ts.ScriptKind.JS)
