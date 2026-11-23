@@ -16,7 +16,7 @@ if (config.compileType !== 'game') throw new Error('Expected compileType=game')
 if (config.setting.es6 !== false) throw new Error('Final ES5 output should keep DevTools ES6 transform disabled')
 
 const game = readFileSync(gameFile, 'utf8')
-if (!game.includes('2026-11-23-R3')) throw new Error('Build stamp missing from game.js')
+if (!game.includes('2026-11-23-R4')) throw new Error('Build stamp missing from game.js')
 if (/^\\s*(import|export)\\s/m.test(game)) throw new Error('game.js must be a single CommonJS bundle')
 
 const sf = ts.createSourceFile('game.js', game, ts.ScriptTarget.ES5, true, ts.ScriptKind.JS)
