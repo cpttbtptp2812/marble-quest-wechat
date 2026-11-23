@@ -64,9 +64,9 @@ const wechatNavigatorBootstrap = `;(function () {
 const injectWechatNavigatorAtEntry: Plugin = {
   name: 'marble-quest:wechat-navigator-entry-bootstrap',
   enforce: 'post' as const,
-  renderChunk(code: string, chunk: { isEntry: boolean; fileName: string }) {
+  renderChunk(code, chunk) {
     if (!chunk.isEntry || chunk.fileName !== 'game.js') return null
-    return wechatNavigatorBootstrap + '\\n' + code
+    return `${wechatNavigatorBootstrap}\n${code}`
   },
 }
 
