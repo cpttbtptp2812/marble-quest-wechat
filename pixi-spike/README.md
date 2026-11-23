@@ -41,9 +41,9 @@ npm install
 npm run build:wechat
 ```
 
-也可以执行 `npm run check` 一次完成类型检查、浏览器构建和微信小游戏发布构建。微信构建结束后会自动执行语法兼容修正与入口脚本语法检查。
+也可以执行 `npm run check` 一次完成类型检查、浏览器构建、微信小游戏发布构建，并同步生成仓库根目录的 `wechat-release/`。微信构建结束后会自动执行语法兼容修正与入口脚本语法检查。
 
-然后在微信开发者工具中选择「小游戏」，导入 `dist-wechat/`。`vite.wechat.config.ts` 使用 `saplingWechat()`，生成微信小游戏入口 `game.js`、`game.json`、`project.config.json` 和资源目录。请按自己的微信小游戏账号配置 AppID；本试验分支尚未配置用户 AppID。
+成功构建后，脚本会自动把纯发布文件复制到仓库根目录的 `wechat-release/`。在微信开发者工具中选择「小游戏」，始终导入仓库根目录的 `wechat-release/`，不要导入 `pixi-spike/`。`vite.wechat.config.ts` 使用 `saplingWechat()`，生成微信小游戏入口 `game.js`、`game.json`、`project.config.json` 和资源目录。请按自己的微信小游戏账号配置 AppID；本试验分支尚未配置用户 AppID。
 
 ## 性能设计原则
 
@@ -58,3 +58,14 @@ npm run build:wechat
 - 这是渲染 / 手感验证场景，不是完整关卡流程。
 - Boss 目前采用矢量骨架式图形与程序动画；Spine 是下一步可选方案，需要单独制作并持有 Spine Editor 授权的动画资产。
 - 尚未在真实微信开发者工具、iOS 或 Android 设备完成本分支的编译和帧率验收。
+
+
+## Git 同步后直接导入（推荐）
+
+CI 在 `main` 分支构建成功后，会自动提交纯发布目录 `wechat-release/`。日常更新只需在仓库根目录：
+
+```bash
+git pull --ff-only origin main
+```
+
+然后微信开发者工具选择「小游戏」，导入 `wechat-release/`。不要导入仓库根目录、`pixi-spike/` 或 `pixi-spike/dist-wechat/` 以外的源码目录；Node 构建脚本不是小游戏运行文件。
