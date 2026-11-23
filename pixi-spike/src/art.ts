@@ -181,20 +181,31 @@ class AimContent implements NodeContent<AimArt>{
 }
 registerNodeContent(AimArt,()=>new AimContent())
 
-/** Ambient star motes and magical runes. One light Graphics layer, animated in-place. */
+/** Ambient star motes and magical runes.
+ * Geometry is static: build it once instead of clearing and tessellating dozens
+ * of Graphics commands on every frame. Only two lightweight transforms animate.
+ */
 export class AmbientArt extends Node2D {
   phase = 0
   override process(dt: number): void { this.phase += dt }
 }
 class AmbientContent implements NodeContent<AmbientArt> {
-  readonly display = new Graphics()
-  sync(node: AmbientArt): void {
-    const g = this.display
-    g.clear()
+  readonly display: Container
+  private readonly stars: Graphics
+  private readonly runes: Graphics
+
+  constructor() {
+    const root = new Container()
+    this.display = root
+    this.stars = new Graphics()
+    this.runes = new Graphics()
+    root.addChild(this.stars, this.runes)
+
+    const g = this.stars
     for (let i = 0; i < 28; i++) {
-      const x = 44 + ((i * 179 + Math.sin(node.phase * (0.14 + (i % 4) * 0.025) + i) * 34 + 1800) % 1350)
-      const y = 88 + ((i * 97 + Math.cos(node.phase * (0.11 + (i % 3) * 0.035) + i * 2) * 22 + 720) % 560)
-      const pulse = 0.28 + 0.42 * (0.5 + 0.5 * Math.sin(node.phase * (1.1 + (i % 5) * 0.22) + i))
+      const x = 44 + ((i * 179 + 1800) % 1350)
+      const y = 88 + ((i * 97 + 720) % 560)
+      const pulse = 0.28 + 0.42 * (0.5 + 0.5 * Math.sin(i * 1.7))
       const radius = i % 7 === 0 ? 2.8 : i % 3 === 0 ? 1.8 : 1.15
       const color = i % 6 === 0 ? 0xffdca7 : i % 3 === 0 ? 0x9eeaff : 0xc9b4ff
       g.circle(x, y, radius * 3.2).fill({ color, alpha: pulse * 0.07 })
@@ -204,17 +215,22 @@ class AmbientContent implements NodeContent<AmbientArt> {
         g.moveTo(x, y - 6).lineTo(x, y + 6).stroke({ color: 0xdaf7ff, width: 1, alpha: pulse * 0.58 })
       }
     }
-    // Slow orbiting rune around the eclipsed moon.
-    const a = node.phase * 0.18
+
+    // Draw the orbit once; rotating this layer preserves the animated rune.
     for (let i = 0; i < 3; i++) {
-      const angle = a + i * Math.PI * 2 / 3
+      const angle = i * Math.PI * 2 / 3
       const x = 720 + Math.cos(angle) * 144
       const y = 224 + Math.sin(angle) * 72
-      g.circle(x, y, 4.5).fill({ color: 0xb4eaff, alpha: 0.55 })
-      g.circle(x, y, 10).stroke({ color: 0xa78be9, width: 1, alpha: 0.28 })
+      this.runes.circle(x, y, 4.5).fill({ color: 0xb4eaff, alpha: 0.55 })
+      this.runes.circle(x, y, 10).stroke({ color: 0xa78be9, width: 1, alpha: 0.28 })
     }
   }
-  destroy(): void { this.display.destroy() }
+
+  sync(node: AmbientArt): void {
+    this.stars.alpha = 0.94 + Math.sin(node.phase * 0.65) * 0.06
+    this.runes.rotation = node.phase * 0.18
+  }
+  destroy(): void { this.display.destroy({ children: true }) }
 }
 registerNodeContent(AmbientArt, () => new AmbientContent())
 
@@ -256,6 +272,7 @@ registerNodeContent(MuzzleFlashArt, (node) => new MuzzleFlashContent(node))
 /** GPU-side drawn trail. Samples are world coordinates and are supplied by the marble. */
 export class TrailArt extends Node2D {
   readonly points: Vector2[] = []
+  revision = 0
   constructor(readonly color: number, options: { zIndex?: number } = {}) {
     super({ zIndex: options.zIndex ?? 2, blendMode: 'add' })
   }
@@ -263,27 +280,36 @@ export class TrailArt extends Node2D {
     const last = this.points[this.points.length - 1]
     if (last && Math.hypot(point.x - last.x, point.y - last.y) < 4) return
     this.points.push(point)
-    if (this.points.length > 15) this.points.shift()
+    if (this.points.length > 12) this.points.shift()
+    this.revision++
   }
-  clear(): void { this.points.length = 0 }
+  clear(): void {
+    this.points.length = 0
+    this.revision++
+  }
 }
 class TrailContent implements NodeContent<TrailArt> {
   readonly display = new Graphics()
+  private lastRevision = -1
+
   sync(node: TrailArt): void {
+    if (this.lastRevision === node.revision) return
+    this.lastRevision = node.revision
+
     const g = this.display
     g.clear()
     const pts = node.points
     if (pts.length < 2) return
-    for (let i = 1; i < pts.length; i++) {
-      const a = i / (pts.length - 1)
-      const p0 = pts[i - 1]!, p1 = pts[i]!
-      g.moveTo(p0.x, p0.y).lineTo(p1.x, p1.y)
-        .stroke({ color: node.color, width: 3 + a * 8, alpha: a * 0.18 })
-      g.circle(p1.x, p1.y, 2 + a * 4).fill({ color: node.color, alpha: a * 0.22 })
-    }
+
+    // One tapered-looking soft stroke plus a compact tip replaces many
+    // individually tessellated line/circle commands for every trail segment.
+    g.moveTo(pts[0]!.x, pts[0]!.y)
+    for (let i = 1; i < pts.length; i++) g.lineTo(pts[i]!.x, pts[i]!.y)
+    g.stroke({ color: node.color, width: 6, alpha: 0.24 })
+
     const tip = pts[pts.length - 1]!
-    g.circle(tip.x, tip.y, 11).fill({ color: node.color, alpha: 0.14 })
-    g.circle(tip.x, tip.y, 5).fill({ color: 0xffffff, alpha: 0.32 })
+    g.circle(tip.x, tip.y, 10).fill({ color: node.color, alpha: 0.14 })
+    g.circle(tip.x, tip.y, 4.5).fill({ color: 0xffffff, alpha: 0.32 })
   }
   destroy(): void { this.display.destroy() }
 }
