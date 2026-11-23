@@ -1,4 +1,6 @@
 import { defineConfig, type Plugin } from 'vite'
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { sapling, saplingWechat } from 'sapling2d/vite'
 
 // Sapling's default WeChat preset inlines everything into one CommonJS file.
@@ -65,31 +67,50 @@ const injectWechatNavigatorAtEntry: Plugin = {
   name: 'marble-quest:wechat-navigator-entry-bootstrap',
   enforce: 'post' as const,
   renderChunk(code, chunk) {
-    // Pixi's Safari/Chrome checks assume DOMAdapter.getNavigator() always
-    // returns an object. In WeChat's game context it may be undefined even
-    // when globalThis.navigator exists. Here it is used only for UA detection.
-    if (chunk.fileName.includes('sapling-engine-DbC_')) {
-      const safariCheck = 'var e = n.N.get().getNavigator().userAgent;'
-      const chromeCheck = 'n.N.get().getNavigator().userAgent.toLowerCase().indexOf("chrome")'
-      if (!code.includes(safariCheck) || !code.includes(chromeCheck)) {
-        this.error('Expected Pixi navigator feature-detection code was not found; refusing an unverified compatibility patch.')
-      }
-      code = code
-        .replace(
-          safariCheck,
-          'var e = String((n.N.get().getNavigator() || {}).userAgent || "");',
-        )
-        .replace(
-          chromeCheck,
-          'String((n.N.get().getNavigator() || {}).userAgent || "").toLowerCase().indexOf("chrome")',
-        )
-      return code
-    }
-
     if (chunk.isEntry && chunk.fileName === 'game.js') {
       return `${wechatNavigatorBootstrap}\n${code}`
     }
     return null
+  },
+  // Sapling's WeChat preset writes its split CommonJS modules as files during
+  // the bundle output phase, so renderChunk does not reliably see those files.
+  // Patch the emitted Pixi chunk on disk before the follow-up ES5/package steps.
+  writeBundle() {
+    const chunksDir = join(process.cwd(), 'dist-wechat', 'chunks')
+    let targets: string[]
+    try {
+      targets = readdirSync(chunksDir).filter(
+        (name) => name.startsWith('sapling-engine-DbC_') && name.endsWith('.js'),
+      )
+    } catch (error) {
+      this.error('Unable to inspect emitted WeChat chunks: ' + String(error))
+    }
+    if (targets.length !== 1) {
+      this.error('Expected exactly one emitted sapling-engine-DbC chunk; found ' + targets.length)
+    }
+
+    const filePath = join(chunksDir, targets[0])
+    const safariCheck = 'var e = n.N.get().getNavigator().userAgent;'
+    const chromeCheck = 'n.N.get().getNavigator().userAgent.toLowerCase().indexOf("chrome")'
+    let code = readFileSync(filePath, 'utf8')
+    if (!code.includes(safariCheck) || !code.includes(chromeCheck)) {
+      this.error('Expected Pixi navigator feature-detection code was not found in ' + targets[0])
+    }
+
+    code = code
+      .replace(
+        safariCheck,
+        'var e = String((n.N.get().getNavigator() || {}).userAgent || "");',
+      )
+      .replace(
+        chromeCheck,
+        'String((n.N.get().getNavigator() || {}).userAgent || "").toLowerCase().indexOf("chrome")',
+      )
+    if (code.includes('n.N.get().getNavigator().userAgent')) {
+      this.error('Unsafe Pixi user-agent dereference remains in ' + targets[0])
+    }
+    writeFileSync(filePath, code, 'utf8')
+    console.log('[wechat-user-agent] guarded Safari/Chrome checks in ' + targets[0])
   },
 }
 
