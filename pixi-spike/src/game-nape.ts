@@ -144,6 +144,7 @@ export class ArenaScene extends Scene {
   #activePointerId: number | null = null
   #gestureMode: 'aim' | 'ui' | null = null
   #shotsFired = 0
+  #cannonY = 632
   #lastInputState = 'READY'
   #cards: { element: Element; label: Label; bg: ColorRect }[] = []
 
@@ -195,6 +196,9 @@ export class ArenaScene extends Scene {
     })
     inputSurface.pointerUp.connect((event) => {
       this.handlePointerUp(event.pointerId, event.position)
+    })
+    inputSurface.pointerCancel.connect((event) => {
+      this.handlePointerCancel(event.pointerId)
     })
   }
 
@@ -298,9 +302,11 @@ export class ArenaScene extends Scene {
     const left = Math.max(18, safe.left + 12)
     const right = Math.min(WIDTH - 18, safe.right - 12)
     const width = Math.max(720, right - left)
-    // Keep the entire tray above the phone's home-indicator area.
-    const safeBottom = Math.min(HEIGHT - 96, safe.bottom - 96)
-    const panelY = Math.max(500, safeBottom - 96)
+    // Keep the tray near the bottom edge. The previous calculation subtracted
+    // the 96px tray height twice, lifting the panel over the cannons and making
+    // taps at the launchers get swallowed as UI taps.
+    const safeBottom = Math.min(HEIGHT - 12, safe.bottom - 12)
+    const panelY = Math.max(620, Math.min(688, safeBottom - 122))
     const gap = 9
     const cardW = Math.min(194, (width - 36 - gap * 5) / 6)
     const total = cardW * 6 + gap * 5
@@ -314,6 +320,11 @@ export class ArenaScene extends Scene {
     this.trayPanel.size = v(m.width, 96)
     this.trayTitle.position = v(m.left + 18, m.panelY + 8)
     this.message.position = v((m.left + m.right) / 2, m.panelY - 28)
+
+    // Anchor both launchers immediately above the tray on every resize.
+    this.#cannonY = m.panelY - 72
+    this.leftCannon.position = v(128, this.#cannonY)
+    this.rightCannon.position = v(1312, this.#cannonY)
 
     for (let i = 0; i < this.#cards.length; i++) {
       const card = this.#cards[i]!
@@ -336,7 +347,9 @@ export class ArenaScene extends Scene {
   }
 
   #launcherOrigin(): Vector2 {
-    return this.aimSide === 'left' ? v(128, 632) : v(1312, 632)
+    return this.aimSide === 'left'
+      ? v(this.leftCannon.position.x, this.leftCannon.position.y)
+      : v(this.rightCannon.position.x, this.rightCannon.position.y)
   }
 
   #defaultTarget(): Vector2 {
@@ -346,6 +359,7 @@ export class ArenaScene extends Scene {
   handlePointerDown(pointerId: number, position: Vector2): void {
     if (this.#activePointerId !== null) return
     this.#activePointerId = pointerId
+    console.log('[MarbleQuest input] down', pointerId, position.x, position.y)
 
     const tray = this.#trayMetrics()
     if (position.y >= tray.panelY - 8 && position.y <= tray.panelY + 96) {
@@ -408,6 +422,7 @@ export class ArenaScene extends Scene {
 
   handlePointerUp(pointerId: number, position: Vector2): void {
     if (pointerId !== this.#activePointerId) return
+    console.log('[MarbleQuest input] up', pointerId, position.x, position.y, this.#gestureMode)
     if (this.#gestureMode === 'aim') {
       this.aimPoint = position
       this.aiming = false
@@ -427,6 +442,7 @@ export class ArenaScene extends Scene {
     this.#gestureMode = null
     this.aimPoint = null
     this.#lastInputState = 'CANCEL'
+    console.log('[MarbleQuest input] cancel', pointerId)
     this.setDiagnostics(this.#lastInputState)
   }
 
@@ -485,6 +501,7 @@ export class ArenaScene extends Scene {
     this.marbles.push(marble)
 
     this.#shotsFired++
+    console.log('[MarbleQuest input] shot', this.#shotsFired, this.selected, spawn.x, spawn.y, ux * speed, uy * speed)
     if (this.aimSide === 'left') this.leftCannon.recoil = 1
     else this.rightCannon.recoil = 1
     this.#lastInputState = 'SHOT ' + this.#shotsFired
