@@ -22,19 +22,23 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-(function () { var e = typeof globalThis < "u" ? globalThis : typeof GameGlobal < "u" ? GameGlobal : null; if (e && (!e.navigator || typeof e.navigator.userAgent != "string")) {
-    var t = { userAgent: "wechatgame", platform: "wechatgame", maxTouchPoints: 1, gpu: null };
-    try {
-        Object.defineProperty(e, "navigator", { configurable: !0, enumerable: !0, writable: !0, value: t });
+(function () { var e = typeof globalThis < "u" ? globalThis : typeof GameGlobal < "u" ? GameGlobal : null; if (e) {
+    if (!e.navigator || typeof e.navigator.userAgent != "string") {
+        var t = { userAgent: "wechatgame", platform: "wechatgame", maxTouchPoints: 1, gpu: null };
+        try {
+            Object.defineProperty(e, "navigator", { configurable: !0, enumerable: !0, writable: !0, value: t });
+        }
+        catch (n) {
+            e.navigator = t;
+        }
     }
-    catch (n) {
-        e.navigator = t;
-    }
+    var n = typeof GameGlobal < "u" ? GameGlobal : e, r = typeof e.requestAnimationFrame == "function" ? e.requestAnimationFrame : typeof n.requestAnimationFrame == "function" ? n.requestAnimationFrame : typeof wx < "u" && typeof wx.requestAnimationFrame == "function" ? wx.requestAnimationFrame : null, i = typeof e.cancelAnimationFrame == "function" ? e.cancelAnimationFrame : typeof n.cancelAnimationFrame == "function" ? n.cancelAnimationFrame : typeof wx < "u" && typeof wx.cancelAnimationFrame == "function" ? wx.cancelAnimationFrame : null;
+    typeof e.requestAnimationFrame != "function" && (e.requestAnimationFrame = r ? function (e) { return r.call(n, e); } : function (t) { var n = e.performance && typeof e.performance.now == "function" ? e.performance.now() : Date.now(); return e.setTimeout(function () { var r = e.performance && typeof e.performance.now == "function" ? e.performance.now() : Date.now(); t(r > n ? r : n + 16); }, 16); }), typeof e.cancelAnimationFrame != "function" && (e.cancelAnimationFrame = i ? function (e) { return i.call(n, e); } : function (t) { return e.clearTimeout(t); }), n !== e && (typeof n.requestAnimationFrame != "function" && (n.requestAnimationFrame = e.requestAnimationFrame), typeof n.cancelAnimationFrame != "function" && (n.cancelAnimationFrame = e.cancelAnimationFrame));
 } })(), (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
 var e = require("./chunks/rolldown-runtime-8PkXcCTM.js"), t = require("./chunks/sapling-engine-CRShniNS.js"), n = require("./chunks/nape-physics-tjC3J-kx.js"), r = require("./chunks/sapling-engine-z5rgo-_C.js"), i = require("./chunks/sapling-engine-BAPCBAVM.js"), a = require("./chunks/sapling-engine-DEUdDAgy.js"), o = require("./chunks/sapling-engine-CDClN5Qk.js"), s = require("./chunks/nape-physics-4EnlLEHY.js"), c = require("./chunks/vendor-CBtsVi5t.js");
 function l() { return (l = e.n((function () { GameGlobal.__saplingAssets = JSON.parse("{\"main\":[],\"subpackage\":null}"); })))(); }
 var u, d, f;
-function p() { return (p = e.n((function () { if (u = "2026-11-23-R8", d = function (e, t) { var n = ""; try {
+function p() { return (p = e.n((function () { if (u = "2026-11-23-R9", d = function (e, t) { var n = ""; try {
     n = typeof t == "string" ? t : JSON.stringify(t);
 }
 catch (e) {
@@ -515,7 +519,7 @@ function Ne() { return (Ne = e.n((function () { t.l(), ne(), B(), n.Sr(), h(), _
     return Q;
 }(r.l)), Me = { main: Q, design: { width: H, height: U, aspect: "expand" }, background: 527652, pauseOnBackground: !0, storagePrefix: "marble-quest-nape:" }; })))(); }
 var $;
-function Pe() { return (Pe = e.n((function () { p(), t.l(), t.n(), Ne(), $ = "2026-11-23-NAPE-2", Object.defineProperty(r.u.prototype, "renderResolution", { configurable: !0, get: function () { var e = Number(this.screen.pixelRatio) || 1; return Math.min(e, 2); } }), console.log("[MarbleQuest][" + $ + "] booting Pixi + Nape"), t.r(Me).then(function (e) { var t = function (e) { return console.log("[MarbleQuest][" + $ + "] " + e); }, n = e.tree.viewport, r = e.platform.canvas, i = r ? r.width + "x" + r.height : "unknown", a = e.scene, o = "NAPE 3.43.5 \u00B7 DPR " + n.screen.pixelRatio + "/" + n.renderResolution + "x \u00B7 CANVAS " + i; a.setDiagnostics(o + " \u00B7 INPUT READY"), t("Sapling pointer pipeline ready"), t("screen=" + n.screen.width + "x" + n.screen.height + " dpr=" + n.screen.pixelRatio + " renderDpr=" + n.renderResolution + " canvas=" + i + " design=" + n.designWidth + "x" + n.designHeight + " scale=" + n.scale.toFixed(3)), setInterval(function () { var n = e.frameStats, r = "FPS " + n.fps.toFixed(0) + " CPU " + n.logicAvg.toFixed(1) + " GPU " + n.renderAvg.toFixed(1) + " ORB " + a.marbles.length + " SHOT " + a.shotsFired + " " + a.inputState; a.setDiagnostics(r), t(r), e.resetFrameStats(); }, 1e3); }).catch(function (e) { var t = ""; try {
+function Pe() { return (Pe = e.n((function () { p(), t.l(), t.n(), Ne(), $ = "2026-11-23-NAPE-3", Object.defineProperty(r.u.prototype, "renderResolution", { configurable: !0, get: function () { var e = Number(this.screen.pixelRatio) || 1; return Math.min(e, 2); } }), console.log("[MarbleQuest][" + $ + "] booting Pixi + Nape"), t.r(Me).then(function (e) { var t = function (e) { return console.log("[MarbleQuest][" + $ + "] " + e); }, n = e.tree.viewport, r = e.platform.canvas, i = r ? r.width + "x" + r.height : "unknown", a = e.scene, o = "NAPE 3.43.5 \u00B7 DPR " + n.screen.pixelRatio + "/" + n.renderResolution + "x \u00B7 CANVAS " + i; a.setDiagnostics(o + " \u00B7 INPUT READY"), t("Sapling pointer pipeline ready"), t("screen=" + n.screen.width + "x" + n.screen.height + " dpr=" + n.screen.pixelRatio + " renderDpr=" + n.renderResolution + " canvas=" + i + " design=" + n.designWidth + "x" + n.designHeight + " scale=" + n.scale.toFixed(3)), setInterval(function () { var n = e.frameStats, r = "FPS " + n.fps.toFixed(0) + " CPU " + n.logicAvg.toFixed(1) + " GPU " + n.renderAvg.toFixed(1) + " ORB " + a.marbles.length + " SHOT " + a.shotsFired + " " + a.inputState; a.setDiagnostics(r), t(r), e.resetFrameStats(); }, 1e3); }).catch(function (e) { var t = ""; try {
     t = e instanceof Error ? e.stack || e.message : String(e);
 }
 catch (e) {
