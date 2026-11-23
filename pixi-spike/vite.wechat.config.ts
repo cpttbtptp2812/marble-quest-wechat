@@ -89,8 +89,8 @@ const injectWechatNavigatorAtEntry: Plugin = {
     }
 
     const filePath = join(chunksDir, targets[0])
-    const chromePattern = /([A-Za-z_$][\\w$]*\\.N\\.get\\(\\)\\.getNavigator\\(\\))\\.userAgent\\.toLowerCase\\(\\)/g
-    const safariPattern = /([A-Za-z_$][\\w$]*\\.N\\.get\\(\\)\\.getNavigator\\(\\))\\.userAgent/g
+    const chromePattern = /([A-Za-z_$][\w$]*\.N\.get\(\)\.getNavigator\(\))\.userAgent\.toLowerCase\(\)/g
+    const safariPattern = /([A-Za-z_$][\w$]*\.N\.get\(\)\.getNavigator\(\))\.userAgent/g
     let code = readFileSync(filePath, 'utf8')
     const chromeMatches = code.match(chromePattern) || []
     const safariMatches = code.match(safariPattern) || []
@@ -111,7 +111,7 @@ const injectWechatNavigatorAtEntry: Plugin = {
         safariPattern,
         'String(($1 || {}).userAgent || "")',
       )
-    if (/\\.getNavigator\\(\\)\\.userAgent/.test(code)) {
+    if (/\.getNavigator\(\)\.userAgent/.test(code)) {
       this.error('Unsafe Pixi user-agent dereference remains in ' + targets[0])
     }
     writeFileSync(filePath, code, 'utf8')
