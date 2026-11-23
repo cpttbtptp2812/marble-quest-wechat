@@ -26,3 +26,11 @@ jobs:
         run: npm install
       - name: Typecheck and build browser preview + WeChat Mini Game
         run: npm run check
+
+      - name: Upload WeChat DevTools package
+        uses: actions/upload-artifact@v4
+        with:
+          name: marble-quest-pixi-wechat-build
+          path: pixi-spike/dist-wechat/
+          if-no-files-found: error
+          retention-days: 14
