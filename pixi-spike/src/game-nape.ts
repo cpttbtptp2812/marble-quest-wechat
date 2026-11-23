@@ -323,8 +323,10 @@ export class ArenaScene extends Scene {
 
     // Anchor both launchers immediately above the tray on every resize.
     this.#cannonY = m.panelY - 72
-    this.leftCannon.position = v(128, this.#cannonY)
-    this.rightCannon.position = v(1312, this.#cannonY)
+    this.leftCannon.x = 128
+    this.leftCannon.y = this.#cannonY
+    this.rightCannon.x = 1312
+    this.rightCannon.y = this.#cannonY
 
     for (let i = 0; i < this.#cards.length; i++) {
       const card = this.#cards[i]!
@@ -348,8 +350,8 @@ export class ArenaScene extends Scene {
 
   #launcherOrigin(): Vector2 {
     return this.aimSide === 'left'
-      ? v(this.leftCannon.position.x, this.leftCannon.position.y)
-      : v(this.rightCannon.position.x, this.rightCannon.position.y)
+      ? v(this.leftCannon.x, this.leftCannon.y)
+      : v(this.rightCannon.x, this.rightCannon.y)
   }
 
   #defaultTarget(): Vector2 {
