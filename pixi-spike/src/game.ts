@@ -375,6 +375,18 @@ export class ArenaScene extends Scene {
     this.aimPoint = null
   }
 
+  handlePointerCancel(pointerId: number): void {
+    if (pointerId !== this.#activePointerId) return
+    this.aiming = false
+    this.aimGuide.points = []
+    this.#activePointerId = null
+    this.#gestureMode = null
+    this.aimStart = null
+    this.aimPoint = null
+    this.#lastInputState = 'CANCEL'
+    this.setDiagnostics(this.#lastInputState)
+  }
+
   #updateAim(): void {
     const target = this.aimPoint
     if (!target) return
