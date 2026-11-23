@@ -180,3 +180,111 @@ class AimContent implements NodeContent<AimArt>{
  destroy(){this.display.destroy()}
 }
 registerNodeContent(AimArt,()=>new AimContent())
+
+/** Ambient star motes and magical runes. One light Graphics layer, animated in-place. */
+export class AmbientArt extends Node2D {
+  phase = 0
+  override process(dt: number): void { this.phase += dt }
+}
+class AmbientContent implements NodeContent<AmbientArt> {
+  readonly display = new Graphics()
+  sync(node: AmbientArt): void {
+    const g = this.display
+    g.clear()
+    for (let i = 0; i < 28; i++) {
+      const x = 44 + ((i * 179 + Math.sin(node.phase * (0.14 + (i % 4) * 0.025) + i) * 34 + 1800) % 1350)
+      const y = 88 + ((i * 97 + Math.cos(node.phase * (0.11 + (i % 3) * 0.035) + i * 2) * 22 + 720) % 560)
+      const pulse = 0.28 + 0.42 * (0.5 + 0.5 * Math.sin(node.phase * (1.1 + (i % 5) * 0.22) + i))
+      const radius = i % 7 === 0 ? 2.8 : i % 3 === 0 ? 1.8 : 1.15
+      const color = i % 6 === 0 ? 0xffdca7 : i % 3 === 0 ? 0x9eeaff : 0xc9b4ff
+      g.circle(x, y, radius * 3.2).fill({ color, alpha: pulse * 0.07 })
+      g.circle(x, y, radius).fill({ color, alpha: pulse * 0.8 })
+      if (i % 9 === 0) {
+        g.moveTo(x - 6, y).lineTo(x + 6, y).stroke({ color: 0xdaf7ff, width: 1, alpha: pulse * 0.58 })
+        g.moveTo(x, y - 6).lineTo(x, y + 6).stroke({ color: 0xdaf7ff, width: 1, alpha: pulse * 0.58 })
+      }
+    }
+    // Slow orbiting rune around the eclipsed moon.
+    const a = node.phase * 0.18
+    for (let i = 0; i < 3; i++) {
+      const angle = a + i * Math.PI * 2 / 3
+      const x = 720 + Math.cos(angle) * 144
+      const y = 224 + Math.sin(angle) * 72
+      g.circle(x, y, 4.5).fill({ color: 0xb4eaff, alpha: 0.55 })
+      g.circle(x, y, 10).stroke({ color: 0xa78be9, width: 1, alpha: 0.28 })
+    }
+  }
+  destroy(): void { this.display.destroy() }
+}
+registerNodeContent(AmbientArt, () => new AmbientContent())
+
+/** Short muzzle pulse when either cannon fires. */
+export class MuzzleFlashArt extends Node2D {
+  age = 0
+  constructor(readonly color: number, options: { position?: Vector2; rotation?: number; zIndex?: number } = {}) {
+    super({ ...options, blendMode: 'add' })
+  }
+  override process(dt: number): void {
+    this.age += dt
+    if (this.age > 0.24) this.queueFree()
+  }
+}
+class MuzzleFlashContent implements NodeContent<MuzzleFlashArt> {
+  readonly display = new Graphics()
+  constructor(node: MuzzleFlashArt) {
+    const g = this.display
+    g.circle(0, 0, 15).fill({ color: 0xffffff, alpha: 0.94 })
+    g.circle(0, 0, 32).fill({ color: node.color, alpha: 0.38 })
+    g.circle(0, 0, 48).stroke({ color: node.color, width: 5, alpha: 0.72 })
+    for (let i = 0; i < 12; i++) {
+      const a = i / 12 * Math.PI * 2
+      const inner = 24, outer = 54 + (i % 3) * 12
+      g.moveTo(Math.cos(a) * inner, Math.sin(a) * inner)
+        .lineTo(Math.cos(a) * outer, Math.sin(a) * outer)
+        .stroke({ color: i % 2 ? 0xffffff : node.color, width: i % 3 === 0 ? 3 : 1.8, alpha: 0.85 })
+    }
+  }
+  sync(node: MuzzleFlashArt): void {
+    const p = node.age / 0.24
+    this.display.scale.set(1 + p * 0.75)
+    this.display.alpha = 1 - p
+  }
+  destroy(): void { this.display.destroy() }
+}
+registerNodeContent(MuzzleFlashArt, () => new MuzzleFlashContent())
+
+/** GPU-side drawn trail. Samples are world coordinates and are supplied by the marble. */
+export class TrailArt extends Node2D {
+  readonly points: Vector2[] = []
+  constructor(readonly color: number, options: { zIndex?: number } = {}) {
+    super({ zIndex: options.zIndex ?? 2, blendMode: 'add' })
+  }
+  addPoint(point: Vector2): void {
+    const last = this.points[this.points.length - 1]
+    if (last && Math.hypot(point.x - last.x, point.y - last.y) < 4) return
+    this.points.push(point)
+    if (this.points.length > 15) this.points.shift()
+  }
+  clear(): void { this.points.length = 0 }
+}
+class TrailContent implements NodeContent<TrailArt> {
+  readonly display = new Graphics()
+  sync(node: TrailArt): void {
+    const g = this.display
+    g.clear()
+    const pts = node.points
+    if (pts.length < 2) return
+    for (let i = 1; i < pts.length; i++) {
+      const a = i / (pts.length - 1)
+      const p0 = pts[i - 1]!, p1 = pts[i]!
+      g.moveTo(p0.x, p0.y).lineTo(p1.x, p1.y)
+        .stroke({ color: node.color, width: 3 + a * 8, alpha: a * 0.18 })
+      g.circle(p1.x, p1.y, 2 + a * 4).fill({ color: node.color, alpha: a * 0.22 })
+    }
+    const tip = pts[pts.length - 1]!
+    g.circle(tip.x, tip.y, 11).fill({ color: node.color, alpha: 0.14 })
+    g.circle(tip.x, tip.y, 5).fill({ color: 0xffffff, alpha: 0.32 })
+  }
+  destroy(): void { this.display.destroy() }
+}
+registerNodeContent(TrailArt, () => new TrailContent())
