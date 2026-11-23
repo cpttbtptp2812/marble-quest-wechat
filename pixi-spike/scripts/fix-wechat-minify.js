@@ -20,9 +20,9 @@ writeFileSync(gameFile, fixed, 'utf8')
 
 const config = JSON.parse(readFileSync(configFile, 'utf8'))
 config.setting = config.setting || {}
-// The shipped bundle is valid ES2017, but enable DevTools' ES6 -> ES5 pass
-// to improve compatibility with older Windows Mini Game parser/runtime builds.
-config.setting.es6 = true
+// The bundle is downlevelled to ES5 by transpile-wechat-es5.js. Keep DevTools
+// transformation disabled so it does not reprocess an already lowered bundle.
+config.setting.es6 = false
 config.setting.enhance = false
 writeFileSync(configFile, JSON.stringify(config, null, 2) + '\n', 'utf8')
 
