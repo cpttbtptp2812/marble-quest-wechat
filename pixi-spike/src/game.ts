@@ -210,7 +210,7 @@ export class ArenaScene extends Scene {
     this.message = hud.add(new Label({ text: '点击左/右半屏即可发射；按住拖动瞄准。点击飞行弹珠定身。', fontSize: 20, color: 0xf2edff, align: 'center', wrapWidth: 1180, position: v(720, 630) }))
     // Visible build / renderer diagnostics: no need to hunt through DevTools console.
     hud.add(new ColorRect({ position: v(1030, 166), size: v(380, 36), color: 0x070d21, alpha: 0.94 }))
-    this.diagnosticLabel = hud.add(new Label({ text: 'PIXIJ BUILD R5 · INPUT READY', fontSize: 15, fontWeight: 'bold', color: 0x9feaff, align: 'center', position: v(1220, 184) }))
+    this.diagnosticLabel = hud.add(new Label({ text: 'PIXIJ BUILD R5 · INPUT READY', fontSize: 12, fontWeight: 'bold', color: 0x9feaff, align: 'center', position: v(1220, 184) }))
     this.trayPanel = hud.add(new ColorRect({ position: v(20, 668), size: v(1400, 100), color: 0x101a36, alpha: 0.98 }))
     this.trayTitle = hud.add(new Label({ text: '选择弹珠属性 · 点击任意一侧发射', fontSize: 16, fontWeight: 'bold', color: 0xc2d4f2, position: v(40, 676) }))
     this.#createOrbCards(hud)
