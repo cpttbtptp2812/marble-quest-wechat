@@ -1,5 +1,5 @@
 import {
-  CanvasLayer, circle, CollisionShape2D, ColorRect, Ease, Label, Node, pointerPress, rect,
+  CanvasLayer, circle, CollisionShape2D, ColorRect, Ease, Label, Node, Node2D, rect,
   RigidBody2D, Scene, StaticBody2D, rectangle, v, type Vector2,
 } from 'sapling2d'
 import { AimArt, BackdropArt, CannonArt, ELEMENTS, FusionArt, MothArt, OrbArt, PillarArt, type Element, type FusionStyle } from './art'
@@ -54,7 +54,6 @@ class Marble extends RigidBody2D {
     this.linearVelocity = velocity
     this.add(new CollisionShape2D({ shape: circle(spec.radius) }))
     this.add(new OrbArt(element, spec.radius))
-    this.clicked.connect(() => this.arena.freezeMarble(this), this)
     this.bodyEntered.connect((other) => {
       if (other instanceof FrozenOrb) this.arena.fuse(this, other)
       else if (other instanceof MothBoss && !this.hitBoss && other.shieldOpen > 0) {
@@ -82,7 +81,6 @@ class FrozenOrb extends StaticBody2D {
     })
     this.add(new CollisionShape2D({ shape: circle(spec.radius + 1) }))
     this.add(new OrbArt(element, spec.radius, true))
-    this.clicked.connect(() => this.arena.releaseOrb(this), this)
   }
 }
 
@@ -122,6 +120,25 @@ class MothBoss extends StaticBody2D {
   }
 }
 
+/**
+ * One transparent, full-arena input surface owns all touch gestures.
+ * WeChat touch events are routed once here, then dispatched by design-space
+ * coordinates. This avoids relying on overlapping per-label hit regions.
+ */
+class ArenaInputSurface extends Node2D {
+  constructor(arena: ArenaScene) {
+    super({
+      name: 'ArenaInputSurface',
+      zIndex: 99999,
+      inputPickable: true,
+      hitArea: rect(-260, -140, 1960, 1090),
+    })
+    this.pointerDown.connect((event) => arena.handlePointerDown(event.pointerId, event.position), this)
+    this.pointerMove.connect((event) => arena.handlePointerMove(event.pointerId, event.position), this)
+    this.pointerUp.connect((event) => arena.handlePointerUp(event.pointerId, event.position), this)
+  }
+}
+
 function makeWall(position: Vector2, width: number, height: number): StaticBody2D {
   const wall = new StaticBody2D({ position, friction: 0.08, bounce: 0.85 })
   wall.add(new CollisionShape2D({ shape: rectangle(width, height) }))
@@ -146,6 +163,8 @@ export class ArenaScene extends Scene {
   marbles: Marble[] = []
   anchors: FrozenOrb[] = []
   fusionCounter = 0
+  #activePointerId: number | null = null
+  #gestureMode: 'aim' | 'ui' | null = null
   #cards: { element: Element; label: Label; bg: ColorRect }[] = []
 
   override ready(): void {
@@ -181,17 +200,19 @@ export class ArenaScene extends Scene {
     hud.add(new Label({ text: '月蚀蝶后', fontSize: 17, fontWeight: 'bold', color: 0xffe0bb, align: 'center', position: v(720, 100) }))
     this.bossFill = hud.add(new ColorRect({ position: v(555, 121), size: v(330, 9), color: 0xa78be9 }))
     this.bossLabel = hud.add(new Label({ text: '月核护盾 · 先用两颗球制造元素融合', fontSize: 14, color: 0xe1d4ff, align: 'center', position: v(720, 145) }))
-    this.message = hud.add(new Label({ text: '从任意一侧拖动瞄准并发射。飞行中点击空白处可定身，再用另一颗球主动撞击。', fontSize: 17, color: 0xe8e6ff, align: 'center', position: v(720, 616) }))
+    this.message = hud.add(new Label({ text: '在任意一侧拖动确定方向，松开发射；点中飞行中的弹珠即可定身。', fontSize: 20, color: 0xf2edff, align: 'center', wrapWidth: 1180, position: v(720, 650) }))
     // Visible build / renderer diagnostics: no need to hunt through DevTools console.
-    hud.add(new ColorRect({ position: v(1030, 166), size: v(380, 34), color: 0x070d21, alpha: 0.92 }))
-    this.diagnosticLabel = hud.add(new Label({ text: 'PIXIJ BUILD 1123-R4 · WAITING FOR START', fontSize: 13, fontWeight: 'bold', color: 0x9feaff, align: 'center', position: v(1220, 183) }))
-    hud.add(new ColorRect({ position: v(20, 700), size: v(1400, 95), color: 0x101a36, alpha: 0.97 }))
-    hud.add(new Label({ text: '选择任意弹珠 · 左右炮台均可装填', fontSize: 14, color: 0x9cb9d7, position: v(40, 704) }))
+    hud.add(new ColorRect({ position: v(1030, 166), size: v(380, 36), color: 0x070d21, alpha: 0.94 }))
+    this.diagnosticLabel = hud.add(new Label({ text: 'PIXIJ BUILD R5 · INPUT READY', fontSize: 15, fontWeight: 'bold', color: 0x9feaff, align: 'center', position: v(1220, 184) }))
+    hud.add(new ColorRect({ position: v(20, 696), size: v(1400, 100), color: 0x101a36, alpha: 0.98 }))
+    hud.add(new Label({ text: '选择弹珠属性 · 左右双炮台均可发射', fontSize: 16, fontWeight: 'bold', color: 0xc2d4f2, position: v(40, 704) }))
     this.#createOrbCards(hud)
-    hud.add(new Label({ text: '拖动炮台附近的空白区域瞄准 · 点击飞行中的球 / 空白处定身 · 撞击定身球触发融合', fontSize: 13, color: 0x9fb2d4, align: 'center', position: v(720, 784) }))
+
     this.#createFloorRunes()
     this.updateBossBar()
     this.#refreshCards()
+    // Added last and on the HUD layer so it reliably receives all touches.
+    hud.add(new ArenaInputSurface(this))
   }
 
   #addPillar(position: Vector2, width: number, height: number, tint: number): void {
@@ -221,8 +242,8 @@ export class ArenaScene extends Scene {
       const x = startX + i * (cardW + gap)
       const bg = hud.add(new ColorRect({ position: v(x, 730), size: v(cardW, 43), color: 0x1a2948, alpha: 0.98 }))
       const label = hud.add(new Label({
-        text: `${this.#symbol(element)}  ${spec.name}`, fontSize: 17, fontWeight: 'bold',
-        color: spec.light, align: 'center', position: v(x + cardW / 2, 752),
+        text: `${this.#symbol(element)}  ${spec.name}`, fontSize: 20, fontWeight: 'bold',
+        color: spec.light, align: 'center', position: v(x + cardW / 2, 755),
         inputPickable: true, hitArea: rect(-cardW / 2, -23, cardW, 46),
       }))
       label.clicked.connect(() => {
@@ -243,50 +264,100 @@ export class ArenaScene extends Scene {
     }
   }
 
-  override process(): void {
-    const input = this.tree.input
-    if (input.isActionJustPressed('aim') && input.pointerPosition) {
-      this.aimStart = input.pointerPosition
-      this.aimPoint = input.pointerPosition
-      this.aimSide = input.pointerPosition.x < WIDTH / 2 ? 'left' : 'right'
-      this.aiming = true
+  /** Called by the full-screen touch surface; positions are HUD design coordinates. */
+  handlePointerDown(pointerId: number, position: Vector2): void {
+    if (this.#activePointerId !== null) return
+    this.#activePointerId = pointerId
+
+    // Bottom element tray.
+    if (position.y >= 700 && position.y <= 800) {
+      const cardW = 210, gap = 10, startX = 34
+      const index = Math.floor((position.x - startX) / (cardW + gap))
+      const cardStart = startX + index * (cardW + gap)
+      if (index >= 0 && index < ORDER.length && position.x <= cardStart + cardW) {
+        this.selected = ORDER[index]!
+        this.#refreshCards()
+        this.setMessage(ELEMENTS[this.selected].name + ' 已装填。拖动场地瞄准，松开发射。')
+      }
+      this.#gestureMode = 'ui'
+      return
     }
-    if (this.aiming && input.isActionPressed('aim') && input.pointerPosition) {
-      this.aimPoint = input.pointerPosition
-      this.#updateAim()
+
+    // Reset control in the upper-right HUD.
+    if (position.x >= 1170 && position.y >= 12 && position.y <= 92) {
+      this.resetTrial()
+      this.#gestureMode = 'ui'
+      return
     }
-    if (this.aiming && input.isActionJustReleased('aim')) {
+
+    // Tapping an existing stasis point releases it; tapping a moving orb freezes it.
+    const anchor = this.anchors.find((item) => Math.hypot(item.x - position.x, item.y - position.y) <= ELEMENTS[item.element].radius + 30)
+    if (anchor) {
+      this.releaseOrb(anchor)
+      this.#gestureMode = 'ui'
+      return
+    }
+    const marble = [...this.marbles].reverse().find((item) => Math.hypot(item.x - position.x, item.y - position.y) <= ELEMENTS[item.element].radius + 28)
+    if (marble) {
+      this.freezeMarble(marble)
+      this.#gestureMode = 'ui'
+      return
+    }
+
+    this.aimStart = position
+    this.aimPoint = position
+    this.aimSide = position.x < WIDTH / 2 ? 'left' : 'right'
+    this.aiming = true
+    this.#gestureMode = 'aim'
+    this.setMessage('正在瞄准：朝目标方向拖动，松开发射。')
+  }
+
+  handlePointerMove(pointerId: number, position: Vector2): void {
+    if (pointerId !== this.#activePointerId || this.#gestureMode !== 'aim') return
+    this.aimPoint = position
+    this.#updateAim()
+  }
+
+  handlePointerUp(pointerId: number, position: Vector2): void {
+    if (pointerId !== this.#activePointerId) return
+    if (this.#gestureMode === 'aim') {
+      this.aimPoint = position
       const start = this.aimStart
-      const end = this.aimPoint ?? input.pointerPosition
+      const end = this.aimPoint
+      const distance = start && end ? Math.hypot(end.x - start.x, end.y - start.y) : 0
       this.aiming = false
       this.aimGuide.points = []
-      if (start && end && Math.hypot(start.x - end.x, start.y - end.y) > 27) this.#launch(start, end)
+      if (start && end && distance > 30) this.#launch(start, end)
       else this.freezeLatest()
-      this.aimStart = null
-      this.aimPoint = null
     }
+    this.#activePointerId = null
+    this.#gestureMode = null
+    this.aimStart = null
+    this.aimPoint = null
   }
+
   #updateAim(): void {
     if (!this.aimStart || !this.aimPoint) return
-    const cannon = this.aimSide === 'left' ? this.leftCannon : this.rightCannon
-    const dx = this.aimStart.x - this.aimPoint.x, dy = this.aimStart.y - this.aimPoint.y
+    const dx = this.aimPoint.x - this.aimStart.x
+    const dy = this.aimPoint.y - this.aimStart.y
     const len = Math.hypot(dx, dy)
     if (len < 1) return
     const ux = dx / len, uy = dy / len
+    const cannon = this.aimSide === 'left' ? this.leftCannon : this.rightCannon
     cannon.aimAngle = Math.atan2(uy, ux) + Math.PI / 2
     const origin = this.aimSide === 'left' ? v(128, 650) : v(1312, 650)
-    const power = Math.max(0.45, Math.min(1.25, len / 180))
+    const power = Math.max(0.48, Math.min(1.3, len / 190))
     const speed = ELEMENTS[this.selected].speed * power
     const points: Vector2[] = []
-    for (let i = 0; i < 17; i++) {
-      const t = i * 0.075
+    for (let i = 0; i < 18; i++) {
+      const t = i * 0.065
       points.push(v(origin.x + ux * speed * t, origin.y + uy * speed * t + 0.5 * 62.5 * t * t))
     }
     this.aimGuide.points = points
   }
   #launch(start: Vector2, end: Vector2): void {
     if (this.bossDefeated) return
-    const dx = start.x - end.x, dy = start.y - end.y
+    const dx = end.x - start.x, dy = end.y - start.y
     const len = Math.hypot(dx, dy)
     if (len < 1) return
     const ux = dx / len, uy = dy / len
@@ -387,5 +458,5 @@ export const gameOptions = {
   maxPhysicsStepsPerFrame: 2,
   pauseOnBackground: true,
   storagePrefix: 'marble-quest-pixi:',
-  actions: { aim: [pointerPress()] },
+
 }
