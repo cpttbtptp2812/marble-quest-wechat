@@ -1,95 +1,44 @@
-# Marble Quest · 微信小游戏
+# Marble Quest
 
-一款以弹珠为武器的魔法物理冒险原型。玩家从左右双炮台发射不同属性的弹珠，可以在飞行中点击定身，再用另一颗弹珠主动撞击，触发元素反应。
+Marble Quest is a landscape 2D physics game for WeChat Mini Games, rebuilt on **Cocos Creator 3.8.9**.
 
-> 当前阶段：核心玩法原型。尚非正式发行版本，仍需微信开发者工具和真机测试。
+The project has one engine, one scene and one gameplay implementation. It no longer contains the old Canvas prototype, PixiJS/Sapling2D experiment, Nape adapter or prebuilt release bundle.
 
-## 核心玩法
+## Open the project
 
-1. 左右两座炮台都可以装填并发射任意弹珠。
-2. 弹珠飞行过程中点击它，可以让它停在当前位置；再次点击可以解除定身。
-3. 从任意炮台发射另一颗弹珠，主动撞击定身球。
-4. 不同属性的弹珠相撞会触发不同元素共鸣。
-5. 利用普通反弹、空中定身、元素融合和机关互动挑战关卡与守护灵。
+1. Install **Cocos Creator 3.8.9** from the [official download page](https://www.cocos.com/creator-download).
+2. In Cocos Dashboard, choose **Open Other** and select this repository root (the folder containing \`package.json\` and \`assets/\`).
+3. Open \`assets/scenes/Main.scene\`. It is the only scene in the project.
 
-## 当前弹珠
+## Build for WeChat Mini Games
 
-- 烈焰核心
-- 极寒晶核
-- 陨星重核
-- 雷暴之眼
-- 裂变之种
-- 虚空奇点
+1. Open the **Build** panel in Cocos Creator.
+2. Choose **WeChat Mini Game** as the platform.
+3. Set your own WeChat Mini Game AppID. No real AppID is stored in this repository.
+4. Build the project. Cocos generates the DevTools project under \`build/wechatgame/\`.
+5. Import that generated folder into WeChat Developer Tools and use Preview/QR code to test on a phone.
 
-## 技术结构
+See the [Cocos Creator 3.8 WeChat publishing guide](https://docs.cocos.com/creator/3.8/manual/en/editor/publish/publish-wechatgame.html).
 
-这是原生微信小游戏工程（`compileType: game`），使用 Canvas 绘制，不是 WebView 包装的普通小程序页面。
+## Controls
 
-- `game.js`：构建后生成的微信小游戏入口。
-- `game.json`：小游戏方向和运行配置。
-- `project.config.json`：微信开发者工具项目配置。
-- `src/packed/`：压缩后的游戏源码分段，按编号顺序还原。
-- `scripts/build.js`：将源码分段还原成根目录 `game.js`，并做旧小游戏运行时语法兼容与移动端 Canvas 绘制优化。
-- `test/wechat-mock.js`：基础运行与触摸事件冒烟测试。
+- Tap either side of the arena (including a cannon) to fire from that side toward the boss.
+- Touch and drag toward the direction you want to shoot, then release to fire along the live aim guide.
+- Tap an element card at the bottom to change the projectile.
+- Tap a flying marble to freeze it; tap the frozen marble again to release it.
+- Fire another marble into a frozen marble to trigger elemental resonance and open the boss shield.
+- Hit the boss while its shield is open. Use **Reset** at the top-right to restart.
 
-## 构建与验证
+The game uses one Cocos touch-input path and Cocos Creator's built-in 2D physics system. There is no custom physics adapter.
 
-需要 Node.js（使用内置 `zlib`，无第三方依赖）。
+## Development checks
 
-```bash
-npm run build
-node --check game.js
+With Node.js 22 or newer, run:
+
+\`\`\`bash
 npm test
-```
+\`\`\`
 
-`npm run build` 会从 `src/packed/` 还原根目录 `game.js`。每次更新压缩源码后，先运行构建，再运行测试。
+The checks cover launch-vector math and verify the serialized scene/script link and removal of the old engine outputs.
 
-Mock 测试用于检查启动、Canvas 首帧、离屏背景缓存和基础触摸事件映射；它不能替代微信开发者工具模拟器或真机测试。
-
-## 在微信开发者工具中运行
-
-1. 安装并打开[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)。
-2. 选择「小游戏」项目类型。
-3. 克隆本仓库后，在仓库根目录运行 `npm run build`。
-4. 将 `project.config.json` 中的 `touristappid` 替换为自己的小游戏 AppID（正式真机预览和发布需要）。
-5. 在微信开发者工具中导入仓库根目录，点击编译。
-
-## 操作
-
-- 点击底部弹珠卡片：选择当前弹珠。
-- 在左侧或右侧炮台附近按住并向反方向拖动：瞄准。
-- 松开：发射。
-- 点击飞行中的弹珠：让它定身在空中。
-- 点击定身弹珠：解除定身。
-- 发射另一颗弹珠并主动撞击定身球：触发两球元素反应。
-- 左右两座炮台共用弹珠选择，可以交替或连续发射。
-
-## 性能处理
-
-- 对高 DPI 设备的 Canvas 像素比设置上限，控制绘制像素数量。
-- 支持时将复杂静态星界背景预绘制到离屏 Canvas，游戏帧内直接绘制缓存。
-- 对粒子、冲击环和飘字数量设置上限。
-- 降低阴影模糊强度，并将画面绘制节奏限制在约 45 FPS；物理模拟继续按实际帧间隔更新。
-- 构建时移除部分旧小游戏运行环境不支持的可选链语法。
-
-## 当前限制
-
-- 当前场景、美术和粒子主要由 Canvas 程序绘制，尚未进入最终商业美术阶段。
-- 物理参数、移动端帧率、触控判定与屏幕适配仍需在目标设备上迭代。
-- 暂不包含线上排行榜、云存档、广告、支付和联机功能。
-- 正式发布需要自己的微信小游戏 AppID，并按微信平台要求完成类目、隐私与内容审核。
-
-
-## Pixi 微信小游戏（当前开发版本）
-
-新版微信小游戏的源码在 `pixi-spike/`。每次 `main` 构建成功后，GitHub Actions 会把不含 Node/Vite 构建脚本的纯发布文件同步到 `wechat-release/`。
-
-**微信开发者工具请导入仓库根目录下的 `wechat-release/`，不要导入仓库根目录或 `pixi-spike/`。**
-
-同步最新发布包：
-
-```bash
-git pull --ff-only origin main
-```
-
-然后在微信开发者工具中重新打开 `wechat-release/`。
+GitHub checks do not run the proprietary Cocos editor or replace a WeChat DevTools/device test. Build in Creator and preview on a real phone before treating the migration as device-verified.

@@ -3,5 +3,8 @@ node_modules/
 *.log
 .vscode/
 .idea/
-dist/
 build/
+temp/
+library/
+local/
+profiles/
