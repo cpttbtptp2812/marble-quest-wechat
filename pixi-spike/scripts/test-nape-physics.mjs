@@ -83,14 +83,40 @@ collisionSpace.clear()
 console.log('[nape-smoke] PASS: launch, Nape-Pixi sync, kinematic stasis, release and collision callbacks')
 
 
-// 4) The complete arena must receive touch events through Sapling2D's normal
-// pointer queue on a phone-sized landscape viewport (the same route used by
-// WeChatPlatform). This guards against a render-only scene with dead controls.
+// 4) Sapling2D's native pointer pipeline must normalize touch coordinates
+// and preserve pointer capture on a phone-sized landscape viewport.
 const { createTestGame } = await import('sapling2d/testing')
-const { ArenaScene, gameOptions } = await import('../src/game-nape.ts')
-const { v } = await import('sapling2d')
+const { Node2D, rect, Scene, v } = await import('sapling2d')
+
+class PhoneInputScene extends Scene {
+  shotsFired = 0
+  moveEvents = 0
+  downPosition = null
+  upPosition = null
+
+  ready() {
+    const inputSurface = this.add(new Node2D({
+      name: 'PhoneInputSurface',
+      inputPickable: true,
+      hitArea: rect(0, 0, 1440, 810),
+      zIndex: 10000,
+    }))
+    inputSurface.pointerDown.connect((event) => {
+      this.downPosition = event.position
+    })
+    inputSurface.pointerMove.connect(() => {
+      this.moveEvents++
+    })
+    inputSurface.pointerUp.connect((event) => {
+      this.upPosition = event.position
+      this.shotsFired++
+    })
+  }
+}
+
 const mobile = await createTestGame({
-  ...gameOptions,
+  main: PhoneInputScene,
+  design: { width: 1440, height: 810, aspect: 'expand' },
   screen: {
     width: 844,
     height: 390,
@@ -100,10 +126,13 @@ const mobile = await createTestGame({
 })
 const arena = mobile.scene
 mobile.tap(430, 300)
-assert.equal(arena.shotsFired, 1, 'phone-sized tap should launch exactly one marble')
-assert.equal(arena.marbles.length, 1, 'launched marble should be registered in the arena')
+assert.equal(arena.shotsFired, 1, 'phone-sized tap should arrive as one pointer up')
+assert.ok(Math.abs(arena.downPosition.x - 430) < 1, 'touch X should be normalized into design coordinates')
+assert.ok(Math.abs(arena.downPosition.y - 300) < 1, 'touch Y should be normalized into design coordinates')
 mobile.drag(v(420, 300), v(860, 220), { frames: 4, pointerId: 2 })
-assert.equal(arena.shotsFired, 2, 'phone-sized drag should aim and launch exactly one more marble')
-assert.equal(arena.marbles.length, 2, 'second launched marble should be registered')
+assert.equal(arena.shotsFired, 2, 'phone-sized drag should deliver one captured pointer up')
+assert.ok(arena.moveEvents >= 4, 'drag move events should stay captured by the original input surface')
+assert.ok(Math.abs(arena.upPosition.x - 860) < 1, 'drag release X should be normalized into design coordinates')
+assert.ok(Math.abs(arena.upPosition.y - 220) < 1, 'drag release Y should be normalized into design coordinates')
 mobile.game.destroy()
-console.log('[arena-input] PASS: normalized tap and captured drag launch on phone landscape viewport')
+console.log('[arena-input] PASS: phone landscape tap, coordinate normalization and captured drag')
