@@ -1,7 +1,4 @@
 /// <reference path="./wechat-global.d.ts" />
-declare const wx: any
-declare const GameGlobal: any
-
 const buildId = '2026-11-23-R3'
 const report = (kind: string, value: unknown): void => {
   let detail = ''
