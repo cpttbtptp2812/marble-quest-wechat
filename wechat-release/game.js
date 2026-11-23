@@ -22,11 +22,19 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-(function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
+(function () { var e = typeof globalThis < "u" ? globalThis : typeof GameGlobal < "u" ? GameGlobal : null; if (e && (!e.navigator || typeof e.navigator.userAgent != "string")) {
+    var t = { userAgent: "wechatgame", platform: "wechatgame", maxTouchPoints: 1, gpu: null };
+    try {
+        Object.defineProperty(e, "navigator", { configurable: !0, enumerable: !0, writable: !0, value: t });
+    }
+    catch (n) {
+        e.navigator = t;
+    }
+} })(), (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
 var e = require("./chunks/rolldown-runtime-8PkXcCTM.js"), t = require("./chunks/sapling-engine-CRShniNS.js"), n = require("./chunks/nape-physics-tjC3J-kx.js"), r = require("./chunks/sapling-engine-z5rgo-_C.js"), i = require("./chunks/sapling-engine-BAPCBAVM.js"), a = require("./chunks/sapling-engine-DEUdDAgy.js"), o = require("./chunks/sapling-engine-CDClN5Qk.js"), s = require("./chunks/nape-physics-4EnlLEHY.js"), c = require("./chunks/vendor-CBtsVi5t.js");
 function l() { return (l = e.n((function () { GameGlobal.__saplingAssets = JSON.parse("{\"main\":[],\"subpackage\":null}"); })))(); }
 var u, d, f;
-function p() { return (p = e.n((function () { if (u = "2026-11-23-R6", d = function (e, t) { var n = ""; try {
+function p() { return (p = e.n((function () { if (u = "2026-11-23-R7", d = function (e, t) { var n = ""; try {
     n = typeof t == "string" ? t : JSON.stringify(t);
 }
 catch (e) {
