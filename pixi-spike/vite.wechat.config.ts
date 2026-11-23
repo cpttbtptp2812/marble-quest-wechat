@@ -18,7 +18,7 @@ const splitWechatRuntime = {
             codeSplitting: {
               groups: [
                 { name: 'pixi-vendor', test: /[\\/]node_modules[\\/](?:pixi\\.js|@pixi)[\\/]/, priority: 30 },
-                { name: 'sapling-engine', test: /[\\/]node_modules[\\/]sapling2d[\\/]/, priority: 20 },
+                { name: 'sapling-engine', test: /[\\/]node_modules[\\/]sapling2d[\\/]/, priority: 20, minSize: 45000, maxSize: 300000 },
                 { name: 'planck-physics', test: /[\\/]node_modules[\\/]planck[\\/]/, priority: 10 },
                 { name: 'vendor', test: /[\\/]node_modules[\\/]/, priority: 1 },
               ],
