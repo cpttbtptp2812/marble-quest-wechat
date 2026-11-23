@@ -7,9 +7,11 @@ const zlib = require('zlib');
 
 const root = path.resolve(__dirname, '..');
 const packedDir = path.join(root, 'src', 'packed');
+const chunkSize = 6500;
 
-// Keep chunks in their exact byte order. Segment 004/005 were normalized
-// after the initial upload; the assembled output is the canonical game.js.
+// The first uploaded segment contains 9,000 chars because its final 2,500
+// chars overlap the beginning of segment 002. Trim it to the canonical
+// 6,500-char boundary before concatenating.
 const segments = [
   'game.js.deflate.b64.001',
   'game.js.deflate.b64.002',
@@ -21,19 +23,27 @@ const segments = [
 ];
 
 try {
-  const encoded = segments
-    .map((name) => {
-      const file = path.join(packedDir, name);
-      if (!fs.existsSync(file)) {
-        throw new Error(`Missing source segment: ${path.relative(root, file)}`);
-      }
-      return fs.readFileSync(file, 'utf8').trim();
-    })
-    .join('');
+  const encoded = segments.map((name, index) => {
+    const file = path.join(packedDir, name);
+    if (!fs.existsSync(file)) {
+      throw new Error(`Missing source segment: ${path.relative(root, file)}`);
+    }
+    const part = fs.readFileSync(file, 'utf8').trim();
+    if (index === 0) {
+      if (part.length < chunkSize) throw new Error('Segment 001 is unexpectedly short');
+      return part.slice(0, chunkSize);
+    }
+    return part;
+  }).join('');
 
-  const compressed = Buffer.from(encoded, 'base64');
-  const source = zlib.inflateRawSync(compressed);
-  if (!source.length) throw new Error('Restored game.js is empty');
+  if (encoded.length !== 44172) {
+    throw new Error(`Unexpected base64 length: ${encoded.length} (expected 44172)`);
+  }
+
+  const source = zlib.inflateRawSync(Buffer.from(encoded, 'base64'));
+  if (source.length !== 101001) {
+    throw new Error(`Unexpected game.js size: ${source.length} (expected 101001)`);
+  }
 
   const output = path.join(root, 'game.js');
   fs.writeFileSync(output, source);
