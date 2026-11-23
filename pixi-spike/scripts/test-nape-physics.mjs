@@ -81,3 +81,29 @@ binding.dispose()
 space.clear()
 collisionSpace.clear()
 console.log('[nape-smoke] PASS: launch, Nape-Pixi sync, kinematic stasis, release and collision callbacks')
+
+
+// 4) The complete arena must receive touch events through Sapling2D's normal
+// pointer queue on a phone-sized landscape viewport (the same route used by
+// WeChatPlatform). This guards against a render-only scene with dead controls.
+const { createTestGame } = await import('sapling2d/testing')
+const { ArenaScene, gameOptions } = await import('../src/game-nape.ts')
+const { v } = await import('sapling2d')
+const mobile = await createTestGame({
+  ...gameOptions,
+  screen: {
+    width: 844,
+    height: 390,
+    pixelRatio: 3,
+    safeArea: { left: 38, top: 0, right: 806, bottom: 390 },
+  },
+})
+const arena = mobile.scene
+mobile.tap(430, 300)
+assert.equal(arena.shotsFired, 1, 'phone-sized tap should launch exactly one marble')
+assert.equal(arena.marbles.length, 1, 'launched marble should be registered in the arena')
+mobile.drag(v(420, 300), v(860, 220), { frames: 4, pointerId: 2 })
+assert.equal(arena.shotsFired, 2, 'phone-sized drag should aim and launch exactly one more marble')
+assert.equal(arena.marbles.length, 2, 'second launched marble should be registered')
+mobile.game.destroy()
+console.log('[arena-input] PASS: normalized tap and captured drag launch on phone landscape viewport')
