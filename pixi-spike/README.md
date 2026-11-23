@@ -8,6 +8,8 @@
 
 背景、炮台、六种弹珠、月蝶 Boss、瞄准轨迹和元素碰撞演出由 Pixi Graphics 矢量节点绘制，按设备像素比渲染（引擎最多使用 2× DPR），不通过降低画面分辨率换帧率。粒子和碰撞演出会限制数量，避免不必要的过量物理对象。
 
+微信发布目录会保留多个本地 JS 文件：主入口 `game.js` 负责加载引擎 / 物理分块，场景和美术源码继续按 `src/game.ts`、`src/art.ts`、`src/main.wechat.ts` 分模块维护；不再把所有依赖塞进一个 1 万行入口文件。
+
 ## 技术选型来源
 
 - [Sapling2D](https://github.com/sapling2d/sapling2d)：MIT，代码优先的 2D 引擎，PixiJS v8 + Planck，并提供 `sapling2d/wechat` 与 `saplingWechat()`。
@@ -41,14 +43,14 @@ npm install
 npm run build:wechat
 ```
 
-也可以执行 `npm run check` 一次完成类型检查、浏览器构建、微信小游戏发布构建，并同步生成仓库根目录的 `wechat-release/`。微信构建结束后会自动执行语法兼容修正与入口脚本语法检查。
+也可以执行 `npm run check` 一次完成类型检查、浏览器构建、微信小游戏发布构建，并同步生成仓库根目录的 `wechat-release/`。微信构建结束后会自动执行 ES5 兼容修正，并检查入口和所有本地 CommonJS 分块。
 
 成功构建后，脚本会自动把纯发布文件复制到仓库根目录的 `wechat-release/`。在微信开发者工具中选择「小游戏」，始终导入仓库根目录的 `wechat-release/`，不要导入 `pixi-spike/`。`vite.wechat.config.ts` 使用 `saplingWechat()`，生成微信小游戏入口 `game.js`、`game.json`、`project.config.json` 和资源目录。请按自己的微信小游戏账号配置 AppID；本试验分支尚未配置用户 AppID。
 
 ## 性能设计原则
 
 - 使用设备原生 DPR，最多 3×；不会把高分屏强制降到 1.25× 或 2×。运行日志会输出逻辑屏幕尺寸、设备 DPR、实际渲染 DPR 和 Canvas 缓冲区尺寸。
-- 背景和大部分美术是静态矢量 Graphics，构建一次、GPU 绘制，不在每帧重新生成复杂纹理。
+- 背景保留静态高清矢量层，额外增加缓慢移动的星尘、绕月符文、Boss 翼振、弹珠拖尾和炮口闪光；大部分动态效果在 Pixi 图形层更新，不压低画面分辨率。
 - 物理世界固定步长，每帧最多推进 2 个物理步，避免掉帧后补帧雪崩。
 - 控制同时存在的弹珠、定身锚点和视觉 FX 数量。
 - 微信运行日志每秒输出 FPS、逻辑耗时、渲染耗时和活跃弹珠数；启动时还输出设备 DPR、渲染 DPR 与 Canvas 实际尺寸。诊断信息也会显示在画面右上角，不必只看控制台。不能用浏览器预览帧率代替真机结果。
