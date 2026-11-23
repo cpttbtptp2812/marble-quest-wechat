@@ -43,6 +43,37 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
+var __mqFrameApi = null;
+if (typeof GameGlobal !== 'undefined' &&
+    typeof GameGlobal.requestAnimationFrame === 'function' &&
+    typeof GameGlobal.cancelAnimationFrame === 'function') {
+    __mqFrameApi = GameGlobal;
+}
+else if (typeof globalThis !== 'undefined' &&
+    typeof globalThis.requestAnimationFrame === 'function' &&
+    typeof globalThis.cancelAnimationFrame === 'function') {
+    __mqFrameApi = globalThis;
+}
+var requestAnimationFrame = __mqFrameApi
+    ? function (callback) {
+        return __mqFrameApi.requestAnimationFrame.call(__mqFrameApi, callback);
+    }
+    : function (callback) {
+        return setTimeout(function () {
+            var timestamp = typeof performance !== 'undefined' &&
+                performance && typeof performance.now === 'function'
+                ? performance.now()
+                : Date.now();
+            callback(timestamp);
+        }, 16);
+    };
+var cancelAnimationFrame = __mqFrameApi
+    ? function (requestId) {
+        return __mqFrameApi.cancelAnimationFrame.call(__mqFrameApi, requestId);
+    }
+    : function (requestId) {
+        clearTimeout(requestId);
+    };
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
 var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-BaQMQODF.js"), n = require("./sapling-engine-E6YpPtHn.js"), r = require("./sapling-engine-BXH-PsI2.js"), i = require("./sapling-engine-lHNhdQUz.js"), a = require("./sapling-engine-Dihp4nr7.js"), o = require("./sapling-engine-D7PD7dB2.js");
 function s(e) {
