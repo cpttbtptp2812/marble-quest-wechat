@@ -3,7 +3,7 @@ import { Viewport } from 'sapling2d'
 import { startGame } from 'sapling2d/wechat'
 import { ArenaScene, gameOptions } from './game'
 
-const BUILD_ID = '2026-11-23-R3'
+const BUILD_ID = '2026-11-23-R4'
 
 // Use at least 2x and at most 3x backing resolution. Some DevTools
 // simulators report DPR=1 even when the preview is displayed much larger.
