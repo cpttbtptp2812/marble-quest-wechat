@@ -153,12 +153,10 @@ export class NapeArenaPhysics {
     body.cbTypes.add(this.projectileType)
     body.type = BodyType.DYNAMIC
     body.velocity.setxy(velocityX, velocityY)
-    body.wake()
   }
 
   setVelocity(body: Body, velocityX: number, velocityY: number): void {
     body.velocity.setxy(velocityX, velocityY)
-    body.wake()
   }
 
   removeBody(body: Body): void {
