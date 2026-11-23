@@ -1,0 +1,74 @@
+name: Pixi Spike Build
+
+on:
+  push:
+    branches: [main, feature/pixi-sapling-spike, feature/nape-ready-made-physics]
+    paths:
+      - 'pixi-spike/**'
+      - '.github/workflows/pixi-spike.yml'
+  pull_request:
+    paths:
+      - 'pixi-spike/**'
+      - '.github/workflows/pixi-spike.yml'
+
+permissions:
+  contents: write
+
+# Serialize every build that publishes wechat-release. A fixed group is used
+# rather than a per-ref group so no two jobs can race while committing output.
+concurrency:
+  group: marble-quest-wechat-release
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pixi-spike
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      # A queued build may have been created from an older push. Always build
+      # the latest main after this job acquires the concurrency lock.
+      - name: Sync latest main before build
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git -C .. fetch origin main
+          git -C .. checkout -B main origin/main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: npm install
+      - name: Typecheck and build browser preview + WeChat Mini Game
+        run: npm run check
+
+      - name: Publish package without stale-build conflicts
+        if: github.ref == 'refs/heads/main'
+        run: |
+          set -e
+          tar -czf /tmp/wechat-release-build.tgz -C .. wechat-release
+          git -C .. fetch origin main
+          git -C .. checkout -B main origin/main
+          tar -xzf /tmp/wechat-release-build.tgz -C ..
+          git -C .. config user.name "github-actions[bot]"
+          git -C .. config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C .. add wechat-release/
+          if ! git -C .. diff --cached --quiet; then
+            git -C .. commit -m "build: publish WeChat Mini Game in wechat-release"
+            git -C .. push origin HEAD:main
+          else
+            echo "wechat-release is already up to date"
+          fi
+
+      - name: Upload WeChat DevTools package
+        uses: actions/upload-artifact@v4
+        with:
+          name: marble-quest-wechat-release
+          path: wechat-release/
+          if-no-files-found: error
+          retention-days: 14

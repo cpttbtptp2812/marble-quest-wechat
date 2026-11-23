@@ -1,0 +1,5 @@
+node_modules/
+dist/
+dist-wechat/
+.DS_Store
+*.log

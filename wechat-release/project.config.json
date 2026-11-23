@@ -1,0 +1,12 @@
+{
+  "appid": "touristappid",
+  "projectname": "MarbleQuest-Pixi",
+  "compileType": "game",
+  "libVersion": "3.0.0",
+  "setting": {
+    "es6": false,
+    "enhance": false,
+    "minified": false,
+    "urlCheck": true
+  }
+}
