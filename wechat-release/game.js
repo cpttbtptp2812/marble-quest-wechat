@@ -26,7 +26,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 var e = require("./chunks/rolldown-runtime-8PkXcCTM.js"), t = require("./chunks/sapling-engine-C5cpr8KZ.js"), n = require("./chunks/sapling-engine-OS5i6gdH.js"), r = require("./chunks/sapling-engine-Bm6Jd0uz.js"), i = require("./chunks/sapling-engine-DdkTJwUg.js"), a = require("./chunks/sapling-engine-DkqQT0bo.js"), o = require("./chunks/sapling-engine-DK3rVQTY.js");
 function s() { return (s = e.n((function () { GameGlobal.__saplingAssets = JSON.parse("{\"main\":[],\"subpackage\":null}"); })))(); }
 var c, l;
-function u() { return (u = e.n((function () { c = "2026-11-23-R4", l = function (e, t) { var n = ""; try {
+function u() { return (u = e.n((function () { c = "2026-11-23-R5", l = function (e, t) { var n = ""; try {
     n = typeof t == "string" ? t : JSON.stringify(t);
 }
 catch (e) {
