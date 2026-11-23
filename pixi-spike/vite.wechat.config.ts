@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import { sapling, saplingWechat } from 'sapling2d/vite'
 
 // Sapling's default WeChat preset inlines everything into one CommonJS file.
@@ -32,6 +32,44 @@ const splitWechatRuntime = {
   },
 }
 
+
+// Pixi's browser feature detection may run while the CommonJS chunks are being
+// evaluated. The source prelude is invoked later by the entry module, so place
+// this tiny environment shim at byte zero of the generated WeChat game.js.
+const wechatNavigatorBootstrap = `;(function () {
+  var host = typeof globalThis !== 'undefined'
+    ? globalThis
+    : (typeof GameGlobal !== 'undefined' ? GameGlobal : null);
+  if (!host) return;
+  if (!host.navigator || typeof host.navigator.userAgent !== 'string') {
+    var navigatorShim = {
+      userAgent: 'wechatgame',
+      platform: 'wechatgame',
+      maxTouchPoints: 1,
+      gpu: null
+    };
+    try {
+      Object.defineProperty(host, 'navigator', {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: navigatorShim
+      });
+    } catch (_error) {
+      host.navigator = navigatorShim;
+    }
+  }
+})();`
+
+const injectWechatNavigatorAtEntry: Plugin = {
+  name: 'marble-quest:wechat-navigator-entry-bootstrap',
+  enforce: 'post' as const,
+  renderChunk(code: string, chunk: { isEntry: boolean; fileName: string }) {
+    if (!chunk.isEntry || chunk.fileName !== 'game.js') return null
+    return wechatNavigatorBootstrap + '\\n' + code
+  },
+}
+
 export default defineConfig({
   plugins: [
     sapling(),
@@ -44,5 +82,6 @@ export default defineConfig({
       release: true,
     }),
     splitWechatRuntime,
+    injectWechatNavigatorAtEntry,
   ],
 })
