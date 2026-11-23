@@ -27,5 +27,5 @@ config.setting.enhance = false
 writeFileSync(configFile, JSON.stringify(config, null, 2) + '\n', 'utf8')
 
 console.log('[wechat-compat] parser-safe ternaries: ' + replacements)
-console.log('[wechat-compat] DevTools ES6->ES5: enabled')
+console.log('[wechat-compat] DevTools ES6->ES5: disabled (bundle is pre-transpiled)')
 console.log('[wechat-compat] game.js: ' + Buffer.byteLength(fixed, 'utf8') + ' bytes')
