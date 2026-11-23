@@ -20,9 +20,8 @@ jobs:
         with:
           node-version: 20
       - run: npm test
-      # The WeChat DevTools expects game.js in the project root. Keep the
-      # generated entry committed so a repository clone can be imported
-      # directly without running a build command first.
+      # Keep the generated entry at repo root for direct WeChat DevTools import.
+      # Rebase first so near-simultaneous pushes do not race each other.
       - name: Commit generated game.js
         run: |
           git config user.name "github-actions[bot]"
@@ -30,6 +29,7 @@ jobs:
           git add game.js
           if ! git diff --cached --quiet; then
             git commit -m "build: update generated WeChat game entry"
+            git pull --rebase origin main
             git push
           else
             echo "game.js is already up to date"
