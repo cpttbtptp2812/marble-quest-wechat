@@ -161,12 +161,16 @@ export class ArenaScene extends Scene {
   diagnosticLabel!: Label
   bossFill!: ColorRect
   bossLabel!: Label
+  trayPanel!: ColorRect
+  trayTitle!: Label
   bossDefeated = false
   marbles: Marble[] = []
   anchors: FrozenOrb[] = []
   fusionCounter = 0
   #activePointerId: number | null = null
   #gestureMode: 'aim' | 'ui' | null = null
+  #shotsFired = 0
+  #lastInputState = 'READY'
   #cards: { element: Element; label: Label; bg: ColorRect }[] = []
 
   override ready(): void {
@@ -203,12 +207,12 @@ export class ArenaScene extends Scene {
     hud.add(new Label({ text: '月蚀蝶后', fontSize: 17, fontWeight: 'bold', color: 0xffe0bb, align: 'center', position: v(720, 100) }))
     this.bossFill = hud.add(new ColorRect({ position: v(555, 121), size: v(330, 9), color: 0xa78be9 }))
     this.bossLabel = hud.add(new Label({ text: '月核护盾 · 先用两颗球制造元素融合', fontSize: 14, color: 0xe1d4ff, align: 'center', position: v(720, 145) }))
-    this.message = hud.add(new Label({ text: '在任意一侧拖动确定方向，松开发射；点中飞行中的弹珠即可定身。', fontSize: 20, color: 0xf2edff, align: 'center', wrapWidth: 1180, position: v(720, 650) }))
+    this.message = hud.add(new Label({ text: '点击左/右半屏即可发射；按住拖动瞄准。点击飞行弹珠定身。', fontSize: 20, color: 0xf2edff, align: 'center', wrapWidth: 1180, position: v(720, 630) }))
     // Visible build / renderer diagnostics: no need to hunt through DevTools console.
     hud.add(new ColorRect({ position: v(1030, 166), size: v(380, 36), color: 0x070d21, alpha: 0.94 }))
     this.diagnosticLabel = hud.add(new Label({ text: 'PIXIJ BUILD R5 · INPUT READY', fontSize: 15, fontWeight: 'bold', color: 0x9feaff, align: 'center', position: v(1220, 184) }))
-    hud.add(new ColorRect({ position: v(20, 696), size: v(1400, 100), color: 0x101a36, alpha: 0.98 }))
-    hud.add(new Label({ text: '选择弹珠属性 · 左右双炮台均可发射', fontSize: 16, fontWeight: 'bold', color: 0xc2d4f2, position: v(40, 704) }))
+    this.trayPanel = hud.add(new ColorRect({ position: v(20, 668), size: v(1400, 100), color: 0x101a36, alpha: 0.98 }))
+    this.trayTitle = hud.add(new Label({ text: '选择弹珠属性 · 点击任意一侧发射', fontSize: 16, fontWeight: 'bold', color: 0xc2d4f2, position: v(40, 676) }))
     this.#createOrbCards(hud)
 
     this.#createFloorRunes()
@@ -216,6 +220,8 @@ export class ArenaScene extends Scene {
     this.#refreshCards()
     // Added last and on the HUD layer so it reliably receives all touches.
     hud.add(new ArenaInputSurface(this))
+    this.#layoutHud()
+    this.tree.viewport.resized.connect(() => this.#layoutHud(), this)
   }
 
   #addPillar(position: Vector2, width: number, height: number, tint: number): void {
@@ -238,23 +244,42 @@ export class ArenaScene extends Scene {
     }
   }
   #createOrbCards(hud: Node): void {
-    const cardW = 210, gap = 10, startX = 34
     for (let i = 0; i < ORDER.length; i++) {
       const element = ORDER[i]!
       const spec = ELEMENTS[element]
-      const x = startX + i * (cardW + gap)
-      const bg = hud.add(new ColorRect({ position: v(x, 730), size: v(cardW, 43), color: 0x1a2948, alpha: 0.98 }))
+      const bg = hud.add(new ColorRect({ position: v(0, 0), size: v(180, 42), color: 0x1a2948, alpha: 0.98 }))
       const label = hud.add(new Label({
-        text: `${this.#symbol(element)}  ${spec.name}`, fontSize: 20, fontWeight: 'bold',
-        color: spec.light, align: 'center', position: v(x + cardW / 2, 755),
-        inputPickable: true, hitArea: rect(-cardW / 2, -23, cardW, 46),
+        text: `${this.#symbol(element)}  ${spec.name}`, fontSize: 18, fontWeight: 'bold',
+        color: spec.light, align: 'center', position: v(90, 21),
+        inputPickable: false,
       }))
-      label.clicked.connect(() => {
-        this.selected = element
-        this.#refreshCards()
-        this.setMessage(`${spec.name} 已装填到两座炮台。选择任意一侧拖动瞄准。`)
-      }, this)
       this.#cards.push({ element, label, bg })
+    }
+  }
+
+  #layoutHud(): void {
+    const safe = this.tree.viewport.safeRect
+    const left = Math.max(18, safe.left + 12)
+    const right = Math.min(WIDTH - 18, safe.right - 12)
+    const width = Math.max(720, right - left)
+    const bottom = Math.min(HEIGHT - 12, safe.bottom - 12)
+    const panelY = Math.max(620, bottom - 104)
+
+    this.trayPanel.position = v(left, panelY)
+    this.trayPanel.size = v(width, 96)
+    this.trayTitle.position = v(left + 18, panelY + 8)
+    this.message.position = v((left + right) / 2, panelY - 28)
+
+    const gap = 9
+    const cardW = Math.min(194, (width - 36 - gap * 5) / 6)
+    const total = cardW * 6 + gap * 5
+    const startX = left + (width - total) / 2
+    for (let i = 0; i < this.#cards.length; i++) {
+      const card = this.#cards[i]!
+      const x = startX + i * (cardW + gap)
+      card.bg.position = v(x, panelY + 36)
+      card.bg.size = v(cardW, 46)
+      card.label.position = v(x + cardW / 2, panelY + 59)
     }
   }
   #symbol(element: Element): string {
@@ -267,71 +292,103 @@ export class ArenaScene extends Scene {
     }
   }
 
-  /** Called by the full-screen touch surface; positions are HUD design coordinates. */
+  #launcherOrigin(): Vector2 {
+    return this.aimSide === 'left' ? v(128, 650) : v(1312, 650)
+  }
+
+  #defaultTarget(): Vector2 {
+    return v(WIDTH / 2, 250)
+  }
+
+  #isTrayPoint(position: Vector2): boolean {
+    const safe = this.tree.viewport.safeRect
+    const bottom = Math.min(HEIGHT - 12, safe.bottom - 12)
+    return position.y >= bottom - 104
+  }
+
   handlePointerDown(pointerId: number, position: Vector2): void {
     if (this.#activePointerId !== null) return
     this.#activePointerId = pointerId
 
-    // Bottom element tray.
-    if (position.y >= 700 && position.y <= 800) {
-      const cardW = 210, gap = 10, startX = 34
+    if (this.#isTrayPoint(position)) {
+      const safe = this.tree.viewport.safeRect
+      const left = Math.max(18, safe.left + 12)
+      const right = Math.min(WIDTH - 18, safe.right - 12)
+      const width = Math.max(720, right - left)
+      const gap = 9
+      const cardW = Math.min(194, (width - 36 - gap * 5) / 6)
+      const total = cardW * 6 + gap * 5
+      const startX = left + (width - total) / 2
       const index = Math.floor((position.x - startX) / (cardW + gap))
-      const cardStart = startX + index * (cardW + gap)
-      if (index >= 0 && index < ORDER.length && position.x <= cardStart + cardW) {
+      if (index >= 0 && index < ORDER.length && position.x <= startX + index * (cardW + gap) + cardW) {
         this.selected = ORDER[index]!
         this.#refreshCards()
-        this.setMessage(ELEMENTS[this.selected].name + ' 已装填。拖动场地瞄准，松开发射。')
+        this.setMessage(ELEMENTS[this.selected].name + ' 已装填。点击场地发射，拖动可瞄准。')
       }
       this.#gestureMode = 'ui'
+      this.#lastInputState = 'SELECT ' + this.selected
+      this.setDiagnostics(this.#lastInputState)
       return
     }
 
-    // Reset control in the upper-right HUD.
     if (position.x >= 1170 && position.y >= 12 && position.y <= 92) {
       this.resetTrial()
       this.#gestureMode = 'ui'
+      this.#lastInputState = 'RESET'
+      this.setDiagnostics(this.#lastInputState)
       return
     }
 
-    // Tapping an existing stasis point releases it; tapping a moving orb freezes it.
-    const anchor = this.anchors.find((item) => Math.hypot(item.x - position.x, item.y - position.y) <= ELEMENTS[item.element].radius + 30)
-    if (anchor) {
-      this.releaseOrb(anchor)
-      this.#gestureMode = 'ui'
-      return
-    }
-    const marble = [...this.marbles].reverse().find((item) => Math.hypot(item.x - position.x, item.y - position.y) <= ELEMENTS[item.element].radius + 28)
+    const marble = [...this.marbles].reverse().find(
+      (item) => Math.hypot(item.x - position.x, item.y - position.y) <= ELEMENTS[item.element].radius + 32,
+    )
     if (marble) {
       this.freezeMarble(marble)
       this.#gestureMode = 'ui'
+      this.#lastInputState = 'STASIS'
+      this.setDiagnostics(this.#lastInputState)
       return
     }
 
-    this.aimStart = position
-    this.aimPoint = position
+    const anchor = this.anchors.find(
+      (item) => Math.hypot(item.x - position.x, item.y - position.y) <= ELEMENTS[item.element].radius + 34,
+    )
+    if (anchor) {
+      this.releaseOrb(anchor)
+      this.#gestureMode = 'ui'
+      this.#lastInputState = 'RELEASE'
+      this.setDiagnostics(this.#lastInputState)
+      return
+    }
+
     this.aimSide = position.x < WIDTH / 2 ? 'left' : 'right'
+    this.aimStart = this.#launcherOrigin()
+    this.aimPoint = position
+    if (Math.hypot(position.x - this.aimStart.x, position.y - this.aimStart.y) < 85) {
+      this.aimPoint = this.#defaultTarget()
+    }
     this.aiming = true
     this.#gestureMode = 'aim'
-    this.setMessage('正在瞄准：朝目标方向拖动，松开发射。')
+    this.#lastInputState = 'AIM ' + this.aimSide.toUpperCase()
+    this.#updateAim()
+    this.setMessage('松手即可发射。点击飞行弹珠定身，点击定身球释放。')
+    this.setDiagnostics(this.#lastInputState)
   }
 
   handlePointerMove(pointerId: number, position: Vector2): void {
     if (pointerId !== this.#activePointerId || this.#gestureMode !== 'aim') return
     this.aimPoint = position
     this.#updateAim()
+    this.#lastInputState = 'AIMING'
   }
 
   handlePointerUp(pointerId: number, position: Vector2): void {
     if (pointerId !== this.#activePointerId) return
     if (this.#gestureMode === 'aim') {
       this.aimPoint = position
-      const start = this.aimStart
-      const end = this.aimPoint
-      const distance = start && end ? Math.hypot(end.x - start.x, end.y - start.y) : 0
       this.aiming = false
       this.aimGuide.points = []
-      if (start && end && distance > 30) this.#launch(start, end)
-      else this.freezeLatest()
+      this.#launch(position)
     }
     this.#activePointerId = null
     this.#gestureMode = null
@@ -340,41 +397,64 @@ export class ArenaScene extends Scene {
   }
 
   #updateAim(): void {
-    if (!this.aimStart || !this.aimPoint) return
-    const dx = this.aimPoint.x - this.aimStart.x
-    const dy = this.aimPoint.y - this.aimStart.y
-    const len = Math.hypot(dx, dy)
+    const target = this.aimPoint
+    if (!target) return
+    const origin = this.#launcherOrigin()
+    let dx = target.x - origin.x
+    let dy = target.y - origin.y
+    let len = Math.hypot(dx, dy)
+    if (len < 85) {
+      const fallback = this.#defaultTarget()
+      dx = fallback.x - origin.x
+      dy = fallback.y - origin.y
+      len = Math.hypot(dx, dy)
+    }
     if (len < 1) return
     const ux = dx / len, uy = dy / len
     const cannon = this.aimSide === 'left' ? this.leftCannon : this.rightCannon
     cannon.aimAngle = Math.atan2(uy, ux) + Math.PI / 2
-    const origin = this.aimSide === 'left' ? v(128, 650) : v(1312, 650)
-    const power = Math.max(0.48, Math.min(1.3, len / 190))
+    const power = Math.max(0.62, Math.min(1.2, len / 520))
     const speed = ELEMENTS[this.selected].speed * power
     const points: Vector2[] = []
-    for (let i = 0; i < 18; i++) {
-      const t = i * 0.065
+    for (let i = 0; i < 15; i++) {
+      const t = i * 0.07
       points.push(v(origin.x + ux * speed * t, origin.y + uy * speed * t + 0.5 * 62.5 * t * t))
     }
     this.aimGuide.points = points
   }
-  #launch(start: Vector2, end: Vector2): void {
+
+  #launch(target: Vector2): void {
     if (this.bossDefeated) return
-    const dx = end.x - start.x, dy = end.y - start.y
-    const len = Math.hypot(dx, dy)
+    const origin = this.#launcherOrigin()
+    let dx = target.x - origin.x
+    let dy = target.y - origin.y
+    let len = Math.hypot(dx, dy)
+    if (len < 85) {
+      const fallback = this.#defaultTarget()
+      dx = fallback.x - origin.x
+      dy = fallback.y - origin.y
+      len = Math.hypot(dx, dy)
+    }
     if (len < 1) return
+
     const ux = dx / len, uy = dy / len
-    const power = Math.max(0.45, Math.min(1.25, len / 180))
-    const spec = ELEMENTS[this.selected], speed = spec.speed * power
-    const origin = this.aimSide === 'left' ? v(128, 650) : v(1312, 650)
-    const spawn = origin.add(v(ux * 67, uy * 67))
+    const power = Math.max(0.62, Math.min(1.2, len / 520))
+    const spec = ELEMENTS[this.selected]
+    const speed = spec.speed * power
+    const spawn = origin.add(v(ux * 74, uy * 74))
     const trail = this.add(new TrailArt(spec.color, { zIndex: 2 }))
     this.add(new MuzzleFlashArt(spec.color, { position: spawn, rotation: Math.atan2(uy, ux), zIndex: 5 }))
-    this.marbles.push(this.add(new Marble(this, this.selected, spawn, v(ux * speed, uy * speed), trail)))
+    const marble = this.add(new Marble(this, this.selected, spawn, v(ux * speed, uy * speed), trail))
+    marble.linearVelocity = v(ux * speed, uy * speed)
+    this.marbles.push(marble)
+    this.#shotsFired++
     if (this.aimSide === 'left') this.leftCannon.recoil = 1
     else this.rightCannon.recoil = 1
-    this.setMessage(`${spec.name} 已发射。飞行中点击空白处，或直接点中弹珠，让它停在空中。`)
+    this.#lastInputState = 'SHOT ' + this.#shotsFired
+    this.setDiagnostics(this.#lastInputState)
+    this.setMessage(ELEMENTS[this.selected].name + ' 发射！点中飞行弹珠可将它定身。')
   }
+
   freezeLatest(): void {
     if (this.anchors.length >= 2) {
       this.setMessage('最多同时定身两颗球。先点击一颗定身球释放它。')
@@ -443,6 +523,8 @@ export class ArenaScene extends Scene {
   }
   setMessage(text: string): void { this.message.text = text }
   setDiagnostics(text: string): void { this.diagnosticLabel.text = text }
+  get shotsFired(): number { return this.#shotsFired }
+  get inputState(): string { return this.#lastInputState }
   resetTrial(): void {
     this.anchors.forEach((x) => x.queueFree())
     this.marbles.forEach((x) => { x.trail.queueFree(); x.queueFree() })
@@ -452,6 +534,8 @@ export class ArenaScene extends Scene {
     this.boss.shieldOpen = 0
     this.bossDefeated = false
     this.fusionCounter = 0
+    this.#shotsFired = 0
+    this.#lastInputState = 'RESET'
     this.updateBossBar()
     this.setMessage('试炼重置。先发射一颗球，点击空白处定身，再用另一颗球主动撞击。')
   }
