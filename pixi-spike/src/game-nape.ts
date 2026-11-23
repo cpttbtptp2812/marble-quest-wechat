@@ -197,9 +197,16 @@ export class ArenaScene extends Scene {
     inputSurface.pointerUp.connect((event) => {
       this.handlePointerUp(event.pointerId, event.position)
     })
-    inputSurface.pointerCancel.connect((event) => {
-      this.handlePointerCancel(event.pointerId)
-    })
+    // Sapling 0.6.0 exposes pointer down/move/up on Node2D but not
+    // pointerCancel. Subscribe to the native WeChat cancellation event so a
+    // system-interrupted touch cannot leave the active pointer locked.
+    if (typeof wx !== 'undefined' && typeof wx.onTouchCancel === 'function') {
+      wx.onTouchCancel((event: { changedTouches?: Array<{ identifier: number }> }) => {
+        for (const touch of event.changedTouches ?? []) {
+          this.handlePointerCancel(touch.identifier)
+        }
+      })
+    }
   }
 
   override process(dt: number): void {
