@@ -1,5 +1,5 @@
 /// <reference path="./wechat-global.d.ts" />
-const buildId = '2026-11-23-R8'
+const buildId = '2026-11-23-R9'
 const report = (kind: string, value: unknown): void => {
   let detail = ''
   try {
