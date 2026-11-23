@@ -113,8 +113,6 @@ const injectWechatNavigatorAtEntry: Plugin = {
       '[wechat-user-agent] guarded ' + getterMatches.length +
       ' Pixi navigator reads in ' + targets[0],
     )
-    writeFileSync(filePath, code, 'utf8')
-    console.log('[wechat-user-agent] guarded Safari/Chrome checks in ' + targets[0])
   },
 }
 
