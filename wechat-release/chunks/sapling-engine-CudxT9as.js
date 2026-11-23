@@ -1,5 +1,5 @@
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-BKSSueUl.js");
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-D-RMTrWW.js");
 var n;
 function r() { return (r = e.n((function () { n = (function () {
     function e(e, t, n) {

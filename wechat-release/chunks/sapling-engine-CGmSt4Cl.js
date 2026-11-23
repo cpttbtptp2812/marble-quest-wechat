@@ -23,8 +23,8 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-OS5i6gdH.js"), n = require("./sapling-engine-Dk_0uYx9.js"), r = require("./sapling-engine-BKSSueUl.js"), i = require("./sapling-engine-sX7qVz9U.js"), a = require("./sapling-engine-6sEQUsKX.js");
-function o() { return (o = e.n((function () { n.Y(), a.H(), a.B(), a.R(), i.xt(), i.dt(), i.lt(), i.st(), i.at(), n.J.add(a.V, a.z, a.L, i.ot, i.ct, i.ut, i.bt); })))(); }
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-0ptSNjZs.js"), r = require("./sapling-engine-D-RMTrWW.js"), i = require("./sapling-engine-BKxInvnL.js"), a = require("./sapling-engine-BOYt4h2A.js");
+function o() { return (o = e.n((function () { n.q(), a.H(), a.B(), a.R(), i.xt(), i.dt(), i.lt(), i.st(), i.at(), n.K.add(a.V, a.z, a.L, i.ot, i.ct, i.ut, i.bt); })))(); }
 function s(e, t, n) { var r = 2166136261; for (var n_1 = 0; n_1 < t; n_1++)
     r ^= e[n_1].uid, r = Math.imul(r, 16777619), r >>>= 0; return l[r] || c(e, t, r, n); }
 function c(e, t, n, r) { var o = {}, s = 0; for (var n_2 = 0; n_2 < r; n_2++) {
@@ -76,7 +76,7 @@ function y() { return (y = e.n((function () { v = (function () {
 function b() { return w > 0 ? C[--w] : new S; }
 function x(e) { e.elements = null, C[w++] = e; }
 var S, C, w, T, E, ee;
-function te() { return (te = e.n((function () { r.Y(), r.m(), r.W(), r.I(), i.L(), _(), y(), t.o(), S = (function () {
+function te() { return (te = e.n((function () { r.Y(), r.m(), r.W(), r.I(), i.L(), _(), y(), t.br(), S = (function () {
     function S() {
         this.renderPipeId = "batch", this.action = "startBatch", this.start = 0, this.size = 0, this.textures = new v, this.blendMode = "normal", this.topology = "triangle-strip", this.canBundle = !0;
     }
@@ -88,7 +88,7 @@ function te() { return (te = e.n((function () { r.Y(), r.m(), r.W(), r.I(), i.L(
             e_2 && e_2.destroy();
         } C.length = 0, w = 0; } }), T = 0, E = (function () {
     function e(n) {
-        this.uid = r.X("batcher"), this.dirty = !0, this.batchIndex = 0, this.batches = [], this._elements = [], n = t.a(t.a({}, e.defaultOptions), n), n.maxTextures || (r.U("v8.8.0", "maxTextures is a required option for Batcher now, please pass it in the options"), n.maxTextures = h());
+        this.uid = r.X("batcher"), this.dirty = !0, this.batchIndex = 0, this.batches = [], this._elements = [], n = t.yr(t.yr({}, e.defaultOptions), n), n.maxTextures || (r.U("v8.8.0", "maxTextures is a required option for Batcher now, please pass it in the options"), n.maxTextures = h());
         var i = n.maxTextures, a = n.attributesInitialSize, o = n.indicesInitialSize;
         this.attributeBuffer = new r.p(a * 4), this.indexBuffer = new Uint16Array(o), this.maxTextures = i;
     }
@@ -222,9 +222,9 @@ function Ee(_a) {
 }
 function De(_a) {
     var e = _a.bits, n = _a.name;
-    return new a.N(t.a({ name: n }, ye({ template: { vertex: xe, fragment: Se }, bits: __spreadArray([Te], e, true) })));
+    return new a.N(t.yr({ name: n }, ye({ template: { vertex: xe, fragment: Se }, bits: __spreadArray([Te], e, true) })));
 }
-function I() { return (I = e.n((function () { a.P(), a.M(), M(), Ce(), F(), t.o(); })))(); }
+function I() { return (I = e.n((function () { a.P(), a.M(), M(), Ce(), F(), t.br(); })))(); }
 var Oe, L;
 function R() {
     return (R = e.n((function () {
@@ -286,7 +286,7 @@ function Fe() { return (Fe = e.n((function () { I(), R(), V(), U(), a.E(), i.J()
     return W;
 }(i.q)); })))(); }
 var G, K, q;
-function J() { return (J = e.n((function () { n.Y(), te(), ae(), Fe(), G = null, K = (function (_super) {
+function J() { return (J = e.n((function () { n.q(), te(), ae(), Fe(), G = null, K = (function (_super) {
     __extends(e, _super);
     function e(t) {
         var _this = this;
@@ -301,15 +301,15 @@ function J() { return (J = e.n((function () { n.Y(), te(), ae(), Fe(), G = null,
     e.prototype._updateMaxTextures = function (e) { this.shader.maxTextures !== e && (G = new W(e), this.shader = G); };
     e.prototype.destroy = function () { this.shader = null, _super.prototype.destroy.call(this); };
     return e;
-}(ee)), K.extension = { type: [n.q.Batcher], name: "default" }, q = K; })))(); }
+}(ee)), K.extension = { type: [n.G.Batcher], name: "default" }, q = K; })))(); }
 var Y, Ie;
 function Le() {
     return (Le = e.n((function () {
-        t.o(), Y = { name: "local-uniform-bit", vertex: { header: "\n\n            struct LocalUniforms {\n                uTransformMatrix:mat3x3<f32>,\n                uColor:vec4<f32>,\n                uRound:f32,\n            }\n\n            @group(1) @binding(0) var<uniform> localUniforms : LocalUniforms;\n        ", main: "\n            vColor *= localUniforms.uColor;\n            modelMatrix *= localUniforms.uTransformMatrix;\n        ", end: "\n            if(localUniforms.uRound == 1)\n            {\n                vPosition = vec4(roundPixels(vPosition.xy, globalUniforms.uResolution), vPosition.zw);\n            }\n        " } }, t.a(t.a({}, Y), {}, { vertex: t.a(t.a({}, Y.vertex), {}, { header: Y.vertex.header.replace("group(1)", "group(2)") }) }), Ie = { name: "local-uniform-bit", vertex: { header: "\n\n            uniform mat3 uTransformMatrix;\n            uniform vec4 uColor;\n            uniform float uRound;\n        ", main: "\n            vColor *= uColor;\n            modelMatrix = uTransformMatrix;\n        ", end: "\n            if(uRound == 1.)\n            {\n                gl_Position.xy = roundPixels(gl_Position.xy, uResolution);\n            }\n        " } };
+        t.br(), Y = { name: "local-uniform-bit", vertex: { header: "\n\n            struct LocalUniforms {\n                uTransformMatrix:mat3x3<f32>,\n                uColor:vec4<f32>,\n                uRound:f32,\n            }\n\n            @group(1) @binding(0) var<uniform> localUniforms : LocalUniforms;\n        ", main: "\n            vColor *= localUniforms.uColor;\n            modelMatrix *= localUniforms.uTransformMatrix;\n        ", end: "\n            if(localUniforms.uRound == 1)\n            {\n                vPosition = vec4(roundPixels(vPosition.xy, globalUniforms.uResolution), vPosition.zw);\n            }\n        " } }, t.yr(t.yr({}, Y), {}, { vertex: t.yr(t.yr({}, Y.vertex), {}, { header: Y.vertex.header.replace("group(1)", "group(2)") }) }), Ie = { name: "local-uniform-bit", vertex: { header: "\n\n            uniform mat3 uTransformMatrix;\n            uniform vec4 uColor;\n            uniform float uRound;\n        ", main: "\n            vColor *= uColor;\n            modelMatrix = uTransformMatrix;\n        ", end: "\n            if(uRound == 1.)\n            {\n                gl_Position.xy = roundPixels(gl_Position.xy, uResolution);\n            }\n        " } };
     })))();
 }
 var X;
-function Re() { return (Re = e.n((function () { n.Y(), i.K(), X = (function () {
+function Re() { return (Re = e.n((function () { n.q(), i.K(), X = (function () {
     function X() {
         this._tempState = i.G.for2d(), this._didUploadHash = {};
     }
@@ -319,9 +319,9 @@ function Re() { return (Re = e.n((function () { n.Y(), i.K(), X = (function () {
     X.prototype.execute = function (e, t) { var n = e.renderer; this._tempState.blendMode = t.blendMode, n.state.set(this._tempState); var r = t.textures.textures; for (var e_10 = 0; e_10 < t.textures.count; e_10++)
         n.texture.bind(r[e_10], e_10); n.texture.unbindIntegerTextures(t.textures.count), n.geometry.draw(t.topology, t.size, t.start); };
     return X;
-}()), X.extension = { type: [n.q.WebGLPipesAdaptor], name: "batch" }; })))(); }
+}()), X.extension = { type: [n.G.WebGLPipesAdaptor], name: "batch" }; })))(); }
 var Z, Q;
-function ze() { return (ze = e.n((function () { n.Y(), i.K(), J(), Z = (function () {
+function ze() { return (ze = e.n((function () { n.q(), i.K(), J(), Z = (function () {
     function e(e, t) {
         var n, r;
         this.state = i.G.for2d(), this._batchersByInstructionSet = Object.create(null), this._activeBatches = Object.create(null), this.renderer = e, this._adaptor = t, (n = (r = this._adaptor).init) == null || n.call(r, this);
@@ -355,7 +355,7 @@ function ze() { return (ze = e.n((function () { n.Y(), i.K(), J(), Z = (function
     e.prototype.destroy = function () { this.state = null, this.renderer = null, this._adaptor = null; for (var e_15 in this._activeBatches)
         this._activeBatches[e_15].destroy(); this._activeBatches = null; };
     return e;
-}()), Z.extension = { type: [n.q.WebGLPipes, n.q.WebGPUPipes, n.q.CanvasPipes], name: "batch" }, Z._availableBatchers = Object.create(null), Q = Z, n.J.handleByMap(n.q.Batcher, Q._availableBatchers), n.J.add(q); })))(); }
+}()), Z.extension = { type: [n.G.WebGLPipes, n.G.WebGPUPipes, n.G.CanvasPipes], name: "batch" }, Z._availableBatchers = Object.create(null), Q = Z, n.K.handleByMap(n.G.Batcher, Q._availableBatchers), n.K.add(q); })))(); }
 var Be;
 function $() {
     return ($ = e.n((function () {

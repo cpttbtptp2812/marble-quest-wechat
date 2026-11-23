@@ -44,7 +44,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-OS5i6gdH.js"), n = require("./sapling-engine-Dk_0uYx9.js"), r = require("./sapling-engine-nIouhjEF.js"), i = require("./sapling-engine-sX7qVz9U.js"), a = require("./sapling-engine-6sEQUsKX.js"), o = require("./sapling-engine-BIAzTs9D.js");
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-BaQMQODF.js"), n = require("./sapling-engine-0ptSNjZs.js"), r = require("./sapling-engine-CudxT9as.js"), i = require("./sapling-engine-BKxInvnL.js"), a = require("./sapling-engine-BOYt4h2A.js"), o = require("./sapling-engine-BKxfCeCE.js");
 function s(e) {
     if (e === void 0) { e = "default"; }
     return c[e] === void 0 && (c[e] = -1), ++c[e];
@@ -415,24 +415,24 @@ catch (e) {
 var U;
 function W() { return (W = e.n((function () { })))(); }
 var G;
-function K() { return (K = e.n((function () { t.n(), n.H(), G = t.t.default || t.t; })))(); }
+function K() { return (K = e.n((function () { t.n(), t.i(), G = t.t.default || t.t; })))(); }
 var q;
-function J() { return (J = e.n((function () { n.H(), q = "8.22.0"; })))(); }
+function J() { return (J = e.n((function () { t.i(), q = "8.22.0"; })))(); }
 var pe, Y;
-function me() { return (me = e.n((function () { n.Y(), J(), pe = (function () {
+function me() { return (me = e.n((function () { n.q(), J(), pe = (function () {
     function pe() {
     }
     pe.init = function () { var e, t; (e = (t = globalThis).__PIXI_APP_INIT__) == null || e.call(t, this, "8.22.0"); };
     pe.destroy = function () { };
     return pe;
-}()), pe.extension = n.q.Application, Y = (function () {
+}()), pe.extension = n.G.Application, Y = (function () {
     function Y(e) {
         this._renderer = e;
     }
     Y.prototype.init = function () { var e, t; (e = (t = globalThis).__PIXI_RENDERER_INIT__) == null || e.call(t, this._renderer, "8.22.0"); };
     Y.prototype.destroy = function () { this._renderer = null; };
     return Y;
-}()), Y.extension = { type: [n.q.WebGLSystem, n.q.WebGPUSystem], name: "initHook", priority: -10 }; })))(); }
+}()), Y.extension = { type: [n.G.WebGLSystem, n.G.WebGPUSystem], name: "initHook", priority: -10 }; })))(); }
 var he;
 function ge() { return (ge = e.n((function () { he = (function () {
     function he(e) {

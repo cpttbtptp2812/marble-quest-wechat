@@ -59,8 +59,8 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-OS5i6gdH.js"), n = require("./sapling-engine-BSPBfx32.js");
-function r(e, t) { return new C(e, t); }
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-BSPBfx32.js");
+function r(e, t) { return new S(e, t); }
 function i(e) { return String(Number.isInteger(e) ? e : Math.round(e * 100) / 100); }
 function a(e) { var t = 7.5625, n = 2.75; return e < 1 / n ? t * e * e : e < 2 / n ? t * (e -= 1.5 / n) * e + .75 : e < 2.5 / n ? t * (e -= 2.25 / n) * e + .9375 : t * (e -= 2.625 / n) * e + .984375; }
 function o(e, t) { var n = e._colorProps; return n instanceof Set && n.has(t); }
@@ -72,30 +72,29 @@ function s(e, t, n) { var r = 0; for (var _i = 0, _a = [16, 8, 0]; _i < _a.lengt
 function c(e) { return "isFreed" in e && e.isFreed === !0; }
 function l() { return { a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0 }; }
 function u(e, t) { var n = e.a, r = e.b, i = e.c, a = e.d, o = e.tx, s = e.ty, c = n * a - r * i; return c !== 0 && (t.a = a / c, t.b = -r / c, t.c = -i / c, t.d = n / c, t.tx = (i * s - a * o) / c, t.ty = (r * o - n * s) / c, !0); }
-function d(e, t, n, r) { return new A(e, t, n, r); }
-function f(e) { if (!M.includes(e))
+function d(e) { if (!M.includes(e))
     throw Error("Node2D: unknown blendMode \"".concat(String(e), "\". Expected: ").concat(M.join(", "), ".")); return e; }
-function p(e) { return Math.min(1, Math.max(0, e)); }
-function m(e) { return Math.min(P, Math.max(0, Math.round(e))); }
-function h(e) { return "#" + e.toString(16).padStart(6, "0"); }
-function g(e) { for (var t_1 = 1; t_1 < e.length; t_1++) {
+function f(e) { return Math.min(1, Math.max(0, e)); }
+function p(e) { return Math.min(P, Math.max(0, Math.round(e))); }
+function m(e) { return "#" + e.toString(16).padStart(6, "0"); }
+function h(e) { for (var t_1 = 1; t_1 < e.length; t_1++) {
     var n_1 = e[t_1], r_1 = t_1 - 1;
     for (; r_1 >= 0 && e[r_1].layer > n_1.layer;)
         e[r_1 + 1] = e[r_1], r_1--;
     e[r_1 + 1] = n_1;
 } }
-function _(e) { var t = 0; for (; t < e.length && e[t].layer < 0;)
+function g(e) { var t = 0; for (; t < e.length && e[t].layer < 0;)
     t++; return t; }
-function v(e, t, n) { var r = []; y(e, r), g(r); var i = _(r), a = function (e, r) { var i = t.length; if (b(e, t), n)
+function _(e, t, n) { var r = []; v(e, r), h(r); var i = g(r), a = function (e, r) { var i = t.length; if (y(e, t), n)
     for (var e_1 = i; e_1 < t.length; e_1++)
         n[e_1] = r; }; for (var e_2 = 0; e_2 < i; e_2++)
     a(r[e_2].children, !0); a(e, !1); for (var e_3 = i; e_3 < r.length; e_3++)
     a(r[e_3].children, !0); }
-function y(e, t) { for (var _i = 0, e_4 = e; _i < e_4.length; _i++) {
+function v(e, t) { for (var _i = 0, e_4 = e; _i < e_4.length; _i++) {
     var n_2 = e_4[_i];
-    n_2._isCanvasLayer && t.push(n_2), y(n_2.children, t);
+    n_2._isCanvasLayer && t.push(n_2), v(n_2.children, t);
 } }
-function b(e, t, n) {
+function y(e, t, n) {
     if (n === void 0) { n = null; }
     var r = [], i = function (e) { for (var _i = 0, e_5 = e; _i < e_5.length; _i++) {
         var t_2 = e_5[_i];
@@ -106,13 +105,13 @@ function b(e, t, n) {
     n && a.push({ n: n, i: -1, z: 0 }), a.sort(function (e, t) { return e.z - t.z || e.i - t.i; });
     for (var _i = 0, a_2 = a; _i < a_2.length; _i++) {
         var _a = a_2[_i], e_6 = _a.n, n_3 = _a.i;
-        n_3 === -1 ? t.push(e_6) : b(e_6.children, t, e_6);
+        n_3 === -1 ? t.push(e_6) : y(e_6.children, t, e_6);
     }
 }
-var x, S, C, w, T, ee, E, te, D, O, ne, k, A, j, re, M, N, P, ie, ae, oe, F;
-function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
+var b, x, S, C, w, ee, T, te, E, D, O, k, A, j, ne, M, N, P, re, ie, ae, F;
+function I() { return (I = e.n((function () { t.Sr(), t.br(), b = (function () {
     function e(e, n) {
-        t.s(this, "x", void 0), t.s(this, "y", void 0), this.x = e, this.y = n, Object.freeze(this);
+        t.xr(this, "x", void 0), t.xr(this, "y", void 0), this.x = e, this.y = n, Object.freeze(this);
     }
     e.fromAngle = function (t) { return new e(Math.cos(t), Math.sin(t)); };
     e.prototype.add = function (t) { return new e(this.x + t.x, this.y + t.y); };
@@ -137,24 +136,24 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
     };
     e.prototype.toString = function () { return "(".concat(i(this.x), ", ").concat(i(this.y), ")"); };
     return e;
-}()), C = (t.s(x, "ZERO", new x(0, 0)), t.s(x, "ONE", new x(1, 1)), t.s(x, "UP", new x(0, -1)), t.s(x, "DOWN", new x(0, 1)), t.s(x, "LEFT", new x(-1, 0)), t.s(x, "RIGHT", new x(1, 0)), x), w = (function () {
-    function w() {
-        t.s(this, "_listeners", []);
+}()), S = (t.xr(b, "ZERO", new b(0, 0)), t.xr(b, "ONE", new b(1, 1)), t.xr(b, "UP", new b(0, -1)), t.xr(b, "DOWN", new b(0, 1)), t.xr(b, "LEFT", new b(-1, 0)), t.xr(b, "RIGHT", new b(1, 0)), b), C = (function () {
+    function C() {
+        t.xr(this, "_listeners", []);
     }
-    Object.defineProperty(w.prototype, "connectionCount", {
+    Object.defineProperty(C.prototype, "connectionCount", {
         get: function () { return this._listeners.length; },
         enumerable: false,
         configurable: true
     });
-    w.prototype.connect = function (e, t) { return this._add(e, !1, t); };
-    w.prototype.once = function (e, t) { return this._add(e, !0, t); };
-    w.prototype.disconnect = function (e) { var t = this._listeners.find(function (t) { return t.fn === e; }); t && this._remove(t); };
-    w.prototype.isConnected = function (e) { return this._listeners.some(function (t) { return t.fn === e; }); };
-    w.prototype.disconnectAll = function () { for (var _i = 0, _a = __spreadArray([], this._listeners, true); _i < _a.length; _i++) {
+    C.prototype.connect = function (e, t) { return this._add(e, !1, t); };
+    C.prototype.once = function (e, t) { return this._add(e, !0, t); };
+    C.prototype.disconnect = function (e) { var t = this._listeners.find(function (t) { return t.fn === e; }); t && this._remove(t); };
+    C.prototype.isConnected = function (e) { return this._listeners.some(function (t) { return t.fn === e; }); };
+    C.prototype.disconnectAll = function () { for (var _i = 0, _a = __spreadArray([], this._listeners, true); _i < _a.length; _i++) {
         var e_7 = _a[_i];
         this._remove(e_7);
     } };
-    w.prototype.emit = function () {
+    C.prototype.emit = function () {
         var e = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             e[_i] = arguments[_i];
@@ -164,8 +163,8 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
             t_3.active && (t_3.once && this._remove(t_3), t_3.fn.apply(t_3, e));
         }
     };
-    w.prototype._remove = function (e) { var t; e.active && (e.active = !1, this._listeners = this._listeners.filter(function (t) { return t !== e; }), (t = e.owner) == null || t._untrackConnection(this, e.fn)); };
-    w.prototype.wait = function () {
+    C.prototype._remove = function (e) { var t; e.active && (e.active = !1, this._listeners = this._listeners.filter(function (t) { return t !== e; }), (t = e.owner) == null || t._untrackConnection(this, e.fn)); };
+    C.prototype.wait = function () {
         var _this = this;
         return new Promise(function (e) { _this.once(function () {
             var t = [];
@@ -175,29 +174,29 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
             return e(t.length === 0 ? void 0 : t.length === 1 ? t[0] : t);
         }); });
     };
-    w.prototype.then = function (e, t) { return this.wait().then(e, t); };
-    w.prototype._add = function (e, t, n) {
+    C.prototype.then = function (e, t) { return this.wait().then(e, t); };
+    C.prototype._add = function (e, t, n) {
         var _this = this;
         return this.isConnected(e) || (this._listeners.push({ fn: e, once: t, owner: n, active: !0 }), n == null || n._trackConnection(this, e)), function () { return _this.disconnect(e); };
     };
-    return w;
-}()), T = 1.70158, ee = T * 1.525, E = 2.70158, te = 2 * Math.PI / 3, D = { Linear: function (e) { return e; }, QuadIn: function (e) { return e * e; }, QuadOut: function (e) { return 1 - (1 - e) * (1 - e); }, QuadInOut: function (e) { return e < .5 ? 2 * e * e : 1 - Math.pow((-2 * e + 2), 2) / 2; }, CubicIn: function (e) { return e * e * e; }, CubicOut: function (e) { return 1 - Math.pow((1 - e), 3); }, CubicInOut: function (e) { return e < .5 ? 4 * e * e * e : 1 - Math.pow((-2 * e + 2), 3) / 2; }, SineIn: function (e) { return 1 - Math.cos(e * Math.PI / 2); }, SineOut: function (e) { return Math.sin(e * Math.PI / 2); }, SineInOut: function (e) { return -(Math.cos(Math.PI * e) - 1) / 2; }, BackIn: function (e) { return E * e * e * e - T * e * e; }, BackOut: function (e) { return 1 + E * Math.pow((e - 1), 3) + T * Math.pow((e - 1), 2); }, BackInOut: function (e) { return e < .5 ? Math.pow((2 * e), 2) * (7.189819 * e - ee) / 2 : (Math.pow((2 * e - 2), 2) * (3.5949095 * (e * 2 - 2) + ee) + 2) / 2; }, ElasticOut: function (e) { return e === 0 ? 0 : e === 1 ? 1 : Math.pow(2, (-10 * e)) * Math.sin((e * 10 - .75) * te) + 1; }, BounceOut: a, BounceIn: function (e) { return 1 - a(1 - e); } }, O = (function () {
-    function O(e, n) {
+    return C;
+}()), w = 1.70158, ee = w * 1.525, T = 2.70158, te = 2 * Math.PI / 3, E = { Linear: function (e) { return e; }, QuadIn: function (e) { return e * e; }, QuadOut: function (e) { return 1 - (1 - e) * (1 - e); }, QuadInOut: function (e) { return e < .5 ? 2 * e * e : 1 - Math.pow((-2 * e + 2), 2) / 2; }, CubicIn: function (e) { return e * e * e; }, CubicOut: function (e) { return 1 - Math.pow((1 - e), 3); }, CubicInOut: function (e) { return e < .5 ? 4 * e * e * e : 1 - Math.pow((-2 * e + 2), 3) / 2; }, SineIn: function (e) { return 1 - Math.cos(e * Math.PI / 2); }, SineOut: function (e) { return Math.sin(e * Math.PI / 2); }, SineInOut: function (e) { return -(Math.cos(Math.PI * e) - 1) / 2; }, BackIn: function (e) { return T * e * e * e - w * e * e; }, BackOut: function (e) { return 1 + T * Math.pow((e - 1), 3) + w * Math.pow((e - 1), 2); }, BackInOut: function (e) { return e < .5 ? Math.pow((2 * e), 2) * (7.189819 * e - ee) / 2 : (Math.pow((2 * e - 2), 2) * (3.5949095 * (e * 2 - 2) + ee) + 2) / 2; }, ElasticOut: function (e) { return e === 0 ? 0 : e === 1 ? 1 : Math.pow(2, (-10 * e)) * Math.sin((e * 10 - .75) * te) + 1; }, BounceOut: a, BounceIn: function (e) { return 1 - a(1 - e); } }, D = (function () {
+    function D(e, n) {
         if (n === void 0) { n = !1; }
-        t.s(this, "finished", new w), t.s(this, "_steps", []), t.s(this, "_nextParallel", !1), t.s(this, "_stepIndex", 0), t.s(this, "_stepTime", 0), t.s(this, "_stepStarted", !1), t.s(this, "_running", !0), t.s(this, "_bound", void 0), t.s(this, "processInPhysics", void 0), this._bound = e, this.processInPhysics = n;
+        t.xr(this, "finished", new C), t.xr(this, "_steps", []), t.xr(this, "_nextParallel", !1), t.xr(this, "_stepIndex", 0), t.xr(this, "_stepTime", 0), t.xr(this, "_stepStarted", !1), t.xr(this, "_running", !0), t.xr(this, "_bound", void 0), t.xr(this, "processInPhysics", void 0), this._bound = e, this.processInPhysics = n;
     }
-    Object.defineProperty(O.prototype, "isRunning", {
+    Object.defineProperty(D.prototype, "isRunning", {
         get: function () { return this._running; },
         enumerable: false,
         configurable: true
     });
-    O.prototype.to = function (e, t, n, r) {
-        if (r === void 0) { r = D.Linear; }
+    D.prototype.to = function (e, t, n, r) {
+        if (r === void 0) { r = E.Linear; }
         var i = Object.keys(t);
         var _loop_1 = function (a_3, l_1) {
             a_3 > 0 && (this_1._nextParallel = !0);
             var i_2 = t[l_1], u_1 = 0, d_1 = e;
-            this_1._add({ duration: Math.max(0, n), start: function () { var t = d_1[l_1]; if (typeof t != "number" && !(t instanceof C))
+            this_1._add({ duration: Math.max(0, n), start: function () { var t = d_1[l_1]; if (typeof t != "number" && !(t instanceof S))
                     throw Error("Tween: property \"".concat(l_1, "\" of ").concat(e.constructor.name, " is not a number or Vector2")); u_1 = t; }, update: function (t) { if (c(e))
                     return; var n = r(t); typeof u_1 == "number" ? o(e, l_1) ? d_1[l_1] = s(u_1, i_2, n) : d_1[l_1] = u_1 + (i_2 - u_1) * n : d_1[l_1] = u_1.lerp(i_2, n); } });
         };
@@ -208,12 +207,12 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
         }
         return this;
     };
-    O.prototype.wait = function (e) { return this._add({ duration: Math.max(0, e), start: function () { }, update: function () { } }), this; };
-    O.prototype.call = function (e) { var t = !1; return this._add({ duration: 0, start: function () { return t = !1; }, update: function () { t || (t = !0, e()); } }), this; };
-    O.prototype.parallel = function () { return this._nextParallel = !0, this; };
-    O.prototype.kill = function () { this._running = !1; };
-    O.prototype._add = function (e) { var t = this._steps[this._steps.length - 1]; this._nextParallel && t ? t.push(e) : this._steps.push([e]), this._nextParallel = !1; };
-    O.prototype._advance = function (e, t) {
+    D.prototype.wait = function (e) { return this._add({ duration: Math.max(0, e), start: function () { }, update: function () { } }), this; };
+    D.prototype.call = function (e) { var t = !1; return this._add({ duration: 0, start: function () { return t = !1; }, update: function () { t || (t = !0, e()); } }), this; };
+    D.prototype.parallel = function () { return this._nextParallel = !0, this; };
+    D.prototype.kill = function () { this._running = !1; };
+    D.prototype._add = function (e) { var t = this._steps[this._steps.length - 1]; this._nextParallel && t ? t.push(e) : this._steps.push([e]), this._nextParallel = !1; };
+    D.prototype._advance = function (e, t) {
         var _this = this;
         if (!this._running)
             return !1;
@@ -233,25 +232,25 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
             }
             var t_5 = Math.max.apply(Math, e_10.map(function (e) { return e.duration; }));
             this._stepTime += n;
-            var r_2 = function (e) { return _this._stepTime >= e.duration - ne ? 1 : _this._stepTime / e.duration; };
+            var r_2 = function (e) { return _this._stepTime >= e.duration - O ? 1 : _this._stepTime / e.duration; };
             for (var _a = 0, e_9 = e_10; _a < e_9.length; _a++) {
                 var t_6 = e_9[_a];
                 t_6.update(r_2(t_6));
             }
             if (!this._running)
                 return !1;
-            if (this._stepTime < t_5 - ne)
+            if (this._stepTime < t_5 - O)
                 return !0;
             n = Math.max(0, this._stepTime - t_5), this._stepIndex++, this._stepStarted = !1;
         }
         return this._running = !1, this.finished.emit(), !1;
     };
-    return O;
-}()), ne = 1e-9, k = (function () {
+    return D;
+}()), O = 1e-9, k = (function () {
     function e(e) {
         if (e === void 0) { e = {}; }
         var n, r, i;
-        t.s(this, "_name", void 0), t.s(this, "_parent", null), t.s(this, "_children", []), t.s(this, "_childByName", new Map), t.s(this, "_nextSuffix", new Map), t.s(this, "_tree", null), t.s(this, "_isReady", !1), t.s(this, "_queuedForDeletion", !1), t.s(this, "_freed", !1), t.s(this, "_groups", new Set), t.s(this, "_connections", []), t.s(this, "processMode", void 0), this._name = (n = e.name) == null ? this.constructor.name : n, this.processMode = (r = e.processMode) == null ? "inherit" : r;
+        t.xr(this, "_name", void 0), t.xr(this, "_parent", null), t.xr(this, "_children", []), t.xr(this, "_childByName", new Map), t.xr(this, "_nextSuffix", new Map), t.xr(this, "_tree", null), t.xr(this, "_isReady", !1), t.xr(this, "_queuedForDeletion", !1), t.xr(this, "_freed", !1), t.xr(this, "_groups", new Set), t.xr(this, "_connections", []), t.xr(this, "processMode", void 0), this._name = (n = e.name) == null ? this.constructor.name : n, this.processMode = (r = e.processMode) == null ? "inherit" : r;
         for (var _i = 0, _a = (i = e.groups) == null ? [] : i; _i < _a.length; _i++) {
             var t_7 = _a[_i];
             this._groups.add(t_7);
@@ -344,7 +343,7 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
         e_13.disconnect(t_9);
     } this._connections = []; for (var _f = 0, _g = Object.values(this); _f < _g.length; _f++) {
         var e_14 = _g[_f];
-        e_14 instanceof w && e_14.disconnectAll();
+        e_14 instanceof C && e_14.disconnectAll();
     } this._groups.clear(), this._onFreed(); };
     Object.defineProperty(e.prototype, "_isCanvasLayer", {
         get: function () { return !1; },
@@ -376,7 +375,7 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
     e.prototype.createTween = function (e) {
         if (e === void 0) { e = {}; }
         var t;
-        return this.tree._addTween(new O(this, (t = e.processInPhysics) != null && t));
+        return this.tree._addTween(new D(this, (t = e.processInPhysics) != null && t));
     };
     e.prototype._trackConnection = function (e, t) { this._assertNotFreed("connect a signal to"), this._connections.push({ signal: e, listener: t }); };
     e.prototype._untrackConnection = function (e, t) { var n = this._connections.findIndex(function (n) { return n.signal === e && n.listener === t; }); n !== -1 && this._connections.splice(n, 1); };
@@ -414,20 +413,20 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
     e.prototype.dumpProps = function () { return {}; };
     e.prototype._dump = function () { var e = {}; for (var _i = 0, _a = Object.entries(this.dumpProps()); _i < _a.length; _i++) {
         var _b = _a[_i], t_11 = _b[0], n_5 = _b[1];
-        n_5 !== void 0 && (e[t_11] = n_5 instanceof C ? n_5.toString() : n_5);
+        n_5 !== void 0 && (e[t_11] = n_5 instanceof S ? n_5.toString() : n_5);
     } return this._groups.size && (e.groups = __spreadArray([], this._groups, true)), this.processMode !== "inherit" && (e.processMode = this.processMode), { type: this.constructor.name, name: this._name, props: e, children: this._children.map(function (e) { return e._dump(); }) }; };
     return e;
 }()), A = (function () {
     function e(e, n, r, i) {
-        t.s(this, "x", void 0), t.s(this, "y", void 0), t.s(this, "width", void 0), t.s(this, "height", void 0), this.x = e, this.y = n, this.width = r, this.height = i, Object.freeze(this);
+        t.xr(this, "x", void 0), t.xr(this, "y", void 0), t.xr(this, "width", void 0), t.xr(this, "height", void 0), this.x = e, this.y = n, this.width = r, this.height = i, Object.freeze(this);
     }
     Object.defineProperty(e.prototype, "position", {
-        get: function () { return new C(this.x, this.y); },
+        get: function () { return new S(this.x, this.y); },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(e.prototype, "size", {
-        get: function () { return new C(this.width, this.height); },
+        get: function () { return new S(this.width, this.height); },
         enumerable: false,
         configurable: true
     });
@@ -452,7 +451,7 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
         configurable: true
     });
     Object.defineProperty(e.prototype, "center", {
-        get: function () { return new C(this.x + this.width / 2, this.y + this.height / 2); },
+        get: function () { return new S(this.x + this.width / 2, this.y + this.height / 2); },
         enumerable: false,
         configurable: true
     });
@@ -464,33 +463,33 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
     };
     e.prototype.toString = function () { return "Rect2(".concat(i(this.x), ", ").concat(i(this.y), ", ").concat(i(this.width), ", ").concat(i(this.height), ")"); };
     return e;
-}()), j = (S = (function () {
+}()), j = (x = (function () {
     function e(e, n, r, i, a, o) {
-        t.s(this, "a", void 0), t.s(this, "b", void 0), t.s(this, "c", void 0), t.s(this, "d", void 0), t.s(this, "tx", void 0), t.s(this, "ty", void 0), this.a = e, this.b = n, this.c = r, this.d = i, this.tx = a, this.ty = o, Object.freeze(this);
+        t.xr(this, "a", void 0), t.xr(this, "b", void 0), t.xr(this, "c", void 0), t.xr(this, "d", void 0), t.xr(this, "tx", void 0), t.xr(this, "ty", void 0), this.a = e, this.b = n, this.c = r, this.d = i, this.tx = a, this.ty = o, Object.freeze(this);
     }
     e.fromParts = function (t, n, r) { var i = Math.cos(n), a = Math.sin(n); return new e(i * r.x, a * r.x, -a * r.y, i * r.y, t.x, t.y); };
     e.prototype.multiply = function (t) { return new e(this.a * t.a + this.c * t.b, this.b * t.a + this.d * t.b, this.a * t.c + this.c * t.d, this.b * t.c + this.d * t.d, this.a * t.tx + this.c * t.ty + this.tx, this.b * t.tx + this.d * t.ty + this.ty); };
-    e.prototype.inverse = function () { var t = re; return u(this, t) ? new e(t.a, t.b, t.c, t.d, t.tx, t.ty) : null; };
-    e.prototype.apply = function (e) { return new C(this.a * e.x + this.c * e.y + this.tx, this.b * e.x + this.d * e.y + this.ty); };
+    e.prototype.inverse = function () { var t = ne; return u(this, t) ? new e(t.a, t.b, t.c, t.d, t.tx, t.ty) : null; };
+    e.prototype.apply = function (e) { return new S(this.a * e.x + this.c * e.y + this.tx, this.b * e.x + this.d * e.y + this.ty); };
     Object.defineProperty(e.prototype, "origin", {
-        get: function () { return new C(this.tx, this.ty); },
+        get: function () { return new S(this.tx, this.ty); },
         enumerable: false,
         configurable: true
     });
     return e;
-}()), t.s(S, "IDENTITY", new S(1, 0, 0, 1, 0, 0)), S), re = l(), M = ["inherit", "normal", "add"], N = (function (_super) {
+}()), t.xr(x, "IDENTITY", new x(1, 0, 0, 1, 0, 0)), x), ne = l(), M = ["inherit", "normal", "add"], N = (function (_super) {
     __extends(e, _super);
     function e(e) {
         if (e === void 0) { e = {}; }
         var _this = this;
-        var n, r, i, a, o, s, c, l, u, d, h, g;
-        _this = _super.call(this, e) || this, t.s(_this, "_x", void 0), t.s(_this, "_y", void 0), t.s(_this, "_positionCache", null), t.s(_this, "_rotation", void 0), t.s(_this, "_scale", void 0), t.s(_this, "_visible", void 0), t.s(_this, "_zIndex", void 0), t.s(_this, "_alpha", void 0), t.s(_this, "_modulate", void 0), t.s(_this, "_selfModulate", void 0), t.s(_this, "_blendMode", void 0), t.s(_this, "_clipRect", void 0), t.s(_this, "_pointerDown", null), t.s(_this, "_pointerMove", null), t.s(_this, "_pointerUp", null), t.s(_this, "_clicked", null), t.s(_this, "inputPickable", void 0), t.s(_this, "hitArea", void 0), t.s(_this, "_transformVersion", 0), t.s(_this, "_version", 0), t.s(_this, "_view", null);
-        var _ = (n = e.position) == null ? C.ZERO : n;
-        _this._x = _.x, _this._y = _.y, _this._positionCache = _, _this._rotation = (r = e.rotation) == null ? 0 : r, _this._scale = (i = e.scale) == null ? C.ONE : i, _this._visible = (a = e.visible) == null || a, _this._zIndex = (o = e.zIndex) == null ? 0 : o, _this._alpha = p((s = e.alpha) == null ? 1 : s), _this._modulate = m((c = e.modulate) == null ? P : c), _this._selfModulate = m((l = e.selfModulate) == null ? P : l), _this._blendMode = f((u = e.blendMode) == null ? "inherit" : u), _this.inputPickable = (d = e.inputPickable) != null && d, _this.hitArea = (h = e.hitArea) == null ? null : h, _this._clipRect = (g = e.clipRect) == null ? null : g;
+        var n, r, i, a, o, s, c, l, u, m, h, g;
+        _this = _super.call(this, e) || this, t.xr(_this, "_x", void 0), t.xr(_this, "_y", void 0), t.xr(_this, "_positionCache", null), t.xr(_this, "_rotation", void 0), t.xr(_this, "_scale", void 0), t.xr(_this, "_visible", void 0), t.xr(_this, "_zIndex", void 0), t.xr(_this, "_alpha", void 0), t.xr(_this, "_modulate", void 0), t.xr(_this, "_selfModulate", void 0), t.xr(_this, "_blendMode", void 0), t.xr(_this, "_clipRect", void 0), t.xr(_this, "_pointerDown", null), t.xr(_this, "_pointerMove", null), t.xr(_this, "_pointerUp", null), t.xr(_this, "_clicked", null), t.xr(_this, "inputPickable", void 0), t.xr(_this, "hitArea", void 0), t.xr(_this, "_transformVersion", 0), t.xr(_this, "_version", 0), t.xr(_this, "_view", null);
+        var _ = (n = e.position) == null ? S.ZERO : n;
+        _this._x = _.x, _this._y = _.y, _this._positionCache = _, _this._rotation = (r = e.rotation) == null ? 0 : r, _this._scale = (i = e.scale) == null ? S.ONE : i, _this._visible = (a = e.visible) == null || a, _this._zIndex = (o = e.zIndex) == null ? 0 : o, _this._alpha = f((s = e.alpha) == null ? 1 : s), _this._modulate = p((c = e.modulate) == null ? P : c), _this._selfModulate = p((l = e.selfModulate) == null ? P : l), _this._blendMode = d((u = e.blendMode) == null ? "inherit" : u), _this.inputPickable = (m = e.inputPickable) != null && m, _this.hitArea = (h = e.hitArea) == null ? null : h, _this._clipRect = (g = e.clipRect) == null ? null : g;
         return _this;
     }
     Object.defineProperty(e.prototype, "position", {
-        get: function () { var e; return (e = this._positionCache) == null ? this._positionCache = new C(this._x, this._y) : e; },
+        get: function () { var e; return (e = this._positionCache) == null ? this._positionCache = new S(this._x, this._y) : e; },
         set: function (e) { this._x = e.x, this._y = e.y, this._positionCache = e, this._transformVersion++, this._transformChanged(); },
         enumerable: false,
         configurable: true
@@ -539,25 +538,25 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
     });
     Object.defineProperty(e.prototype, "alpha", {
         get: function () { return this._alpha; },
-        set: function (e) { this._alpha = p(e), this._version++; },
+        set: function (e) { this._alpha = f(e), this._version++; },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(e.prototype, "modulate", {
         get: function () { return this._modulate; },
-        set: function (e) { this._modulate = m(e), this._version++; },
+        set: function (e) { this._modulate = p(e), this._version++; },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(e.prototype, "selfModulate", {
         get: function () { return this._selfModulate; },
-        set: function (e) { this._selfModulate = m(e), this._version++; },
+        set: function (e) { this._selfModulate = p(e), this._version++; },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(e.prototype, "blendMode", {
         get: function () { return this._blendMode; },
-        set: function (e) { e !== this._blendMode && (this._blendMode = f(e), this._version++); },
+        set: function (e) { e !== this._blendMode && (this._blendMode = d(e), this._version++); },
         enumerable: false,
         configurable: true
     });
@@ -575,7 +574,7 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
             return !1;
     } return !0; };
     Object.defineProperty(e.prototype, "_colorProps", {
-        get: function () { return ie; },
+        get: function () { return re; },
         enumerable: false,
         configurable: true
     });
@@ -586,7 +585,7 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
         configurable: true
     });
     Object.defineProperty(e.prototype, "globalTransform", {
-        get: function () { var e = ae; return this._computeGlobalInto(e), new j(e.a, e.b, e.c, e.d, e.tx, e.ty); },
+        get: function () { var e = ie; return this._computeGlobalInto(e), new j(e.a, e.b, e.c, e.d, e.tx, e.ty); },
         enumerable: false,
         configurable: true
     });
@@ -606,7 +605,7 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
         enumerable: false,
         configurable: true
     });
-    e.prototype.toLocal = function (e) { var t, n; return (t = (n = this.globalTransform.inverse()) == null ? void 0 : n.apply(e)) == null ? C.ZERO : t; };
+    e.prototype.toLocal = function (e) { var t, n; return (t = (n = this.globalTransform.inverse()) == null ? void 0 : n.apply(e)) == null ? S.ZERO : t; };
     e.prototype.toGlobal = function (e) { return this.globalTransform.apply(e); };
     Object.defineProperty(e.prototype, "isVisibleInTree", {
         get: function () { for (var t_13 = this; t_13; t_13 = t_13._canvasParent)
@@ -618,22 +617,22 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
         configurable: true
     });
     Object.defineProperty(e.prototype, "pointerDown", {
-        get: function () { var e; return (e = this._pointerDown) == null ? this._pointerDown = new w : e; },
+        get: function () { var e; return (e = this._pointerDown) == null ? this._pointerDown = new C : e; },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(e.prototype, "pointerMove", {
-        get: function () { var e; return (e = this._pointerMove) == null ? this._pointerMove = new w : e; },
+        get: function () { var e; return (e = this._pointerMove) == null ? this._pointerMove = new C : e; },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(e.prototype, "pointerUp", {
-        get: function () { var e; return (e = this._pointerUp) == null ? this._pointerUp = new w : e; },
+        get: function () { var e; return (e = this._pointerUp) == null ? this._pointerUp = new C : e; },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(e.prototype, "clicked", {
-        get: function () { var e; return (e = this._clicked) == null ? this._clicked = new w : e; },
+        get: function () { var e; return (e = this._clicked) == null ? this._clicked = new C : e; },
         enumerable: false,
         configurable: true
     });
@@ -642,7 +641,7 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
         if (t === void 0) { t = !1; }
         return this.isInsideTree && this.tree.input._hasPointerCapture(e, this, t);
     };
-    e.prototype.hitTest = function (e) { var t; var n = this.hitArea; return n ? n instanceof A ? n.contains(e) : e.distanceTo((t = n.center) == null ? C.ZERO : t) <= n.radius : !1; };
+    e.prototype.hitTest = function (e) { var t; var n = this.hitArea; return n ? n instanceof A ? n.contains(e) : e.distanceTo((t = n.center) == null ? S.ZERO : t) <= n.radius : !1; };
     e.prototype._onFreed = function () { for (var _i = 0, _a = [this._pointerDown, this._pointerMove, this._pointerUp, this._clicked]; _i < _a.length; _i++) {
         var e_19 = _a[_i];
         e_19 == null || e_19.disconnectAll();
@@ -652,15 +651,15 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
         enumerable: false,
         configurable: true
     });
-    e.prototype.dumpProps = function () { return { position: this.position, rotationDegrees: this._rotation === 0 ? void 0 : Math.round(this.rotationDegrees * 100) / 100, scale: this._scale.equals(C.ONE) ? void 0 : this._scale, visible: this._visible ? void 0 : !1, zIndex: this._zIndex === 0 ? void 0 : this._zIndex, alpha: this._alpha === 1 ? void 0 : Math.round(this._alpha * 100) / 100, modulate: this._modulate === P ? void 0 : h(this._modulate), selfModulate: this._selfModulate === P ? void 0 : h(this._selfModulate), blendMode: this._blendMode === "inherit" ? void 0 : this._blendMode, clipRect: this._clipRect ? "(".concat(i(this._clipRect.x), ", ").concat(i(this._clipRect.y), ", ").concat(i(this._clipRect.width), ", ").concat(i(this._clipRect.height), ")") : void 0 }; };
+    e.prototype.dumpProps = function () { return { position: this.position, rotationDegrees: this._rotation === 0 ? void 0 : Math.round(this.rotationDegrees * 100) / 100, scale: this._scale.equals(S.ONE) ? void 0 : this._scale, visible: this._visible ? void 0 : !1, zIndex: this._zIndex === 0 ? void 0 : this._zIndex, alpha: this._alpha === 1 ? void 0 : Math.round(this._alpha * 100) / 100, modulate: this._modulate === P ? void 0 : m(this._modulate), selfModulate: this._selfModulate === P ? void 0 : m(this._selfModulate), blendMode: this._blendMode === "inherit" ? void 0 : this._blendMode, clipRect: this._clipRect ? "(".concat(i(this._clipRect.x), ", ").concat(i(this._clipRect.y), ", ").concat(i(this._clipRect.width), ", ").concat(i(this._clipRect.height), ")") : void 0 }; };
     return e;
-}(k)), P = 16777215, ie = new Set(["modulate", "selfModulate"]), ae = l(), oe = new Set(["modulate", "selfModulate", "color"]), F = (function (_super) {
+}(k)), P = 16777215, re = new Set(["modulate", "selfModulate"]), ie = l(), ae = new Set(["modulate", "selfModulate", "color"]), F = (function (_super) {
     __extends(F, _super);
     function F(e) {
         if (e === void 0) { e = {}; }
         var _this = this;
         var n, r;
-        _this = _super.call(this, e) || this, t.s(_this, "_size", void 0), t.s(_this, "_color", void 0), _this._size = (n = e.size) == null ? C.ZERO : n, _this._color = m((r = e.color) == null ? 16777215 : r);
+        _this = _super.call(this, e) || this, t.xr(_this, "_size", void 0), t.xr(_this, "_color", void 0), _this._size = (n = e.size) == null ? S.ZERO : n, _this._color = p((r = e.color) == null ? 16777215 : r);
         return _this;
     }
     Object.defineProperty(F.prototype, "size", {
@@ -671,7 +670,7 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
     });
     Object.defineProperty(F.prototype, "color", {
         get: function () { return this._color; },
-        set: function (e) { this._color = m(e), this._version++; },
+        set: function (e) { this._color = p(e), this._version++; },
         enumerable: false,
         configurable: true
     });
@@ -681,28 +680,28 @@ function I() { return (I = e.n((function () { t.c(), t.o(), x = (function () {
         configurable: true
     });
     Object.defineProperty(F.prototype, "_colorProps", {
-        get: function () { return oe; },
+        get: function () { return ae; },
         enumerable: false,
         configurable: true
     });
     F.prototype.hitTest = function (e) { if (this.hitArea)
         return _super.prototype.hitTest.call(this, e); var t = this._size; return e.x >= 0 && e.y >= 0 && e.x <= t.x && e.y <= t.y; };
-    F.prototype.dumpProps = function () { return t.a(t.a({}, _super.prototype.dumpProps.call(this)), {}, { size: this._size, color: h(this._color) }); };
+    F.prototype.dumpProps = function () { return t.yr(t.yr({}, _super.prototype.dumpProps.call(this)), {}, { size: this._size, color: m(this._color) }); };
     return F;
 }(N)); })))(); }
 function L(e) { return Math.min(1, Math.max(0, e)); }
-function se(e, t) { return t == null ? !0 : Array.isArray(t) ? Array.isArray(e) : e === null || Array.isArray(e) ? !1 : typeof e == typeof t; }
-function ce(e) { return e.flatMap(function (e) { return __spreadArray([e], e._textures().flatMap(function (e) { return __spreadArray([e], e._textures(), true); }), true); }); }
-function le(e, t) { if (!e.isLoaded)
+function oe(e, t) { return t == null ? !0 : Array.isArray(t) ? Array.isArray(e) : e === null || Array.isArray(e) ? !1 : typeof e == typeof t; }
+function se(e) { return e.flatMap(function (e) { return __spreadArray([e], e._textures().flatMap(function (e) { return __spreadArray([e], e._textures(), true); }), true); }); }
+function ce(e, t) { if (!e.isLoaded)
     return e._load(t).then(function () { return Promise.all(e._textures().map(function (e) { return e._load(t); })); }).then(function () { return void 0; }); }
-function ue(e) { var t = e.type; return t === "pointerdown" || t === "pointermove" || t === "pointerup" || t === "pointercancel"; }
+function le(e) { var t = e.type; return t === "pointerdown" || t === "pointermove" || t === "pointerup" || t === "pointercancel"; }
 function R(e) { return !e.isQueuedForDeletion && e.isVisibleInTree && e.canProcess(); }
-function de(e, t, n, r) { if (!R(e))
+function ue(e, t, n, r) { if (!R(e))
     return !1; var i = e.globalTransform.inverse(); if (!i)
     return !1; var a = (r == null ? e._canvasLayer !== null : r) ? n : t; return e.hitTest(i.apply(a)) && e._insideClips(a); }
 function z(e, t, n, r) { var i = r._canvasLayer ? n : t; return { pointerId: e, position: i, localPosition: r.toLocal(i) }; }
 function B(e, t) { var n = e.indexOf(t); n >= 0 && e.splice(n, 1); }
-function fe(e, t) { t.length = 0; for (var n_7 = 0; n_7 < e.length; n_7++)
+function de(e, t) { t.length = 0; for (var n_7 = 0; n_7 < e.length; n_7++)
     t.push(e[n_7]); return t; }
 function V(e, t, n, r, i) {
     if (i === void 0) { i = n; }
@@ -713,61 +712,61 @@ function V(e, t, n, r, i) {
     }
     return a;
 }
-function pe(e) { return typeof e == "number" ? i(e) : Array.isArray(e) ? "[".concat(e.map(pe).join(", "), "]") : typeof e == "string" ? /^\(.*\)$/.test(e) || !(/\s/.test(e) || e === "") ? e : JSON.stringify(e) : String(e); }
-function me() { return { install: function (e) { var t = new Q; e.provide(Q, t); var n = e.tree.input; n.addSource(t); var r = e.platform.kind === "browser" ? he(function (e) { return n.enqueue(e); }) : null; return function () { r == null || r(), n.removeSource(t); }; } }; }
-function he(e) { var t = globalThis.window; if (!t)
+function fe(e) { return typeof e == "number" ? i(e) : Array.isArray(e) ? "[".concat(e.map(fe).join(", "), "]") : typeof e == "string" ? /^\(.*\)$/.test(e) || !(/\s/.test(e) || e === "") ? e : JSON.stringify(e) : String(e); }
+function pe() { return { install: function (e) { var t = new Q; e.provide(Q, t); var n = e.tree.input; n.addSource(t); var r = e.platform.kind === "browser" ? me(function (e) { return n.enqueue(e); }) : null; return function () { r == null || r(), n.removeSource(t); }; } }; }
+function me(e) { var t = globalThis.window; if (!t)
     return null; var n = new Set, r = function (t) { if (t.repeat)
     return; var r = t.type === "keydown"; r ? n.add(t.code) : n.delete(t.code), e({ type: r ? "keydown" : "keyup", code: t.code }); }, i = function () { for (var _i = 0, n_8 = n; _i < n_8.length; _i++) {
     var t_14 = n_8[_i];
     e({ type: "keyup", code: t_14 });
 } n.clear(); }; return t.addEventListener("keydown", r), t.addEventListener("keyup", r), t.addEventListener("blur", i), function () { t.removeEventListener("keydown", r), t.removeEventListener("keyup", r), t.removeEventListener("blur", i); }; }
-var H, U, W, G, ge, _e, ve, K, ye, be, q, J, Y, xe, Se, Ce, we, Te, X, Ee, Z, De, Q, $, Oe, ke, Ae;
-function je() {
-    return (je = e.n((function () {
-        I(), n.o(), t.c(), t.o(), H = (function (_super) {
+var H, U, W, G, he, ge, _e, K, ve, ye, q, J, Y, be, xe, Se, Ce, we, X, Te, Z, Ee, Q, $, De, Oe, ke;
+function Ae() {
+    return (Ae = e.n((function () {
+        I(), n.o(), t.Sr(), t.br(), H = (function (_super) {
             __extends(H, _super);
             function H() {
                 return _super !== null && _super.apply(this, arguments) || this;
             }
             return H;
-        }(N)), W = (t.s(H, "assets", {}), H), G = (function () {
+        }(N)), W = (t.xr(H, "assets", {}), H), G = (function () {
             function G(e) {
                 if (e === void 0) { e = Date.now(); }
-                t.s(this, "_state", void 0), t.s(this, "seed", void 0), this.seed = e >>> 0, this._state = this.seed;
+                t.xr(this, "_state", void 0), t.xr(this, "seed", void 0), this.seed = e >>> 0, this._state = this.seed;
             }
             G.prototype.randf = function () { this._state = this._state + 1831565813 >>> 0; var e = this._state; return e = Math.imul(e ^ e >>> 15, e | 1), e ^= e + Math.imul(e ^ e >>> 7, e | 61), ((e ^ e >>> 14) >>> 0) / 4294967296; };
             G.prototype.randfRange = function (e, t) { return e + (t - e) * this.randf(); };
             G.prototype.randiRange = function (e, t) { return e + Math.floor(this.randf() * (t - e + 1)); };
             G.prototype.pick = function (e) { return e.length === 0 ? void 0 : e[Math.floor(this.randf() * e.length)]; };
             return G;
-        }()), ge = (function () {
-            function ge(e) {
+        }()), he = (function () {
+            function he(e) {
                 var _this = this;
                 var r, i, a, o;
-                t.s(this, "pixelsPerMeter", void 0), t.s(this, "velocityIterations", void 0), t.s(this, "positionIterations", void 0), t.s(this, "_world", void 0), t.s(this, "_entries", new Map), t.s(this, "_gravity", void 0), t.s(this, "_events", []), t.s(this, "_pairs", new Map), t.s(this, "_queryBox", new n.t), t.s(this, "_queryFound", null), t.s(this, "_onStaticQuery", function (e) { var t = e.getBody(); return t.getType() !== "static" || !n.t.testOverlap(_this._queryBox, e.getAABB(0)) || (_this._queryFound = t.getUserData(), !1); });
+                t.xr(this, "pixelsPerMeter", void 0), t.xr(this, "velocityIterations", void 0), t.xr(this, "positionIterations", void 0), t.xr(this, "_world", void 0), t.xr(this, "_entries", new Map), t.xr(this, "_gravity", void 0), t.xr(this, "_events", []), t.xr(this, "_pairs", new Map), t.xr(this, "_queryBox", new n.t), t.xr(this, "_queryFound", null), t.xr(this, "_onStaticQuery", function (e) { var t = e.getBody(); return t.getType() !== "static" || !n.t.testOverlap(_this._queryBox, e.getAABB(0)) || (_this._queryFound = t.getUserData(), !1); });
                 var s = e.physicsSettings;
-                this.pixelsPerMeter = (r = s.pixelsPerMeter) == null ? 50 : r, this.velocityIterations = (i = s.velocityIterations) == null ? 8 : i, this.positionIterations = (a = s.positionIterations) == null ? 3 : a, this._gravity = (o = s.gravity) == null ? new C(0, 980) : o, this._world = new n.a({ gravity: this._toMeters(this._gravity) }), this._world.on("begin-contact", function (e) { return _this._onContact(e, !0); }), this._world.on("end-contact", function (e) { return _this._onContact(e, !1); });
+                this.pixelsPerMeter = (r = s.pixelsPerMeter) == null ? 50 : r, this.velocityIterations = (i = s.velocityIterations) == null ? 8 : i, this.positionIterations = (a = s.positionIterations) == null ? 3 : a, this._gravity = (o = s.gravity) == null ? new S(0, 980) : o, this._world = new n.a({ gravity: this._toMeters(this._gravity) }), this._world.on("begin-contact", function (e) { return _this._onContact(e, !0); }), this._world.on("end-contact", function (e) { return _this._onContact(e, !1); });
             }
-            Object.defineProperty(ge.prototype, "gravity", {
+            Object.defineProperty(he.prototype, "gravity", {
                 get: function () { return this._gravity; },
                 set: function (e) { this._gravity = e, this._world.setGravity(this._toMeters(e)); },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(ge.prototype, "bodyCount", {
+            Object.defineProperty(he.prototype, "bodyCount", {
                 get: function () { return this._entries.size; },
                 enumerable: false,
                 configurable: true
             });
-            ge.prototype._register = function (e) { this._entries.has(e) || this._entries.set(e, { node: e, body: null, shapesDirty: !0, propsDirty: !0, teleport: !1, lastX: NaN, lastY: NaN, lastAngle: NaN }); };
-            ge.prototype._unregister = function (e) { var t = this._entries.get(e); t && (this._entries.delete(e), t.body && this._world.destroyBody(t.body), e._detached()); };
-            ge.prototype._shapesChanged = function (e) { var t = this._entries.get(e); t && (t.shapesDirty = !0); };
-            ge.prototype._propsChanged = function (e) { var t = this._entries.get(e); t && (t.propsDirty = !0); };
-            ge.prototype._teleport = function (e) { var t = this._entries.get(e); t && t.body && !e._isArea && (this._world.isLocked() ? t.teleport = !0 : this._applyTeleport(t.body, e)); };
-            ge.prototype._applyTeleport = function (e, t) { var n, r; e.setTransform(this._toMeters(t.globalPosition), t.globalRotation), t._bodyType === "dynamic" && (e.setLinearVelocity({ x: 0, y: 0 }), e.setAngularVelocity(0)), e.setAwake(!0); for (var t_15 = e.getContactList(); t_15; t_15 = (n = t_15.next) == null ? null : n)
+            he.prototype._register = function (e) { this._entries.has(e) || this._entries.set(e, { node: e, body: null, shapesDirty: !0, propsDirty: !0, teleport: !1, lastX: NaN, lastY: NaN, lastAngle: NaN }); };
+            he.prototype._unregister = function (e) { var t = this._entries.get(e); t && (this._entries.delete(e), t.body && this._world.destroyBody(t.body), e._detached()); };
+            he.prototype._shapesChanged = function (e) { var t = this._entries.get(e); t && (t.shapesDirty = !0); };
+            he.prototype._propsChanged = function (e) { var t = this._entries.get(e); t && (t.propsDirty = !0); };
+            he.prototype._teleport = function (e) { var t = this._entries.get(e); t && t.body && !e._isArea && (this._world.isLocked() ? t.teleport = !0 : this._applyTeleport(t.body, e)); };
+            he.prototype._applyTeleport = function (e, t) { var n, r; e.setTransform(this._toMeters(t.globalPosition), t.globalRotation), t._bodyType === "dynamic" && (e.setLinearVelocity({ x: 0, y: 0 }), e.setAngularVelocity(0)), e.setAwake(!0); for (var t_15 = e.getContactList(); t_15; t_15 = (n = t_15.next) == null ? null : n)
                 (r = t_15.other) == null || r.setAwake(!0); };
-            ge.prototype._overlaps = function (e) { var t, n; return __spreadArray([], (t = (n = this._pairs.get(e)) == null ? void 0 : n.keys()) == null ? [] : t, true).filter(function (e) { return !e._isArea; }); };
-            ge.prototype.physicsStep = function (e) { for (var _i = 0, _a = this._entries.values(); _i < _a.length; _i++) {
+            he.prototype._overlaps = function (e) { var t, n; return __spreadArray([], (t = (n = this._pairs.get(e)) == null ? void 0 : n.keys()) == null ? [] : t, true).filter(function (e) { return !e._isArea; }); };
+            he.prototype.physicsStep = function (e) { for (var _i = 0, _a = this._entries.values(); _i < _a.length; _i++) {
                 var e_20 = _a[_i];
                 this._sync(e_20);
             } this._world.step(e, this.velocityIterations, this.positionIterations); var t = this.pixelsPerMeter; for (var _b = 0, _c = this._entries.values(); _b < _c.length; _b++) {
@@ -776,10 +775,10 @@ function je() {
                 if (!n_9 || e_21.node._isArea || e_21.node._bodyType === "static" || !n_9.isAwake())
                     continue;
                 var r_4 = n_9.getPosition();
-                e_21.node._writeBack(new C(r_4.x * t, r_4.y * t), n_9.getAngle());
+                e_21.node._writeBack(new S(r_4.x * t, r_4.y * t), n_9.getAngle());
             } this._dispatchContacts(); };
-            ge.prototype._onContact = function (e, t) { var n = e.getFixtureA().getBody().getUserData(), r = e.getFixtureB().getBody().getUserData(); n && r && n !== r && this._events.push({ begin: t, a: n, b: r }); };
-            ge.prototype._dispatchContacts = function () { for (; this._events.length > 0;) {
+            he.prototype._onContact = function (e, t) { var n = e.getFixtureA().getBody().getUserData(), r = e.getFixtureB().getBody().getUserData(); n && r && n !== r && this._events.push({ begin: t, a: n, b: r }); };
+            he.prototype._dispatchContacts = function () { for (; this._events.length > 0;) {
                 var e_23 = this._events;
                 this._events = [];
                 for (var _i = 0, e_22 = e_23; _i < e_22.length; _i++) {
@@ -788,15 +787,15 @@ function je() {
                     this._setPairCount(n_10, r_5, Math.max(0, e_24 + (t_16 ? 1 : -1))), t_16 && e_24 === 0 ? this._emit(n_10, r_5, !0) : !t_16 && e_24 === 1 && this._emit(n_10, r_5, !1);
                 }
             } };
-            ge.prototype._emit = function (e, t, n) { var r = function (e, t) { t._isArea || e.isFreed || (n ? e._emitBodyEntered(t) : e._emitBodyExited(t)); }; r(e, t), r(t, e); };
-            ge.prototype._pairCount = function (e, t) { var n, r; return (n = (r = this._pairs.get(e)) == null ? void 0 : r.get(t)) == null ? 0 : n; };
-            ge.prototype._setPairCount = function (e, t, n) { for (var _i = 0, _a = [[e, t], [t, e]]; _i < _a.length; _i++) {
+            he.prototype._emit = function (e, t, n) { var r = function (e, t) { t._isArea || e.isFreed || (n ? e._emitBodyEntered(t) : e._emitBodyExited(t)); }; r(e, t), r(t, e); };
+            he.prototype._pairCount = function (e, t) { var n, r; return (n = (r = this._pairs.get(e)) == null ? void 0 : r.get(t)) == null ? 0 : n; };
+            he.prototype._setPairCount = function (e, t, n) { for (var _i = 0, _a = [[e, t], [t, e]]; _i < _a.length; _i++) {
                 var _b = _a[_i], r_6 = _b[0], i_3 = _b[1];
                 var e_25 = this._pairs.get(r_6);
                 n > 0 ? (e_25 || this._pairs.set(r_6, e_25 = new Map), e_25.set(i_3, n)) : e_25 && (e_25.delete(i_3), e_25.size === 0 && this._pairs.delete(r_6));
             } };
-            ge.prototype._firstStaticOverlapping = function (e, t, n, r) { var i = 1 / this.pixelsPerMeter, a = this._queryBox; a.lowerBound.x = e * i, a.lowerBound.y = t * i, a.upperBound.x = n * i, a.upperBound.y = r * i, this._queryFound = null, this._world.queryAABB(a, this._onStaticQuery); var o = this._queryFound; return this._queryFound = null, o; };
-            ge.prototype._sync = function (e) { var t = e.node, n = !1; e.body || (e.body = this._world.createBody({ type: t._bodyType, position: this._toMeters(t.globalPosition), angle: t.globalRotation }), e.body.setUserData(t), e.shapesDirty = !0, e.propsDirty = !0, n = !0); var r = e.body; if (e.shapesDirty || e.propsDirty) {
+            he.prototype._firstStaticOverlapping = function (e, t, n, r) { var i = 1 / this.pixelsPerMeter, a = this._queryBox; a.lowerBound.x = e * i, a.lowerBound.y = t * i, a.upperBound.x = n * i, a.upperBound.y = r * i, this._queryFound = null, this._world.queryAABB(a, this._onStaticQuery); var o = this._queryFound; return this._queryFound = null, o; };
+            he.prototype._sync = function (e) { var t = e.node, n = !1; e.body || (e.body = this._world.createBody({ type: t._bodyType, position: this._toMeters(t.globalPosition), angle: t.globalRotation }), e.body.setUserData(t), e.shapesDirty = !0, e.propsDirty = !0, n = !0); var r = e.body; if (e.shapesDirty || e.propsDirty) {
                 var n_11 = t._props();
                 e.shapesDirty ? this._rebuildFixtures(r, t, n_11) : this._applyFixtureProps(r, n_11), this._applyBodyProps(r, n_11), e.shapesDirty = !1, e.propsDirty = !1;
             } if (t._isArea) {
@@ -804,8 +803,8 @@ function je() {
                 (n_12.x !== e.lastX || n_12.y !== e.lastY || i_4 !== e.lastAngle) && (r.setTransform(this._toMeters(n_12), i_4), r.setAwake(!0), e.lastX = n_12.x, e.lastY = n_12.y, e.lastAngle = i_4), e.teleport = !1;
             }
             else
-                e.teleport && (e.teleport = !1, this._applyTeleport(r, t)); n && t._attached(new _e(r, this.pixelsPerMeter)); };
-            ge.prototype._rebuildFixtures = function (e, t, n) { for (var t_17 = e.getFixtureList(); t_17;) {
+                e.teleport && (e.teleport = !1, this._applyTeleport(r, t)); n && t._attached(new ge(r, this.pixelsPerMeter)); };
+            he.prototype._rebuildFixtures = function (e, t, n) { for (var t_17 = e.getFixtureList(); t_17;) {
                 var n_13 = t_17.getNext();
                 e.destroyFixture(t_17), t_17 = n_13;
             } var r = t._shapes(), i = this.pixelsPerMeter, a = r.reduce(function (e, t) { return e + t.shape.area; }, 0) / (i * i), o = a > 0 ? n.mass / a : 1; for (var _i = 0, r_7 = r; _i < r_7.length; _i++) {
@@ -813,13 +812,13 @@ function je() {
                 var r_8 = e.createFixture({ shape: this._planckShape(i_5), density: o, friction: n.friction, restitution: n.bounce, isSensor: t._isArea });
                 r_8.setUserData(t), r_8.shouldCollide = function (e) { var n = e.getUserData(); return !n || (t.collisionMask & n.collisionLayer) !== 0 || (n.collisionMask & t.collisionLayer) !== 0; };
             } e.resetMassData(); };
-            ge.prototype._planckShape = function (_a) {
+            he.prototype._planckShape = function (_a) {
                 var _this = this;
                 var e = _a.shape, t = _a.position, r = _a.rotation;
                 var i = this.pixelsPerMeter, a = this._toMeters(t);
                 return e.kind === "circle" ? new n.r(a, e.radius / i) : e.kind === "rectangle" ? new n.n(e.width / 2 / i, e.height / 2 / i, a, r) : new n.i(e.points.map(function (e) { return _this._toMeters(e.rotated(r).add(t)); }));
             };
-            ge.prototype._applyFixtureProps = function (e, t) { var n = 0; for (var r_9 = e.getFixtureList(); r_9; r_9 = r_9.getNext())
+            he.prototype._applyFixtureProps = function (e, t) { var n = 0; for (var r_9 = e.getFixtureList(); r_9; r_9 = r_9.getNext())
                 r_9.setFriction(t.friction), r_9.setRestitution(t.bounce), r_9.refilter(), n++; if (n === 0 || e.isStatic())
                 return; var r = e.getMass(); if (r > 0 && Math.abs(r - t.mass) > 1e-9) {
                 var n_14 = t.mass / r;
@@ -827,71 +826,71 @@ function je() {
                     t_18.setDensity(t_18.getDensity() * n_14);
                 e.resetMassData();
             } };
-            ge.prototype._applyBodyProps = function (e, t) { e.setGravityScale(t.gravityScale), e.setLinearDamping(t.linearDamp), e.setAngularDamping(t.angularDamp), e.setFixedRotation(t.lockRotation), e.setSleepingAllowed(t.canSleep), e.setBullet(t.ccd); };
-            ge.prototype._toMeters = function (e) { return { x: e.x / this.pixelsPerMeter, y: e.y / this.pixelsPerMeter }; };
-            return ge;
-        }()), _e = (function () {
-            function _e(e, n) {
-                t.s(this, "_body", void 0), t.s(this, "_ppm", void 0), this._body = e, this._ppm = n;
+            he.prototype._applyBodyProps = function (e, t) { e.setGravityScale(t.gravityScale), e.setLinearDamping(t.linearDamp), e.setAngularDamping(t.angularDamp), e.setFixedRotation(t.lockRotation), e.setSleepingAllowed(t.canSleep), e.setBullet(t.ccd); };
+            he.prototype._toMeters = function (e) { return { x: e.x / this.pixelsPerMeter, y: e.y / this.pixelsPerMeter }; };
+            return he;
+        }()), ge = (function () {
+            function ge(e, n) {
+                t.xr(this, "_body", void 0), t.xr(this, "_ppm", void 0), this._body = e, this._ppm = n;
             }
-            Object.defineProperty(_e.prototype, "linearVelocity", {
-                get: function () { var e = this._body.getLinearVelocity(); return new C(e.x * this._ppm, e.y * this._ppm); },
+            Object.defineProperty(ge.prototype, "linearVelocity", {
+                get: function () { var e = this._body.getLinearVelocity(); return new S(e.x * this._ppm, e.y * this._ppm); },
                 set: function (e) { this._body.setLinearVelocity({ x: e.x / this._ppm, y: e.y / this._ppm }), e.lengthSquared() > 0 && this._body.setAwake(!0); },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(_e.prototype, "angularVelocity", {
+            Object.defineProperty(ge.prototype, "angularVelocity", {
                 get: function () { return this._body.getAngularVelocity(); },
                 set: function (e) { this._body.isFixedRotation() || (this._body.setAngularVelocity(e), e !== 0 && this._body.setAwake(!0)); },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(_e.prototype, "sleeping", {
+            Object.defineProperty(ge.prototype, "sleeping", {
                 get: function () { return !this._body.isAwake(); },
                 set: function (e) { this._body.setAwake(!e); },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(_e.prototype, "mass", {
+            Object.defineProperty(ge.prototype, "mass", {
                 get: function () { return this._body.getMass(); },
                 enumerable: false,
                 configurable: true
             });
-            _e.prototype.applyImpulse = function (e, t) {
-                if (t === void 0) { t = C.ZERO; }
+            ge.prototype.applyImpulse = function (e, t) {
+                if (t === void 0) { t = S.ZERO; }
                 var n = this._body.getWorldCenter();
                 this._body.applyLinearImpulse({ x: e.x / this._ppm, y: e.y / this._ppm }, { x: n.x + t.x / this._ppm, y: n.y + t.y / this._ppm }, !0);
             };
-            _e.prototype.applyForce = function (e, t) {
-                if (t === void 0) { t = C.ZERO; }
+            ge.prototype.applyForce = function (e, t) {
+                if (t === void 0) { t = S.ZERO; }
                 var n = this._body.getWorldCenter();
                 this._body.applyForce({ x: e.x / this._ppm, y: e.y / this._ppm }, { x: n.x + t.x / this._ppm, y: n.y + t.y / this._ppm }, !0);
             };
-            _e.prototype.applyTorqueImpulse = function (e) { this._body.applyAngularImpulse(e / (this._ppm * this._ppm), !0); };
-            _e.prototype.applyTorque = function (e) { this._body.applyTorque(e / (this._ppm * this._ppm), !0); };
-            return _e;
-        }()), ve = (function () {
-            function ve(e, n, r) {
-                t.s(this, "finished", new w), t.s(this, "stream", void 0), t.s(this, "bus", void 0), t.s(this, "loop", void 0), t.s(this, "_volume", void 0), t.s(this, "_playing", !0), t.s(this, "_handle", null), t.s(this, "_server", void 0), this._server = e, this.stream = n, this.bus = r.bus, this.loop = r.loop, this._volume = r.volume;
+            ge.prototype.applyTorqueImpulse = function (e) { this._body.applyAngularImpulse(e / (this._ppm * this._ppm), !0); };
+            ge.prototype.applyTorque = function (e) { this._body.applyTorque(e / (this._ppm * this._ppm), !0); };
+            return ge;
+        }()), _e = (function () {
+            function _e(e, n, r) {
+                t.xr(this, "finished", new C), t.xr(this, "stream", void 0), t.xr(this, "bus", void 0), t.xr(this, "loop", void 0), t.xr(this, "_volume", void 0), t.xr(this, "_playing", !0), t.xr(this, "_handle", null), t.xr(this, "_server", void 0), this._server = e, this.stream = n, this.bus = r.bus, this.loop = r.loop, this._volume = r.volume;
             }
-            Object.defineProperty(ve.prototype, "playing", {
+            Object.defineProperty(_e.prototype, "playing", {
                 get: function () { return this._playing; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(ve.prototype, "volume", {
+            Object.defineProperty(_e.prototype, "volume", {
                 get: function () { return this._volume; },
                 set: function (e) { var t; this._volume = L(e), (t = this._handle) == null || t.setVolume(this._server._effectiveVolume(this)); },
                 enumerable: false,
                 configurable: true
             });
-            ve.prototype.stop = function () { var e; this._playing && (this._playing = !1, (e = this._handle) == null || e.stop(), this._handle = null, this._server._forget(this)); };
-            ve.prototype._drop = function () { this._playing = !1; };
-            ve.prototype._ended = function () { this._playing && (this._playing = !1, this._handle = null, this._server._forget(this), this.finished.emit()); };
-            return ve;
+            _e.prototype.stop = function () { var e; this._playing && (this._playing = !1, (e = this._handle) == null || e.stop(), this._handle = null, this._server._forget(this)); };
+            _e.prototype._drop = function () { this._playing = !1; };
+            _e.prototype._ended = function () { this._playing && (this._playing = !1, this._handle = null, this._server._forget(this), this.finished.emit()); };
+            return _e;
         }()), K = (function () {
             function K(e) {
-                t.s(this, "_backend", void 0), t.s(this, "_buses", { Master: { volume: 1, muted: !1 }, Music: { volume: 1, muted: !1 }, SFX: { volume: 1, muted: !1 } }), t.s(this, "_voices", new Set), t.s(this, "_warned", new Set), this._backend = e;
+                t.xr(this, "_backend", void 0), t.xr(this, "_buses", { Master: { volume: 1, muted: !1 }, Music: { volume: 1, muted: !1 }, SFX: { volume: 1, muted: !1 } }), t.xr(this, "_voices", new Set), t.xr(this, "_warned", new Set), this._backend = e;
             }
             K.prototype.getBusVolume = function (e) { return this._buses[e].volume; };
             K.prototype.setBusVolume = function (e, t) { this._buses[e].volume = L(t), this._refresh(); };
@@ -901,7 +900,7 @@ function je() {
                 var _this = this;
                 if (t === void 0) { t = {}; }
                 var n, r, i;
-                var a = new ve(this, e, { volume: L((n = t.volume) == null ? 1 : n), loop: (r = t.loop) != null && r, bus: (i = t.bus) == null ? e.kind === "music" ? "Music" : "SFX" : i }), o = t.maxVoices;
+                var a = new _e(this, e, { volume: L((n = t.volume) == null ? 1 : n), loop: (r = t.loop) != null && r, bus: (i = t.bus) == null ? e.kind === "music" ? "Music" : "SFX" : i }), o = t.maxVoices;
                 if (o !== void 0) {
                     if (!(o >= 0))
                         throw Error("audio.play: maxVoices must be a number >= 0, got ".concat(o, "."));
@@ -933,48 +932,48 @@ function je() {
             K.prototype._forget = function (e) { this._voices.delete(e); };
             K.prototype._setFocused = function (e) { e ? this._backend.resume() : this._backend.suspend(); };
             return K;
-        }()), ye = (function () {
-            function ye() {
-                t.s(this, "log", []), t.s(this, "_suspended", !1), t.s(this, "_endCallbacks", new Map);
+        }()), ve = (function () {
+            function ve() {
+                t.xr(this, "log", []), t.xr(this, "_suspended", !1), t.xr(this, "_endCallbacks", new Map);
             }
-            Object.defineProperty(ye.prototype, "suspended", {
+            Object.defineProperty(ve.prototype, "suspended", {
                 get: function () { return this._suspended; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(ye.prototype, "playing", {
+            Object.defineProperty(ve.prototype, "playing", {
                 get: function () { return this.log.filter(function (e) { return !e.ended; }); },
                 enumerable: false,
                 configurable: true
             });
-            ye.prototype.loadSound = function (e) { return Promise.resolve({ path: e }); };
-            ye.prototype.playSound = function (e, t) { return this._play("sfx", e.path, t); };
-            ye.prototype.playMusic = function (e, t) { return this._play("music", e, t); };
-            ye.prototype.suspend = function () { this._suspended = !0; };
-            ye.prototype.resume = function () { this._suspended = !1; };
-            ye.prototype.finishAll = function () { for (var _i = 0, _a = this.playing; _i < _a.length; _i++) {
+            ve.prototype.loadSound = function (e) { return Promise.resolve({ path: e }); };
+            ve.prototype.playSound = function (e, t) { return this._play("sfx", e.path, t); };
+            ve.prototype.playMusic = function (e, t) { return this._play("music", e, t); };
+            ve.prototype.suspend = function () { this._suspended = !0; };
+            ve.prototype.resume = function () { this._suspended = !1; };
+            ve.prototype.finishAll = function () { for (var _i = 0, _a = this.playing; _i < _a.length; _i++) {
                 var t_21 = _a[_i];
                 var e;
                 t_21.loop || (t_21.ended = !0, (e = this._endCallbacks.get(t_21)) == null || e());
             } };
-            ye.prototype._play = function (e, t, n) {
+            ve.prototype._play = function (e, t, n) {
                 var _this = this;
                 var r = { kind: e, path: t, volume: n.volume, loop: n.loop, ended: !1 };
                 return this.log.push(r), { setVolume: function (e) { return r.volume = e; }, stop: function () { return r.ended = !0; }, onEnded: function (e) { return _this._endCallbacks.set(r, e); } };
             };
-            return ye;
-        }()), be = (function () {
-            function be() {
-                t.s(this, "_data", new Map);
+            return ve;
+        }()), ye = (function () {
+            function ye() {
+                t.xr(this, "_data", new Map);
             }
-            be.prototype.getItem = function (e) { var t; return (t = this._data.get(e)) == null ? null : t; };
-            be.prototype.setItem = function (e, t) { this._data.set(e, t); };
-            be.prototype.removeItem = function (e) { this._data.delete(e); };
-            be.prototype.keys = function () { return __spreadArray([], this._data.keys(), true); };
-            return be;
+            ye.prototype.getItem = function (e) { var t; return (t = this._data.get(e)) == null ? null : t; };
+            ye.prototype.setItem = function (e, t) { this._data.set(e, t); };
+            ye.prototype.removeItem = function (e) { this._data.delete(e); };
+            ye.prototype.keys = function () { return __spreadArray([], this._data.keys(), true); };
+            return ye;
         }()), q = (function () {
             function q(e, n) {
-                t.s(this, "prefix", void 0), t.s(this, "_backend", void 0), this._backend = e, this.prefix = n;
+                t.xr(this, "prefix", void 0), t.xr(this, "_backend", void 0), this._backend = e, this.prefix = n;
             }
             q.prototype.get = function (e, t) { var n; try {
                 n = this._backend.getItem(this.prefix + e);
@@ -987,7 +986,7 @@ function je() {
             }
             catch (n) {
                 return console.warn("Storage: value of \"".concat(e, "\" is not valid JSON; using the default.")), t;
-            } return se(r, t) ? r : t; };
+            } return oe(r, t) ? r : t; };
             q.prototype.set = function (e, t) { try {
                 return this._backend.setItem(this.prefix + e, JSON.stringify(t)), !0;
             }
@@ -1020,7 +1019,7 @@ function je() {
             return q;
         }()), J = .7, Y = (function () {
             function class_1(e) {
-                t.s(this, "_platform", void 0), t.s(this, "_progress", 1), t.s(this, "_pinned", []), t.s(this, "_preloaded", []), this._platform = e;
+                t.xr(this, "_platform", void 0), t.xr(this, "_progress", 1), t.xr(this, "_pinned", []), t.xr(this, "_preloaded", []), this._platform = e;
             }
             Object.defineProperty(class_1.prototype, "progress", {
                 get: function () { return this._progress; },
@@ -1073,7 +1072,7 @@ function je() {
                 });
             };
             class_1.prototype._unloadUnused = function (e, t) { if (!e)
-                return; var n = new Set(ce(__spreadArray(__spreadArray([], Object.values(t == null ? {} : t), true), this._pinned, true))); for (var _i = 0, _a = new Set(ce(Object.values(e))); _i < _a.length; _i++) {
+                return; var n = new Set(se(__spreadArray(__spreadArray([], Object.values(t == null ? {} : t), true), this._pinned, true))); for (var _i = 0, _a = new Set(se(Object.values(e))); _i < _a.length; _i++) {
                 var t_22 = _a[_i];
                 n.has(t_22) || t_22._unload();
             } };
@@ -1085,7 +1084,7 @@ function je() {
                             if (!n || e.length === 0)
                                 return [2];
                             r = __spreadArray([], new Set(e), true), i = 0, a = function () { return t(++i / r.length); };
-                            return [4, Promise.all(r.map(function (e) { var t = le(e, n); return t ? t.then(a) : a(); }))];
+                            return [4, Promise.all(r.map(function (e) { var t = ce(e, n); return t ? t.then(a) : a(); }))];
                         case 1:
                             _a.sent();
                             return [2];
@@ -1093,71 +1092,71 @@ function je() {
                 }); });
             };
             return class_1;
-        }()), xe = .5, Se = (function () {
-            function Se() {
-                t.s(this, "_actions", new Map), t.s(this, "_pressed", new Set), t.s(this, "_justPressed", new Set), t.s(this, "_justReleased", new Set), t.s(this, "_physicsJustPressed", new Set), t.s(this, "_physicsJustReleased", new Set), t.s(this, "_strength", new Map), t.s(this, "_inPhysics", !1);
+        }()), be = .5, xe = (function () {
+            function xe() {
+                t.xr(this, "_actions", new Map), t.xr(this, "_pressed", new Set), t.xr(this, "_justPressed", new Set), t.xr(this, "_justReleased", new Set), t.xr(this, "_physicsJustPressed", new Set), t.xr(this, "_physicsJustReleased", new Set), t.xr(this, "_strength", new Map), t.xr(this, "_inPhysics", !1);
             }
-            Se.prototype.add = function (e, t) { this._actions.set(e, __spreadArray([], t, true)); };
-            Se.prototype.remove = function (e) { this._actions.delete(e), this._pressed.delete(e), this._justPressed.delete(e), this._justReleased.delete(e), this._physicsJustPressed.delete(e), this._physicsJustReleased.delete(e), this._strength.delete(e); };
-            Se.prototype.has = function (e) { return this._actions.has(e); };
-            Se.prototype.isPressed = function (e) { return this._assert(e), this._pressed.has(e); };
-            Se.prototype.isJustPressed = function (e) { return this._assert(e), (this._inPhysics ? this._physicsJustPressed : this._justPressed).has(e); };
-            Se.prototype.isJustReleased = function (e) { return this._assert(e), (this._inPhysics ? this._physicsJustReleased : this._justReleased).has(e); };
-            Se.prototype.strength = function (e) { var t; return this._assert(e), (t = this._strength.get(e)) == null ? 0 : t; };
-            Se.prototype.beginFrame = function () { this._justPressed.clear(), this._justReleased.clear(); };
-            Se.prototype.beginPhysicsStep = function () { this._inPhysics = !0; };
-            Se.prototype.endPhysicsStep = function () { this._inPhysics = !1, this._physicsJustPressed.clear(), this._physicsJustReleased.clear(); };
-            Se.prototype.update = function (e) { for (var _i = 0, _a = this._actions; _i < _a.length; _i++) {
+            xe.prototype.add = function (e, t) { this._actions.set(e, __spreadArray([], t, true)); };
+            xe.prototype.remove = function (e) { this._actions.delete(e), this._pressed.delete(e), this._justPressed.delete(e), this._justReleased.delete(e), this._physicsJustPressed.delete(e), this._physicsJustReleased.delete(e), this._strength.delete(e); };
+            xe.prototype.has = function (e) { return this._actions.has(e); };
+            xe.prototype.isPressed = function (e) { return this._assert(e), this._pressed.has(e); };
+            xe.prototype.isJustPressed = function (e) { return this._assert(e), (this._inPhysics ? this._physicsJustPressed : this._justPressed).has(e); };
+            xe.prototype.isJustReleased = function (e) { return this._assert(e), (this._inPhysics ? this._physicsJustReleased : this._justReleased).has(e); };
+            xe.prototype.strength = function (e) { var t; return this._assert(e), (t = this._strength.get(e)) == null ? 0 : t; };
+            xe.prototype.beginFrame = function () { this._justPressed.clear(), this._justReleased.clear(); };
+            xe.prototype.beginPhysicsStep = function () { this._inPhysics = !0; };
+            xe.prototype.endPhysicsStep = function () { this._inPhysics = !1, this._physicsJustPressed.clear(), this._physicsJustReleased.clear(); };
+            xe.prototype.update = function (e) { for (var _i = 0, _a = this._actions; _i < _a.length; _i++) {
                 var _b = _a[_i], t_23 = _b[0], n_16 = _b[1];
                 var r_10 = e.strength(t_23, n_16);
                 this._strength.set(t_23, r_10);
-                var i_6 = r_10 >= xe, a_4 = this._pressed.has(t_23);
+                var i_6 = r_10 >= be, a_4 = this._pressed.has(t_23);
                 i_6 && !a_4 ? (this._pressed.add(t_23), this._justPressed.add(t_23), this._physicsJustPressed.add(t_23)) : !i_6 && a_4 && (this._pressed.delete(t_23), this._justReleased.add(t_23), this._physicsJustReleased.add(t_23));
             } };
-            Se.prototype._assert = function (e) { if (!this._actions.has(e)) {
+            xe.prototype._assert = function (e) { if (!this._actions.has(e)) {
                 var t_24 = __spreadArray([], this._actions.keys(), true);
                 throw Error("Unknown input action \"".concat(e, "\". Define it in the game options (actions: { ").concat(e, ": [...] }) or with tree.input.addAction(). Known actions: ").concat(t_24.length ? t_24.join(", ") : "(none)", "."));
             } };
-            return Se;
-        }()), Ce = (function () {
-            function Ce(e, n) {
-                t.s(this, "_viewport", void 0), t.s(this, "_topLevel", void 0), t.s(this, "_pointers", new Map), t.s(this, "_pointersDesign", new Map), t.s(this, "_unhandled", new Set), t.s(this, "_captures", new Map), t.s(this, "_position", null), t.s(this, "_positionDesign", null), t.s(this, "_justPressed", !1), t.s(this, "_justReleased", !1), this._viewport = e, this._topLevel = n;
+            return xe;
+        }()), Se = (function () {
+            function Se(e, n) {
+                t.xr(this, "_viewport", void 0), t.xr(this, "_topLevel", void 0), t.xr(this, "_pointers", new Map), t.xr(this, "_pointersDesign", new Map), t.xr(this, "_unhandled", new Set), t.xr(this, "_captures", new Map), t.xr(this, "_position", null), t.xr(this, "_positionDesign", null), t.xr(this, "_justPressed", !1), t.xr(this, "_justReleased", !1), this._viewport = e, this._topLevel = n;
             }
-            Object.defineProperty(Ce.prototype, "pointers", {
+            Object.defineProperty(Se.prototype, "pointers", {
                 get: function () { return this._pointers; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(Ce.prototype, "position", {
+            Object.defineProperty(Se.prototype, "position", {
                 get: function () { return this._position; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(Ce.prototype, "justPressed", {
+            Object.defineProperty(Se.prototype, "justPressed", {
                 get: function () { return this._justPressed; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(Ce.prototype, "justReleased", {
+            Object.defineProperty(Se.prototype, "justReleased", {
                 get: function () { return this._justReleased; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(Ce.prototype, "hasUnhandled", {
+            Object.defineProperty(Se.prototype, "hasUnhandled", {
                 get: function () { return this._unhandled.size > 0; },
                 enumerable: false,
                 configurable: true
             });
-            Ce.prototype.beginFrame = function () { this._justPressed = !1, this._justReleased = !1; var e = this._viewport; for (var _i = 0, _a = this._pointersDesign; _i < _a.length; _i++) {
+            Se.prototype.beginFrame = function () { this._justPressed = !1, this._justReleased = !1; var e = this._viewport; for (var _i = 0, _a = this._pointersDesign; _i < _a.length; _i++) {
                 var _b = _a[_i], t_25 = _b[0], n_17 = _b[1];
                 this._pointers.set(t_25, e.designToWorld(n_17));
             } this._positionDesign && (this._position = e.designToWorld(this._positionDesign)); };
-            Ce.prototype.cancelUnhittable = function () { if (this._captures.size !== 0)
+            Se.prototype.cancelUnhittable = function () { if (this._captures.size !== 0)
                 for (var _i = 0, _a = this._captures; _i < _a.length; _i++) {
                     var _b = _a[_i], e_28 = _b[0], t_26 = _b[1];
                     t_26.isInsideTree && !t_26.isFreed && R(t_26) || this._end(e_28, !1, this._pointers.get(e_28), this._pointersDesign.get(e_28));
                 } };
-            Ce.prototype.releaseAll = function (e) { var t = new Map; for (var _i = 0, _a = this._pointersDesign; _i < _a.length; _i++) {
+            Se.prototype.releaseAll = function (e) { var t = new Map; for (var _i = 0, _a = this._pointersDesign; _i < _a.length; _i++) {
                 var _b = _a[_i], e_30 = _b[0], n_18 = _b[1];
                 t.set(e_30, this._viewport.designToScreen(n_18));
             } for (var _c = 0, e_29 = e; _c < e_29.length; _c++) {
@@ -1167,7 +1166,7 @@ function je() {
                 var _f = t_27[_d], n_20 = _f[0], r_11 = _f[1];
                 e.push({ type: "pointercancel", pointerId: n_20, x: r_11.x, y: r_11.y });
             } };
-            Ce.prototype.handle = function (e) { var t = this._viewport.screenToDesign(new C(e.x, e.y)), n = this._viewport.designToWorld(t); this._position = n, this._positionDesign = t; var r = e.pointerId; if (e.type === "pointerdown") {
+            Se.prototype.handle = function (e) { var t = this._viewport.screenToDesign(new S(e.x, e.y)), n = this._viewport.designToWorld(t); this._position = n, this._positionDesign = t; var r = e.pointerId; if (e.type === "pointerdown") {
                 this._pointers.set(r, n), this._pointersDesign.set(r, t), this._justPressed = !0;
                 var e_31 = this._pick(n, t);
                 e_31 ? (this._captures.set(r, e_31), e_31.pointerDown.emit(z(r, n, t, e_31))) : this._unhandled.add(r);
@@ -1177,44 +1176,44 @@ function je() {
                 this._end(r, e.type === "pointerup", n, t);
                 return;
             } this._pointers.set(r, n), this._pointersDesign.set(r, t); var i = this._captures.get(r); i && i.isInsideTree && !i.isFreed && i.pointerMove.emit(z(r, n, t, i)); };
-            Ce.prototype.cancelStale = function (e) { var t = this._pointers.get(e); return t ? (this._end(e, !1, t, this._pointersDesign.get(e)), !0) : !1; };
-            Ce.prototype.transfer = function (e, t) { var n = this._pointers.get(e); if (!n || !t.isInsideTree || t.isFreed || !R(t))
+            Se.prototype.cancelStale = function (e) { var t = this._pointers.get(e); return t ? (this._end(e, !1, t, this._pointersDesign.get(e)), !0) : !1; };
+            Se.prototype.transfer = function (e, t) { var n = this._pointers.get(e); if (!n || !t.isInsideTree || t.isFreed || !R(t))
                 return !1; var r = this._captures.get(e); return r === t || (this._captures.set(e, t), this._unhandled.delete(e), r && r.isInsideTree && !r.isFreed && r.pointerUp.emit(z(e, n, this._pointersDesign.get(e), r))), !0; };
-            Ce.prototype.isCapturedBy = function (e, t, n) { var r = this._captures.get(e); if (!r)
+            Se.prototype.isCapturedBy = function (e, t, n) { var r = this._captures.get(e); if (!r)
                 return !1; if (!n)
                 return r === t; for (var e_32 = r; e_32; e_32 = e_32.parent)
                 if (e_32 === t)
                     return !0; return !1; };
-            Ce.prototype._end = function (e, t, n, r) { var i = this._captures.get(e), a = i && i.isInsideTree && !i.isFreed ? i : null; if (this._pointers.delete(e), this._pointersDesign.delete(e), this._unhandled.delete(e), this._captures.delete(e), this._justReleased = !0, a) {
+            Se.prototype._end = function (e, t, n, r) { var i = this._captures.get(e), a = i && i.isInsideTree && !i.isFreed ? i : null; if (this._pointers.delete(e), this._pointersDesign.delete(e), this._unhandled.delete(e), this._captures.delete(e), this._justReleased = !0, a) {
                 var i_7 = z(e, n, r, a);
                 a.pointerUp.emit(i_7), t && a.hitTest(i_7.localPosition) && a._insideClips(i_7.position) && a.clicked.emit(i_7);
             } };
-            Ce.prototype._pick = function (e, t) { var n = [], r = []; v(this._topLevel(), n, r); for (var i_8 = n.length - 1; i_8 >= 0; i_8--) {
+            Se.prototype._pick = function (e, t) { var n = [], r = []; _(this._topLevel(), n, r); for (var i_8 = n.length - 1; i_8 >= 0; i_8--) {
                 var a_5 = n[i_8];
-                if (a_5.inputPickable && de(a_5, e, t, r[i_8]))
+                if (a_5.inputPickable && ue(a_5, e, t, r[i_8]))
                     return a_5;
             } return null; };
-            return Ce;
-        }()), we = (function () {
-            function we(e, n) {
+            return Se;
+        }()), Ce = (function () {
+            function Ce(e, n) {
                 var _this = this;
-                t.s(this, "_queue", []), t.s(this, "_spare", []), t.s(this, "_actions", new Se), t.s(this, "_pointer", void 0), t.s(this, "_sources", []), t.s(this, "_strengthSources", []), t.s(this, "_frameSources", []), t.s(this, "_routes", new Map), t.s(this, "_frameScratch", []), t.s(this, "_dispatchScratch", []), t.s(this, "_warnedTypes", new Set), t.s(this, "_source", { strength: function (e, t) { return _this._strength(e, t); } }), this._pointer = new Ce(e, n);
+                t.xr(this, "_queue", []), t.xr(this, "_spare", []), t.xr(this, "_actions", new xe), t.xr(this, "_pointer", void 0), t.xr(this, "_sources", []), t.xr(this, "_strengthSources", []), t.xr(this, "_frameSources", []), t.xr(this, "_routes", new Map), t.xr(this, "_frameScratch", []), t.xr(this, "_dispatchScratch", []), t.xr(this, "_warnedTypes", new Set), t.xr(this, "_source", { strength: function (e, t) { return _this._strength(e, t); } }), this._pointer = new Se(e, n);
             }
-            we.prototype.addAction = function (e, t) { for (var _i = 0, t_28 = t; _i < t_28.length; _i++) {
+            Ce.prototype.addAction = function (e, t) { for (var _i = 0, t_28 = t; _i < t_28.length; _i++) {
                 var n_21 = t_28[_i];
                 n_21.type === "pointer" || this._warnedTypes.has(n_21.type) || this._claims(n_21.type) || (this._warnedTypes.add(n_21.type), console.warn("Input action \"".concat(e, "\": binding type \"").concat(n_21.type, "\" has no input source, so it will never press the action. Install its plugin in the game options (plugins: [...]).")));
             } this._actions.add(e, t); };
-            we.prototype.removeAction = function (e) { this._actions.remove(e); };
-            we.prototype.hasAction = function (e) { return this._actions.has(e); };
-            we.prototype.isActionPressed = function (e) { return this._actions.isPressed(e); };
-            we.prototype.isActionJustPressed = function (e) { return this._actions.isJustPressed(e); };
-            we.prototype.isActionJustReleased = function (e) { return this._actions.isJustReleased(e); };
-            we.prototype.getActionStrength = function (e) { return this._actions.strength(e); };
-            we.prototype.getAxis = function (e, t) { return this.getActionStrength(t) - this.getActionStrength(e); };
-            we.prototype.getVector = function (e, t, n, r) { var i = this.getAxis(e, t), a = this.getAxis(n, r), o = Math.sqrt(i * i + a * a); return o > 1 && (i /= o, a /= o), new C(i, a); };
-            we.prototype._beginPhysicsStep = function () { this._actions.beginPhysicsStep(); };
-            we.prototype._endPhysicsStep = function () { this._actions.endPhysicsStep(); };
-            we.prototype._strength = function (e, t) { var n = 0; if (this._pointer.hasUnhandled) {
+            Ce.prototype.removeAction = function (e) { this._actions.remove(e); };
+            Ce.prototype.hasAction = function (e) { return this._actions.has(e); };
+            Ce.prototype.isActionPressed = function (e) { return this._actions.isPressed(e); };
+            Ce.prototype.isActionJustPressed = function (e) { return this._actions.isJustPressed(e); };
+            Ce.prototype.isActionJustReleased = function (e) { return this._actions.isJustReleased(e); };
+            Ce.prototype.getActionStrength = function (e) { return this._actions.strength(e); };
+            Ce.prototype.getAxis = function (e, t) { return this.getActionStrength(t) - this.getActionStrength(e); };
+            Ce.prototype.getVector = function (e, t, n, r) { var i = this.getAxis(e, t), a = this.getAxis(n, r), o = Math.sqrt(i * i + a * a); return o > 1 && (i /= o, a /= o), new S(i, a); };
+            Ce.prototype._beginPhysicsStep = function () { this._actions.beginPhysicsStep(); };
+            Ce.prototype._endPhysicsStep = function () { this._actions.endPhysicsStep(); };
+            Ce.prototype._strength = function (e, t) { var n = 0; if (this._pointer.hasUnhandled) {
                 for (var e_33 = 0; e_33 < t.length; e_33++)
                     if (t[e_33].type === "pointer") {
                         n = 1;
@@ -1224,56 +1223,56 @@ function je() {
                 var a_6 = r[i_9].strength(e, t);
                 a_6 > n && (n = a_6);
             } return n; };
-            we.prototype._claims = function (e) { for (var t_29 = 0; t_29 < this._sources.length; t_29++) {
+            Ce.prototype._claims = function (e) { for (var t_29 = 0; t_29 < this._sources.length; t_29++) {
                 var n_22 = this._sources[t_29].bindingTypes;
                 if (n_22 && n_22.includes(e))
                     return !0;
             } return !1; };
-            Object.defineProperty(we.prototype, "pointerPosition", {
+            Object.defineProperty(Ce.prototype, "pointerPosition", {
                 get: function () { return this._pointer.position; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(we.prototype, "isPointerPressed", {
+            Object.defineProperty(Ce.prototype, "isPointerPressed", {
                 get: function () { return this._pointer.pointers.size > 0; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(we.prototype, "isPointerJustPressed", {
+            Object.defineProperty(Ce.prototype, "isPointerJustPressed", {
                 get: function () { return this._pointer.justPressed; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(we.prototype, "isPointerJustReleased", {
+            Object.defineProperty(Ce.prototype, "isPointerJustReleased", {
                 get: function () { return this._pointer.justReleased; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(we.prototype, "pressedPointers", {
+            Object.defineProperty(Ce.prototype, "pressedPointers", {
                 get: function () { return this._pointer.pointers; },
                 enumerable: false,
                 configurable: true
             });
-            we.prototype.addSource = function (e) { if (!this._sources.includes(e) && (this._sources.push(e), e.strength && this._strengthSources.push(e), e.beginFrame && this._frameSources.push(e), e.eventTypes))
+            Ce.prototype.addSource = function (e) { if (!this._sources.includes(e) && (this._sources.push(e), e.strength && this._strengthSources.push(e), e.beginFrame && this._frameSources.push(e), e.eventTypes))
                 for (var _i = 0, _a = e.eventTypes; _i < _a.length; _i++) {
                     var t_30 = _a[_i];
                     var n_23 = this._routes.get(t_30);
                     n_23 ? n_23.push(e) : this._routes.set(t_30, [e]);
                 } };
-            we.prototype.removeSource = function (e) { B(this._sources, e), B(this._strengthSources, e), B(this._frameSources, e); for (var _i = 0, _a = this._routes.values(); _i < _a.length; _i++) {
+            Ce.prototype.removeSource = function (e) { B(this._sources, e), B(this._strengthSources, e), B(this._frameSources, e); for (var _i = 0, _a = this._routes.values(); _i < _a.length; _i++) {
                 var t_31 = _a[_i];
                 B(t_31, e);
             } };
-            we.prototype.enqueue = function (e) { this._queue.push(e); };
-            we.prototype._flush = function () { this._actions.beginFrame(), this._pointer.beginFrame(), this._pointer.cancelUnhittable(); var e = fe(this._frameSources, this._frameScratch); for (var t_32 = 0; t_32 < e.length; t_32++)
+            Ce.prototype.enqueue = function (e) { this._queue.push(e); };
+            Ce.prototype._flush = function () { this._actions.beginFrame(), this._pointer.beginFrame(), this._pointer.cancelUnhittable(); var e = de(this._frameSources, this._frameScratch); for (var t_32 = 0; t_32 < e.length; t_32++)
                 e[t_32].beginFrame(); this._actions.update(this._source); var t = this._queue; if (t.length !== 0) {
                 this._queue = this._spare, this._spare = t;
                 for (var e_34 = 0; e_34 < t.length; e_34++) {
                     var n_24 = t[e_34];
-                    ue(n_24) && (n_24.type === "pointerdown" && this._pointer.cancelStale(n_24.pointerId) && this._actions.update(this._source), this._pointer.handle(n_24));
+                    le(n_24) && (n_24.type === "pointerdown" && this._pointer.cancelStale(n_24.pointerId) && this._actions.update(this._source), this._pointer.handle(n_24));
                     var r_12 = this._routes.get(n_24.type);
                     if (r_12) {
-                        var e_35 = fe(r_12, this._dispatchScratch);
+                        var e_35 = de(r_12, this._dispatchScratch);
                         for (var t_33 = 0; t_33 < e_35.length; t_33++)
                             e_35[t_33].handle(n_24);
                     }
@@ -1281,28 +1280,28 @@ function je() {
                 }
                 t.length = 0;
             } };
-            we.prototype._capturePointer = function (e, t) { return this._pointer.transfer(e, t); };
-            we.prototype._hasPointerCapture = function (e, t, n) { return this._pointer.isCapturedBy(e, t, n); };
-            we.prototype._releaseAll = function () { var e, t; this._pointer.releaseAll(this._queue); var n = this._sources.slice(); for (var r_13 = 0; r_13 < n.length; r_13++)
+            Ce.prototype._capturePointer = function (e, t) { return this._pointer.transfer(e, t); };
+            Ce.prototype._hasPointerCapture = function (e, t, n) { return this._pointer.isCapturedBy(e, t, n); };
+            Ce.prototype._releaseAll = function () { var e, t; this._pointer.releaseAll(this._queue); var n = this._sources.slice(); for (var r_13 = 0; r_13 < n.length; r_13++)
                 (e = (t = n[r_13]).releaseAll) == null || e.call(t, this._queue); };
-            return we;
-        }()), Te = (function () {
-            function Te(e, n, r, i) {
+            return Ce;
+        }()), we = (function () {
+            function we(e, n, r, i) {
                 if (r === void 0) { r = !1; }
                 if (i === void 0) { i = !1; }
-                t.s(this, "timeout", new w), t.s(this, "processAlways", void 0), t.s(this, "ignoreTimeScale", void 0), t.s(this, "processInPhysics", void 0), t.s(this, "_timeLeft", void 0), this._timeLeft = e, this.processAlways = n, this.ignoreTimeScale = r, this.processInPhysics = i;
+                t.xr(this, "timeout", new C), t.xr(this, "processAlways", void 0), t.xr(this, "ignoreTimeScale", void 0), t.xr(this, "processInPhysics", void 0), t.xr(this, "_timeLeft", void 0), this._timeLeft = e, this.processAlways = n, this.ignoreTimeScale = r, this.processInPhysics = i;
             }
-            Object.defineProperty(Te.prototype, "timeLeft", {
+            Object.defineProperty(we.prototype, "timeLeft", {
                 get: function () { return Math.max(0, this._timeLeft); },
                 enumerable: false,
                 configurable: true
             });
-            Te.prototype._advance = function (e, t) { return t && !this.processAlways || (this._timeLeft -= e, this._timeLeft > 1e-9) ? !0 : (this.timeout.emit(), !1); };
-            return Te;
+            we.prototype._advance = function (e, t) { return t && !this.processAlways || (this._timeLeft -= e, this._timeLeft > 1e-9) ? !0 : (this.timeout.emit(), !1); };
+            return we;
         }()), X = (function () {
             function X(e, n) {
                 var r;
-                t.s(this, "designWidth", void 0), t.s(this, "designHeight", void 0), t.s(this, "aspect", void 0), t.s(this, "resized", new w), t.s(this, "_screen", void 0), t.s(this, "_scale", 1), t.s(this, "_offset", C.ZERO), t.s(this, "_visibleRect", void 0), t.s(this, "_safeRect", void 0), t.s(this, "_version", 0), t.s(this, "_canvasX", 0), t.s(this, "_canvasY", 0), this.designWidth = e.width, this.designHeight = e.height, this.aspect = (r = e.aspect) == null ? "expand" : r, this._update(n, !1);
+                t.xr(this, "designWidth", void 0), t.xr(this, "designHeight", void 0), t.xr(this, "aspect", void 0), t.xr(this, "resized", new C), t.xr(this, "_screen", void 0), t.xr(this, "_scale", 1), t.xr(this, "_offset", S.ZERO), t.xr(this, "_visibleRect", void 0), t.xr(this, "_safeRect", void 0), t.xr(this, "_version", 0), t.xr(this, "_canvasX", 0), t.xr(this, "_canvasY", 0), this.designWidth = e.width, this.designHeight = e.height, this.aspect = (r = e.aspect) == null ? "expand" : r, this._update(n, !1);
             }
             Object.defineProperty(X.prototype, "designRect", {
                 get: function () { return new A(0, 0, this.designWidth, this.designHeight); },
@@ -1357,29 +1356,29 @@ function je() {
             });
             X.prototype.screenToWorld = function (e) { return this.designToWorld(this.screenToDesign(e)); };
             X.prototype.worldToScreen = function (e) { return this.designToScreen(this.worldToDesign(e)); };
-            X.prototype.designToWorld = function (e) { return new C(e.x - this._canvasX, e.y - this._canvasY); };
-            X.prototype.worldToDesign = function (e) { return new C(e.x + this._canvasX, e.y + this._canvasY); };
-            X.prototype.screenToDesign = function (e) { return new C((e.x - this._offset.x) / this._scale, (e.y - this._offset.y) / this._scale); };
-            X.prototype.designToScreen = function (e) { return new C(e.x * this._scale + this._offset.x, e.y * this._scale + this._offset.y); };
+            X.prototype.designToWorld = function (e) { return new S(e.x - this._canvasX, e.y - this._canvasY); };
+            X.prototype.worldToDesign = function (e) { return new S(e.x + this._canvasX, e.y + this._canvasY); };
+            X.prototype.screenToDesign = function (e) { return new S((e.x - this._offset.x) / this._scale, (e.y - this._offset.y) / this._scale); };
+            X.prototype.designToScreen = function (e) { return new S(e.x * this._scale + this._offset.x, e.y * this._scale + this._offset.y); };
             X.prototype._update = function (e, t) {
                 if (t === void 0) { t = !0; }
                 var n;
                 var r = (n = e.safeArea) == null ? { left: 0, top: 0, right: e.width, bottom: e.height } : n;
                 this._screen = { width: e.width, height: e.height, pixelRatio: e.pixelRatio, safeArea: r };
                 var i = Math.min(e.width / this.designWidth, e.height / this.designHeight);
-                this._scale = i, this._offset = new C((e.width - this.designWidth * i) / 2, (e.height - this.designHeight * i) / 2), this._visibleRect = this.aspect === "keep" ? this.designRect : new A((0 - this._offset.x) / i, (0 - this._offset.y) / i, e.width / i, e.height / i);
-                var a = this.screenToDesign(new C(r.left, r.top)), o = this.screenToDesign(new C(r.right, r.bottom));
+                this._scale = i, this._offset = new S((e.width - this.designWidth * i) / 2, (e.height - this.designHeight * i) / 2), this._visibleRect = this.aspect === "keep" ? this.designRect : new A((0 - this._offset.x) / i, (0 - this._offset.y) / i, e.width / i, e.height / i);
+                var a = this.screenToDesign(new S(r.left, r.top)), o = this.screenToDesign(new S(r.right, r.bottom));
                 this._safeRect = new A(a.x, a.y, o.x - a.x, o.y - a.y).intersection(this._visibleRect), this._version++, t && this.resized.emit();
             };
             return X;
-        }()), Ee = 1e-9, Z = 100, De = (U = (function () {
+        }()), Te = 1e-9, Z = 100, Ee = (U = (function () {
             function e(n) {
                 if (n === void 0) { n = {}; }
                 var _this = this;
                 var r, i, a, o, s, c;
-                if (t.s(this, "physicsDelta", 1 / e.PHYSICS_TICKS_PER_SECOND), t.s(this, "maxPhysicsStepsPerFrame", void 0), t.s(this, "rng", void 0), t.s(this, "fxRng", void 0), t.s(this, "viewport", void 0), t.s(this, "input", void 0), t.s(this, "audio", void 0), t.s(this, "storage", void 0), t.s(this, "assets", void 0), t.s(this, "physicsSettings", void 0), t.s(this, "_root", new k({ name: "root" })), t.s(this, "_scene", null), t.s(this, "_autoloads", new Map), t.s(this, "_services", new Map), t.s(this, "_systems", new Map), t.s(this, "_physicsSteppers", []), t.s(this, "_frameEnders", []), t.s(this, "_accumulator", 0), t.s(this, "_physicsFrames", 0), t.s(this, "_gameSteps", 0), t.s(this, "_processFrames", 0), t.s(this, "_deferred", []), t.s(this, "_paused", !1), t.s(this, "_timeScale", 1), t.s(this, "sceneChanged", new w), t.s(this, "_changeChain", Promise.resolve()), t.s(this, "_currentArgs", null), t.s(this, "focusChanged", new w), t.s(this, "_tweens", []), t.s(this, "_timers", []), t.s(this, "_physicsTweens", []), t.s(this, "_physicsTimers", []), t.s(this, "_physicsProcessNodes", 0), t.s(this, "_inPhysicsProcess", !1), t.s(this, "_freeQueue", []), this.rng = new G(n.seed), this.fxRng = new G(this.rng.seed ^ 2654435769), this.maxPhysicsStepsPerFrame = (r = n.maxPhysicsStepsPerFrame) == null ? 2 : r, !(this.maxPhysicsStepsPerFrame >= 1))
+                if (t.xr(this, "physicsDelta", 1 / e.PHYSICS_TICKS_PER_SECOND), t.xr(this, "maxPhysicsStepsPerFrame", void 0), t.xr(this, "rng", void 0), t.xr(this, "fxRng", void 0), t.xr(this, "viewport", void 0), t.xr(this, "input", void 0), t.xr(this, "audio", void 0), t.xr(this, "storage", void 0), t.xr(this, "assets", void 0), t.xr(this, "physicsSettings", void 0), t.xr(this, "_root", new k({ name: "root" })), t.xr(this, "_scene", null), t.xr(this, "_autoloads", new Map), t.xr(this, "_services", new Map), t.xr(this, "_systems", new Map), t.xr(this, "_physicsSteppers", []), t.xr(this, "_frameEnders", []), t.xr(this, "_accumulator", 0), t.xr(this, "_physicsFrames", 0), t.xr(this, "_gameSteps", 0), t.xr(this, "_processFrames", 0), t.xr(this, "_deferred", []), t.xr(this, "_paused", !1), t.xr(this, "_timeScale", 1), t.xr(this, "sceneChanged", new C), t.xr(this, "_changeChain", Promise.resolve()), t.xr(this, "_currentArgs", null), t.xr(this, "focusChanged", new C), t.xr(this, "_tweens", []), t.xr(this, "_timers", []), t.xr(this, "_physicsTweens", []), t.xr(this, "_physicsTimers", []), t.xr(this, "_physicsProcessNodes", 0), t.xr(this, "_inPhysicsProcess", !1), t.xr(this, "_freeQueue", []), this.rng = new G(n.seed), this.fxRng = new G(this.rng.seed ^ 2654435769), this.maxPhysicsStepsPerFrame = (r = n.maxPhysicsStepsPerFrame) == null ? 2 : r, !(this.maxPhysicsStepsPerFrame >= 1))
                     throw Error("maxPhysicsStepsPerFrame must be >= 1, got ".concat(n.maxPhysicsStepsPerFrame, "."));
-                this.viewport = (i = n.viewport) == null ? new X({ width: 750, height: 1334 }, { width: 750, height: 1334, pixelRatio: 1 }) : i, this.input = new we(this.viewport, function () { return _this._root.children; }), this.physicsSettings = (a = n.physics) == null ? {} : a, this.audio = (o = n.audio) == null ? new K(new ye) : o, this.storage = (s = n.storage) == null ? new q(new be, "sapling2d:") : s, this.assets = (c = n.assets) == null ? new Y(null) : c, this._root._attachAsRoot(this);
+                this.viewport = (i = n.viewport) == null ? new X({ width: 750, height: 1334 }, { width: 750, height: 1334, pixelRatio: 1 }) : i, this.input = new Ce(this.viewport, function () { return _this._root.children; }), this.physicsSettings = (a = n.physics) == null ? {} : a, this.audio = (o = n.audio) == null ? new K(new ve) : o, this.storage = (s = n.storage) == null ? new q(new ye, "sapling2d:") : s, this.assets = (c = n.assets) == null ? new Y(null) : c, this._root._attachAsRoot(this);
             }
             Object.defineProperty(e.prototype, "currentScene", {
                 get: function () { return this._scene; },
@@ -1416,7 +1415,7 @@ function je() {
                 configurable: true
             });
             Object.defineProperty(e.prototype, "physics", {
-                get: function () { return this.system(ge); },
+                get: function () { return this.system(he); },
                 enumerable: false,
                 configurable: true
             });
@@ -1458,7 +1457,7 @@ function je() {
             e.prototype.createTween = function (e) {
                 if (e === void 0) { e = {}; }
                 var t;
-                return this._addTween(new O(null, (t = e.processInPhysics) != null && t));
+                return this._addTween(new D(null, (t = e.processInPhysics) != null && t));
             };
             e.prototype._addTween = function (e) { return (e.processInPhysics ? this._physicsTweens : this._tweens).push(e), e; };
             e.prototype.createTimer = function (e, t) {
@@ -1466,7 +1465,7 @@ function je() {
                 var n, r, i;
                 if (t.ignoreTimeScale && t.processInPhysics)
                     throw Error("createTimer: ignoreTimeScale and processInPhysics cannot be combined (physics steps are game time).");
-                var a = new Te(e, (n = t.processAlways) == null || n, (r = t.ignoreTimeScale) != null && r, (i = t.processInPhysics) != null && i);
+                var a = new we(e, (n = t.processAlways) == null || n, (r = t.ignoreTimeScale) != null && r, (i = t.processInPhysics) != null && i);
                 return (a.processInPhysics ? this._physicsTimers : this._timers).push(a), a;
             };
             e.prototype.getNodesInGroup = function (e) { return this._snapshot().filter(function (t) { return t.isInGroup(e); }); };
@@ -1490,7 +1489,7 @@ function je() {
                     t_36 === this._scene && (this._scene = null), t_36._free();
                 }
             } };
-            e.prototype.advance = function (e) { var t = this._tweens.length, n = this._timers.length; this.input._flush(); var r = Math.min(Math.max(e, 0), this.maxPhysicsStepsPerFrame * this.physicsDelta), i = r * this._timeScale; for (this._accumulator += i; this._accumulator >= this.physicsDelta - Ee;) {
+            e.prototype.advance = function (e) { var t = this._tweens.length, n = this._timers.length; this.input._flush(); var r = Math.min(Math.max(e, 0), this.maxPhysicsStepsPerFrame * this.physicsDelta), i = r * this._timeScale; for (this._accumulator += i; this._accumulator >= this.physicsDelta - Te;) {
                 this._accumulator -= this.physicsDelta, this._physicsFrames++, this._paused || this._gameSteps++;
                 var e_40 = this._physicsTweens.length, t_37 = this._physicsTimers.length;
                 this.input._beginPhysicsStep();
@@ -1537,7 +1536,7 @@ function je() {
                     return "(empty tree)";
                 var n = [], r = function (e, t) { var i = Object.entries(e.props).map(function (_a) {
                     var e = _a[0], t = _a[1];
-                    return "".concat(e, "=").concat(pe(t));
+                    return "".concat(e, "=").concat(fe(t));
                 }); n.push("".concat("  ".repeat(t)).concat(e.name, " (").concat(e.type, ")").concat(i.length ? " " + i.join(" ") : "")); for (var _i = 0, _a = e.children; _i < _a.length; _i++) {
                     var n_26 = _a[_i];
                     r(n_26, t + 1);
@@ -1549,9 +1548,9 @@ function je() {
                 return n.join("\n");
             };
             return e;
-        }()), t.s(U, "PHYSICS_TICKS_PER_SECOND", 60), U), Q = (function () {
+        }()), t.xr(U, "PHYSICS_TICKS_PER_SECOND", 60), U), Q = (function () {
             function Q() {
-                t.s(this, "bindingTypes", ["key"]), t.s(this, "eventTypes", ["keydown", "keyup"]), t.s(this, "_down", new Set);
+                t.xr(this, "bindingTypes", ["key"]), t.xr(this, "eventTypes", ["keydown", "keyup"]), t.xr(this, "_down", new Set);
             }
             Q.prototype.isPressed = function (e) { return this._down.has(e); };
             Q.prototype.handle = function (e) { e.type === "keydown" ? this._down.add(e.code) : e.type === "keyup" && this._down.delete(e.code); };
@@ -1568,58 +1567,58 @@ function je() {
                 e.push({ type: "keyup", code: n_29 });
             } };
             return Q;
-        }()), $ = 8, Oe = (function (_super) {
-            __extends(Oe, _super);
-            function Oe() {
+        }()), $ = 8, De = (function (_super) {
+            __extends(De, _super);
+            function De() {
                 var e = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     e[_i] = arguments[_i];
                 }
                 var _this = this;
-                _this = _super.apply(this, e) || this, t.s(_this, "_fill", null);
+                _this = _super.apply(this, e) || this, t.xr(_this, "_fill", null);
                 return _this;
             }
-            Oe.prototype.ready = function () { var e = this.tree.viewport.designRect, t = Math.round(e.width * .6), n = this.add(new F({ name: "Track", position: r(e.x + (e.width - t) / 2, e.y + e.height / 2 - $ / 2), size: r(t, $), color: 4210752 })); this._fill = n.add(new F({ name: "Fill", size: r(t, $), color: 16777215 })), this._update(); };
-            Oe.prototype.process = function () { this._update(); };
-            Oe.prototype._update = function () { var e = this.tree.assets.progress; this._fill && this._fill.scale.x !== e && (this._fill.scale = r(e, 1)); };
-            return Oe;
-        }(W)), ke = (function () {
-            function ke() {
-                t.s(this, "frames", 0), t.s(this, "intervalMax", 0), t.s(this, "logicMax", 0), t.s(this, "renderMax", 0), t.s(this, "_interval", 0), t.s(this, "_logic", 0), t.s(this, "_render", 0);
+            De.prototype.ready = function () { var e = this.tree.viewport.designRect, t = Math.round(e.width * .6), n = this.add(new F({ name: "Track", position: r(e.x + (e.width - t) / 2, e.y + e.height / 2 - $ / 2), size: r(t, $), color: 4210752 })); this._fill = n.add(new F({ name: "Fill", size: r(t, $), color: 16777215 })), this._update(); };
+            De.prototype.process = function () { this._update(); };
+            De.prototype._update = function () { var e = this.tree.assets.progress; this._fill && this._fill.scale.x !== e && (this._fill.scale = r(e, 1)); };
+            return De;
+        }(W)), Oe = (function () {
+            function Oe() {
+                t.xr(this, "frames", 0), t.xr(this, "intervalMax", 0), t.xr(this, "logicMax", 0), t.xr(this, "renderMax", 0), t.xr(this, "_interval", 0), t.xr(this, "_logic", 0), t.xr(this, "_render", 0);
             }
-            Object.defineProperty(ke.prototype, "intervalAvg", {
+            Object.defineProperty(Oe.prototype, "intervalAvg", {
                 get: function () { return this.frames ? this._interval / this.frames : 0; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(ke.prototype, "logicAvg", {
+            Object.defineProperty(Oe.prototype, "logicAvg", {
                 get: function () { return this.frames ? this._logic / this.frames : 0; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(ke.prototype, "renderAvg", {
+            Object.defineProperty(Oe.prototype, "renderAvg", {
                 get: function () { return this.frames ? this._render / this.frames : 0; },
                 enumerable: false,
                 configurable: true
             });
-            Object.defineProperty(ke.prototype, "fps", {
+            Object.defineProperty(Oe.prototype, "fps", {
                 get: function () { return this._interval ? 1e3 * this.frames / this._interval : 0; },
                 enumerable: false,
                 configurable: true
             });
-            ke.prototype._add = function (e, t, n) { this.frames++, this._interval += e, this._logic += t, this._render += n, e > this.intervalMax && (this.intervalMax = e), t > this.logicMax && (this.logicMax = t), n > this.renderMax && (this.renderMax = n); };
-            ke.prototype._reset = function () { this.frames = this._interval = this._logic = this._render = 0, this.intervalMax = this.logicMax = this.renderMax = 0; };
-            return ke;
-        }()), Ae = (function () {
+            Oe.prototype._add = function (e, t, n) { this.frames++, this._interval += e, this._logic += t, this._render += n, e > this.intervalMax && (this.intervalMax = e), t > this.logicMax && (this.logicMax = t), n > this.renderMax && (this.renderMax = n); };
+            Oe.prototype._reset = function () { this.frames = this._interval = this._logic = this._render = 0, this.intervalMax = this.logicMax = this.renderMax = 0; };
+            return Oe;
+        }()), ke = (function () {
             function e(e, n, r, i, a) {
                 var _this = this;
-                t.s(this, "tree", void 0), t.s(this, "_platform", void 0), t.s(this, "_renderer", void 0), t.s(this, "_stats", new ke), t.s(this, "_frameId", null), t.s(this, "_lastTime", 0), t.s(this, "_unsubscribeScreen", void 0), t.s(this, "_unsubscribeInput", void 0), t.s(this, "_unsubscribeFocus", void 0), t.s(this, "_disposers", void 0), t.s(this, "_suspended", !1), this._platform = e, this._renderer = n, this.tree = r, this._disposers = a, this._unsubscribeScreen = e.onScreenChange(function (e) { return r.viewport._update(e); }), this._unsubscribeInput = e.onInput(function (e) { return r.input.enqueue(e); }), this._unsubscribeFocus = e.onFocusChange(function (t) { i && (_this._suspended = !t, t && (_this._lastTime = e.now())), r.setFocused(t); });
+                t.xr(this, "tree", void 0), t.xr(this, "_platform", void 0), t.xr(this, "_renderer", void 0), t.xr(this, "_stats", new Oe), t.xr(this, "_frameId", null), t.xr(this, "_lastTime", 0), t.xr(this, "_unsubscribeScreen", void 0), t.xr(this, "_unsubscribeInput", void 0), t.xr(this, "_unsubscribeFocus", void 0), t.xr(this, "_disposers", void 0), t.xr(this, "_suspended", !1), this._platform = e, this._renderer = n, this.tree = r, this._disposers = a, this._unsubscribeScreen = e.onScreenChange(function (e) { return r.viewport._update(e); }), this._unsubscribeInput = e.onInput(function (e) { return r.input.enqueue(e); }), this._unsubscribeFocus = e.onFocusChange(function (t) { i && (_this._suspended = !t, t && (_this._lastTime = e.now())), r.setFocused(t); });
             }
             e.create = function (n) {
                 return __awaiter(this, void 0, void 0, function () { var r, i, a, o, s, c, l, u, d, f, p, m, _i, _a, e_47, t_42, _b, _c, _d, e_48, t_43, _f, _g, e_49, h, g, _, _h, _j; return __generator(this, function (_k) {
                     switch (_k.label) {
                         case 0:
-                            d = n.platform, f = new De(t.a(t.a(t.a({ viewport: new X((r = n.design) == null ? { width: 750, height: 1334 } : r, d.getScreenInfo()), audio: new K(d.audio), storage: new q(d.storage, (i = n.storagePrefix) == null ? "sapling2d:" : i), assets: new Y(d) }, n.seed === void 0 ? {} : { seed: n.seed }), n.physics ? { physics: n.physics } : {}), n.maxPhysicsStepsPerFrame === void 0 ? {} : { maxPhysicsStepsPerFrame: n.maxPhysicsStepsPerFrame })), p = [], m = { tree: f, platform: d, provide: function (e, t) { return f.provide(e, t); }, preload: function (e) { return f.assets.preload(e); }, autoload: function (e) { return f.addAutoload(e); } };
+                            d = n.platform, f = new Ee(t.yr(t.yr(t.yr({ viewport: new X((r = n.design) == null ? { width: 750, height: 1334 } : r, d.getScreenInfo()), audio: new K(d.audio), storage: new q(d.storage, (i = n.storagePrefix) == null ? "sapling2d:" : i), assets: new Y(d) }, n.seed === void 0 ? {} : { seed: n.seed }), n.physics ? { physics: n.physics } : {}), n.maxPhysicsStepsPerFrame === void 0 ? {} : { maxPhysicsStepsPerFrame: n.maxPhysicsStepsPerFrame })), p = [], m = { tree: f, platform: d, provide: function (e, t) { return f.provide(e, t); }, preload: function (e) { return f.assets.preload(e); }, autoload: function (e) { return f.addAutoload(e); } };
                             for (_i = 0, _a = (a = n.plugins) == null ? [] : a; _i < _a.length; _i++) {
                                 e_47 = _a[_i];
                                 t_42 = e_47.install(m);
@@ -1633,7 +1632,7 @@ function je() {
                                 e_49 = _g[_f];
                                 f.addAutoload(e_49);
                             }
-                            h = new e(d, (c = n.renderer) == null ? null : c, f, (l = n.pauseOnBackground) == null || l, p), g = n.loading === void 0 ? Oe : n.loading;
+                            h = new e(d, (c = n.renderer) == null ? null : c, f, (l = n.pauseOnBackground) == null || l, p), g = n.loading === void 0 ? De : n.loading;
                             if (!g) return [3, 2];
                             return [4, f.changeScene(g)];
                         case 1:
@@ -1699,96 +1698,96 @@ function je() {
         }());
     })))();
 }
-function Me() { return (Me = e.n((function () { je(); })))(); }
-function Ne(e) { return e > 0 ? Math.min(1, e) : 0; }
-function Pe(e) { return new Be({ name: e.name, tileSet: e.tileSet, width: e.width, height: e.height, cells: e.cells, position: new C(e.offsetX, e.offsetY), visible: e.visible, alpha: e.opacity, collisionLayer: e.collisionLayer }); }
-function Fe(e) { if (!Number.isInteger(e) || e < 0 || e > 65535)
+function je() { return (je = e.n((function () { Ae(); })))(); }
+function Me(e) { return e > 0 ? Math.min(1, e) : 0; }
+function Ne(e) { return new ze({ name: e.name, tileSet: e.tileSet, width: e.width, height: e.height, cells: e.cells, position: new S(e.offsetX, e.offsetY), visible: e.visible, alpha: e.opacity, collisionLayer: e.collisionLayer }); }
+function Pe(e) { if (!Number.isInteger(e) || e < 0 || e > 65535)
     throw Error("TileMapLayer: tile id must be an integer from 0 (empty) to 65535 (got ".concat(e, ").")); }
-function Ie(e) { var t = typeof e == "number" ? { left: e, top: e, right: e, bottom: e } : e; for (var _i = 0, _a = ["left", "top", "right", "bottom"]; _i < _a.length; _i++) {
+function Fe(e) { var t = typeof e == "number" ? { left: e, top: e, right: e, bottom: e } : e; for (var _i = 0, _a = ["left", "top", "right", "bottom"]; _i < _a.length; _i++) {
     var e_51 = _a[_i];
     var n_30 = t[e_51];
     if (!(n_30 >= 0) || !Number.isFinite(n_30))
         throw Error("NineSliceSprite: margin ".concat(e_51, " must be a finite number >= 0, got ").concat(n_30, "."));
 } return Object.freeze({ left: t.left, top: t.top, right: t.right, bottom: t.bottom }); }
-var Le, Re, ze, Be, Ve, He, Ue;
-function We() { return (We = e.n((function () { I(), t.c(), t.o(), Le = new Set(["modulate", "selfModulate", "flashColor"]), Re = (function (_super) {
-    __extends(Re, _super);
-    function Re(e) {
+var Ie, Le, Re, ze, Be, Ve, He;
+function Ue() { return (Ue = e.n((function () { I(), t.Sr(), t.br(), Ie = new Set(["modulate", "selfModulate", "flashColor"]), Le = (function (_super) {
+    __extends(Le, _super);
+    function Le(e) {
         if (e === void 0) { e = {}; }
         var _this = this;
         var n, r, i, a, o, s, c;
-        _this = _super.call(this, e) || this, t.s(_this, "_texture", void 0), t.s(_this, "_centered", void 0), t.s(_this, "_offset", void 0), t.s(_this, "_flipH", void 0), t.s(_this, "_flipV", void 0), t.s(_this, "_flashAmount", void 0), t.s(_this, "_flashTint", void 0), _this._texture = (n = e.texture) == null ? null : n, _this._centered = (r = e.centered) == null || r, _this._offset = (i = e.offset) == null ? C.ZERO : i, _this._flipH = (a = e.flipH) != null && a, _this._flipV = (o = e.flipV) != null && o, _this._flashAmount = Ne((s = e.flash) == null ? 0 : s), _this._flashTint = m((c = e.flashColor) == null ? 16777215 : c);
+        _this = _super.call(this, e) || this, t.xr(_this, "_texture", void 0), t.xr(_this, "_centered", void 0), t.xr(_this, "_offset", void 0), t.xr(_this, "_flipH", void 0), t.xr(_this, "_flipV", void 0), t.xr(_this, "_flashAmount", void 0), t.xr(_this, "_flashTint", void 0), _this._texture = (n = e.texture) == null ? null : n, _this._centered = (r = e.centered) == null || r, _this._offset = (i = e.offset) == null ? S.ZERO : i, _this._flipH = (a = e.flipH) != null && a, _this._flipV = (o = e.flipV) != null && o, _this._flashAmount = Me((s = e.flash) == null ? 0 : s), _this._flashTint = p((c = e.flashColor) == null ? 16777215 : c);
         return _this;
     }
-    Object.defineProperty(Re.prototype, "texture", {
+    Object.defineProperty(Le.prototype, "texture", {
         get: function () { return this._texture; },
         set: function (e) { this._texture = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Re.prototype, "centered", {
+    Object.defineProperty(Le.prototype, "centered", {
         get: function () { return this._centered; },
         set: function (e) { this._centered = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Re.prototype, "offset", {
+    Object.defineProperty(Le.prototype, "offset", {
         get: function () { return this._offset; },
         set: function (e) { this._offset = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Re.prototype, "flipH", {
+    Object.defineProperty(Le.prototype, "flipH", {
         get: function () { return this._flipH; },
         set: function (e) { this._flipH = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Re.prototype, "flipV", {
+    Object.defineProperty(Le.prototype, "flipV", {
         get: function () { return this._flipV; },
         set: function (e) { this._flipV = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Re.prototype, "flash", {
+    Object.defineProperty(Le.prototype, "flash", {
         get: function () { return this._flashAmount; },
-        set: function (e) { var t = Ne(e); t !== this._flashAmount && (this._flashAmount = t, this._version++); },
+        set: function (e) { var t = Me(e); t !== this._flashAmount && (this._flashAmount = t, this._version++); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Re.prototype, "flashColor", {
+    Object.defineProperty(Le.prototype, "flashColor", {
         get: function () { return this._flashTint; },
-        set: function (e) { this._flashTint = m(e), this._version++; },
+        set: function (e) { this._flashTint = p(e), this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Re.prototype, "_colorProps", {
-        get: function () { return Le; },
+    Object.defineProperty(Le.prototype, "_colorProps", {
+        get: function () { return Ie; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Re.prototype, "rect", {
+    Object.defineProperty(Le.prototype, "rect", {
         get: function () { var e = this._texture; if (!e || e.width === 0 || e.height === 0)
             return null; var t = this._centered ? e.pivot : null, n = this._centered ? t ? t.x : .5 : 0, r = this._centered ? t ? t.y : .5 : 0; return new A(-n * e.width + this._offset.x, -r * e.height + this._offset.y, e.width, e.height); },
         enumerable: false,
         configurable: true
     });
-    Re.prototype.hitTest = function (e) { var t, n; return this.hitArea ? _super.prototype.hitTest.call(this, e) : (t = (n = this.rect) == null ? void 0 : n.contains(e)) != null && t; };
-    Re.prototype.dumpProps = function () { var e, n; return t.a(t.a({}, _super.prototype.dumpProps.call(this)), {}, { texture: (e = (n = this._texture) == null ? void 0 : n.path) == null ? null : e, centered: this._centered ? void 0 : !1, offset: this._offset.equals(C.ZERO) ? void 0 : this._offset, flipH: this._flipH || void 0, flipV: this._flipV || void 0, flash: this._flashAmount > 0 ? Math.round(this._flashAmount * 100) / 100 : void 0, flashColor: this._flashTint === 16777215 ? void 0 : h(this._flashTint) }); };
-    return Re;
-}(N)), Object.freeze({}), ze = (function () {
-    function ze() {
-        t.s(this, "layers", []);
+    Le.prototype.hitTest = function (e) { var t, n; return this.hitArea ? _super.prototype.hitTest.call(this, e) : (t = (n = this.rect) == null ? void 0 : n.contains(e)) != null && t; };
+    Le.prototype.dumpProps = function () { var e, n; return t.yr(t.yr({}, _super.prototype.dumpProps.call(this)), {}, { texture: (e = (n = this._texture) == null ? void 0 : n.path) == null ? null : e, centered: this._centered ? void 0 : !1, offset: this._offset.equals(S.ZERO) ? void 0 : this._offset, flipH: this._flipH || void 0, flipV: this._flipV || void 0, flash: this._flashAmount > 0 ? Math.round(this._flashAmount * 100) / 100 : void 0, flashColor: this._flashTint === 16777215 ? void 0 : m(this._flashTint) }); };
+    return Le;
+}(N)), Object.freeze({}), Re = (function () {
+    function Re() {
+        t.xr(this, "layers", []);
     }
-    ze.prototype.add = function (e) { this.layers.push(e); };
-    ze.prototype.remove = function (e) { var t = this.layers.indexOf(e); t >= 0 && this.layers.splice(t, 1); };
-    return ze;
-}()), Be = (function (_super) {
-    __extends(Be, _super);
-    function Be(e) {
+    Re.prototype.add = function (e) { this.layers.push(e); };
+    Re.prototype.remove = function (e) { var t = this.layers.indexOf(e); t >= 0 && this.layers.splice(t, 1); };
+    return Re;
+}()), ze = (function (_super) {
+    __extends(ze, _super);
+    function ze(e) {
         var _this = this;
         var n;
-        _this = _super.call(this, e) || this, t.s(_this, "tileSet", void 0), t.s(_this, "width", void 0), t.s(_this, "height", void 0), t.s(_this, "collisionLayer", void 0), t.s(_this, "_cells", void 0), t.s(_this, "_chunksX", void 0), t.s(_this, "_chunksY", void 0), t.s(_this, "_chunkVersions", void 0), t.s(_this, "_usedCount", 0);
+        _this = _super.call(this, e) || this, t.xr(_this, "tileSet", void 0), t.xr(_this, "width", void 0), t.xr(_this, "height", void 0), t.xr(_this, "collisionLayer", void 0), t.xr(_this, "_cells", void 0), t.xr(_this, "_chunksX", void 0), t.xr(_this, "_chunksY", void 0), t.xr(_this, "_chunkVersions", void 0), t.xr(_this, "_usedCount", 0);
         var r = e.tileSet, i = e.width, a = e.height, o = e.cells;
         if (!Number.isInteger(i) || !Number.isInteger(a) || i < 1 || a < 1)
             throw Error("TileMapLayer: width and height must be positive integers (got ".concat(i, "\u00D7").concat(a, ")."));
@@ -1797,99 +1796,99 @@ function We() { return (We = e.n((function () { I(), t.c(), t.o(), Le = new Set(
                 throw Error("TileMapLayer: cells has ".concat(o.length, " entries, expected ").concat(i, "\u00D7").concat(a, " = ").concat(i * a, "."));
             for (var e_52 = 0; e_52 < o.length; e_52++) {
                 var t_44 = o[e_52];
-                Fe(t_44), _this._cells[e_52] = t_44, t_44 && _this._usedCount++;
+                Pe(t_44), _this._cells[e_52] = t_44, t_44 && _this._usedCount++;
             }
         }
         return _this;
     }
-    Be.fromTiled = function (e, t) { return t === void 0 ? e.tileLayers.map(Pe) : Pe(e.tileLayer(t)); };
-    Object.defineProperty(Be.prototype, "usedCellCount", {
+    ze.fromTiled = function (e, t) { return t === void 0 ? e.tileLayers.map(Ne) : Ne(e.tileLayer(t)); };
+    Object.defineProperty(ze.prototype, "usedCellCount", {
         get: function () { return this._usedCount; },
         enumerable: false,
         configurable: true
     });
-    Be.prototype.getCell = function (e, t) { return e < 0 || t < 0 || e >= this.width || t >= this.height || !Number.isInteger(e) || !Number.isInteger(t) ? 0 : this._cells[t * this.width + e]; };
-    Be.prototype.setCell = function (e, t, n) { if (e < 0 || t < 0 || e >= this.width || t >= this.height || !Number.isInteger(e) || !Number.isInteger(t))
-        throw Error("TileMapLayer \"".concat(this.name, "\": cell (").concat(e, ", ").concat(t, ") is outside the map (").concat(this.width, "\u00D7").concat(this.height, ").")); Fe(n); var r = t * this.width + e, i = this._cells[r]; i !== n && (this._cells[r] = n, this._usedCount += !!n - +!!i, this._chunkVersions[Math.floor(t / 16) * this._chunksX + Math.floor(e / 16)]++); };
-    Be.prototype.eraseCell = function (e, t) { this.setCell(e, t, 0); };
-    Be.prototype.getCellTileData = function (e, t) { var n = this.getCell(e, t); return n ? this.tileSet.tile(n) : null; };
-    Be.prototype.localToMap = function (e) { var t = this.tileSet.tileSize; return new C(Math.floor(e.x / t), Math.floor(e.y / t)); };
-    Be.prototype.mapToLocal = function (e) { var t = this.tileSet.tileSize; return new C((e.x + .5) * t, (e.y + .5) * t); };
-    Be.prototype.getUsedRect = function () { var e = this.width, t = this.height, n = -1, r = -1, i = this.width; for (var a_7 = 0; a_7 < this._cells.length; a_7++) {
+    ze.prototype.getCell = function (e, t) { return e < 0 || t < 0 || e >= this.width || t >= this.height || !Number.isInteger(e) || !Number.isInteger(t) ? 0 : this._cells[t * this.width + e]; };
+    ze.prototype.setCell = function (e, t, n) { if (e < 0 || t < 0 || e >= this.width || t >= this.height || !Number.isInteger(e) || !Number.isInteger(t))
+        throw Error("TileMapLayer \"".concat(this.name, "\": cell (").concat(e, ", ").concat(t, ") is outside the map (").concat(this.width, "\u00D7").concat(this.height, ").")); Pe(n); var r = t * this.width + e, i = this._cells[r]; i !== n && (this._cells[r] = n, this._usedCount += !!n - +!!i, this._chunkVersions[Math.floor(t / 16) * this._chunksX + Math.floor(e / 16)]++); };
+    ze.prototype.eraseCell = function (e, t) { this.setCell(e, t, 0); };
+    ze.prototype.getCellTileData = function (e, t) { var n = this.getCell(e, t); return n ? this.tileSet.tile(n) : null; };
+    ze.prototype.localToMap = function (e) { var t = this.tileSet.tileSize; return new S(Math.floor(e.x / t), Math.floor(e.y / t)); };
+    ze.prototype.mapToLocal = function (e) { var t = this.tileSet.tileSize; return new S((e.x + .5) * t, (e.y + .5) * t); };
+    ze.prototype.getUsedRect = function () { var e = this.width, t = this.height, n = -1, r = -1, i = this.width; for (var a_7 = 0; a_7 < this._cells.length; a_7++) {
         if (!this._cells[a_7])
             continue;
         var o_3 = a_7 % i, s_2 = (a_7 - o_3) / i;
         o_3 < e && (e = o_3), o_3 > n && (n = o_3), s_2 < t && (t = s_2), s_2 > r && (r = s_2);
     } return n < 0 ? new A(0, 0, 0, 0) : new A(e, t, n - e + 1, r - t + 1); };
-    Be.prototype._cellCollision = function (e, t) { var n; return e < 0 || t < 0 || e >= this.width || t >= this.height || (n = this.tileSet._collision[this._cells[t * this.width + e]]) == null ? 0 : n; };
-    Be.prototype._onEnterTree = function () { this.tree.system(ze).add(this); };
-    Be.prototype._onExitTree = function () { this.tree.system(ze).remove(this); };
-    Be.prototype.dumpProps = function () { return t.a(t.a({}, _super.prototype.dumpProps.call(this)), {}, { tileSet: this.tileSet.texture.path, size: "".concat(this.width, "x").concat(this.height), cells: this._usedCount, collisionLayer: this.collisionLayer === 1 ? void 0 : this.collisionLayer }); };
+    ze.prototype._cellCollision = function (e, t) { var n; return e < 0 || t < 0 || e >= this.width || t >= this.height || (n = this.tileSet._collision[this._cells[t * this.width + e]]) == null ? 0 : n; };
+    ze.prototype._onEnterTree = function () { this.tree.system(Re).add(this); };
+    ze.prototype._onExitTree = function () { this.tree.system(Re).remove(this); };
+    ze.prototype.dumpProps = function () { return t.yr(t.yr({}, _super.prototype.dumpProps.call(this)), {}, { tileSet: this.tileSet.texture.path, size: "".concat(this.width, "x").concat(this.height), cells: this._usedCount, collisionLayer: this.collisionLayer === 1 ? void 0 : this.collisionLayer }); };
+    return ze;
+}(N)), Be = (function (_super) {
+    __extends(Be, _super);
+    function Be(e) {
+        if (e === void 0) { e = {}; }
+        var _this = this;
+        var n, r, i;
+        _this = _super.call(this, e) || this, t.xr(_this, "_texture", void 0), t.xr(_this, "_margins", void 0), t.xr(_this, "_size", void 0), _this._texture = (n = e.texture) == null ? null : n, _this._margins = Fe((r = e.margins) == null ? 0 : r), _this._size = (i = e.size) == null ? S.ZERO : i;
+        return _this;
+    }
+    Object.defineProperty(Be.prototype, "texture", {
+        get: function () { return this._texture; },
+        set: function (e) { this._texture = e, this._version++; },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Be.prototype, "margins", {
+        get: function () { return this._margins; },
+        set: function (e) { this._margins = Fe(e), this._version++; },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Be.prototype, "size", {
+        get: function () { return this._size; },
+        set: function (e) { this._size = e, this._version++; },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Be.prototype, "rect", {
+        get: function () { return new A(0, 0, this._size.x, this._size.y); },
+        enumerable: false,
+        configurable: true
+    });
+    Be.prototype.hitTest = function (e) { if (this.hitArea)
+        return _super.prototype.hitTest.call(this, e); var t = this._size; return e.x >= 0 && e.y >= 0 && e.x <= t.x && e.y <= t.y; };
+    Be.prototype.dumpProps = function () { var e, n; var r = this._margins, i = r.left === r.top && r.left === r.right && r.left === r.bottom; return t.yr(t.yr({}, _super.prototype.dumpProps.call(this)), {}, { texture: (e = (n = this._texture) == null ? void 0 : n.path) == null ? null : e, size: this._size, margins: i ? r.left === 0 ? void 0 : r.left : "".concat(r.left, ",").concat(r.top, ",").concat(r.right, ",").concat(r.bottom) }); };
     return Be;
 }(N)), Ve = (function (_super) {
     __extends(Ve, _super);
     function Ve(e) {
         if (e === void 0) { e = {}; }
         var _this = this;
-        var n, r, i;
-        _this = _super.call(this, e) || this, t.s(_this, "_texture", void 0), t.s(_this, "_margins", void 0), t.s(_this, "_size", void 0), _this._texture = (n = e.texture) == null ? null : n, _this._margins = Ie((r = e.margins) == null ? 0 : r), _this._size = (i = e.size) == null ? C.ZERO : i;
-        return _this;
-    }
-    Object.defineProperty(Ve.prototype, "texture", {
-        get: function () { return this._texture; },
-        set: function (e) { this._texture = e, this._version++; },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Ve.prototype, "margins", {
-        get: function () { return this._margins; },
-        set: function (e) { this._margins = Ie(e), this._version++; },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Ve.prototype, "size", {
-        get: function () { return this._size; },
-        set: function (e) { this._size = e, this._version++; },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Ve.prototype, "rect", {
-        get: function () { return new A(0, 0, this._size.x, this._size.y); },
-        enumerable: false,
-        configurable: true
-    });
-    Ve.prototype.hitTest = function (e) { if (this.hitArea)
-        return _super.prototype.hitTest.call(this, e); var t = this._size; return e.x >= 0 && e.y >= 0 && e.x <= t.x && e.y <= t.y; };
-    Ve.prototype.dumpProps = function () { var e, n; var r = this._margins, i = r.left === r.top && r.left === r.right && r.left === r.bottom; return t.a(t.a({}, _super.prototype.dumpProps.call(this)), {}, { texture: (e = (n = this._texture) == null ? void 0 : n.path) == null ? null : e, size: this._size, margins: i ? r.left === 0 ? void 0 : r.left : "".concat(r.left, ",").concat(r.top, ",").concat(r.right, ",").concat(r.bottom) }); };
-    return Ve;
-}(N)), He = (function (_super) {
-    __extends(He, _super);
-    function He(e) {
-        if (e === void 0) { e = {}; }
-        var _this = this;
         var n, r, i, a, o, s, c, u, d, f, p, m, h, g, _, v, y, b;
-        _this = _super.call(this, e) || this, t.s(_this, "finished", new w), t.s(_this, "texture", void 0), t.s(_this, "lifetime", void 0), t.s(_this, "lifetimeRandomness", void 0), t.s(_this, "oneShot", void 0), t.s(_this, "rate", void 0), t.s(_this, "direction", void 0), t.s(_this, "spread", void 0), t.s(_this, "speedMin", void 0), t.s(_this, "speedMax", void 0), t.s(_this, "gravity", void 0), t.s(_this, "damping", void 0), t.s(_this, "scaleStart", void 0), t.s(_this, "scaleEnd", void 0), t.s(_this, "alphaStart", void 0), t.s(_this, "alphaEnd", void 0), t.s(_this, "localCoords", void 0), t.s(_this, "_emitting", void 0), t.s(_this, "_amount", 0), t.s(_this, "_count", 0), t.s(_this, "_px", new Float64Array), t.s(_this, "_py", new Float64Array), t.s(_this, "_age", new Float64Array), t.s(_this, "_life", new Float64Array), t.s(_this, "_vx", new Float64Array), t.s(_this, "_vy", new Float64Array), t.s(_this, "_acc", 0), t.s(_this, "_running", !1), t.s(_this, "_global", l()), _this.texture = (n = e.texture) == null ? null : n, _this.lifetime = (r = e.lifetime) == null ? 1 : r, _this.lifetimeRandomness = (i = e.lifetimeRandomness) == null ? 0 : i, _this._emitting = (a = e.emitting) == null || a, _this.oneShot = (o = e.oneShot) != null && o, _this.rate = (s = e.rate) == null ? null : s, _this.direction = (c = e.direction) == null ? 0 : c, _this.spread = (u = e.spread) == null ? Math.PI : u, _this.speedMin = (d = e.speedMin) == null ? 100 : d, _this.speedMax = (f = e.speedMax) == null ? _this.speedMin : f, _this.gravity = (p = e.gravity) == null ? C.ZERO : p, _this.damping = (m = e.damping) == null ? 0 : m, _this.scaleStart = (h = e.scaleStart) == null ? 1 : h, _this.scaleEnd = (g = e.scaleEnd) == null ? _this.scaleStart : g, _this.alphaStart = (_ = e.alphaStart) == null ? 1 : _, _this.alphaEnd = (v = e.alphaEnd) == null ? _this.alphaStart : v, _this.localCoords = (y = e.localCoords) != null && y, _this.amount = (b = e.amount) == null ? 16 : b;
+        _this = _super.call(this, e) || this, t.xr(_this, "finished", new C), t.xr(_this, "texture", void 0), t.xr(_this, "lifetime", void 0), t.xr(_this, "lifetimeRandomness", void 0), t.xr(_this, "oneShot", void 0), t.xr(_this, "rate", void 0), t.xr(_this, "direction", void 0), t.xr(_this, "spread", void 0), t.xr(_this, "speedMin", void 0), t.xr(_this, "speedMax", void 0), t.xr(_this, "gravity", void 0), t.xr(_this, "damping", void 0), t.xr(_this, "scaleStart", void 0), t.xr(_this, "scaleEnd", void 0), t.xr(_this, "alphaStart", void 0), t.xr(_this, "alphaEnd", void 0), t.xr(_this, "localCoords", void 0), t.xr(_this, "_emitting", void 0), t.xr(_this, "_amount", 0), t.xr(_this, "_count", 0), t.xr(_this, "_px", new Float64Array), t.xr(_this, "_py", new Float64Array), t.xr(_this, "_age", new Float64Array), t.xr(_this, "_life", new Float64Array), t.xr(_this, "_vx", new Float64Array), t.xr(_this, "_vy", new Float64Array), t.xr(_this, "_acc", 0), t.xr(_this, "_running", !1), t.xr(_this, "_global", l()), _this.texture = (n = e.texture) == null ? null : n, _this.lifetime = (r = e.lifetime) == null ? 1 : r, _this.lifetimeRandomness = (i = e.lifetimeRandomness) == null ? 0 : i, _this._emitting = (a = e.emitting) == null || a, _this.oneShot = (o = e.oneShot) != null && o, _this.rate = (s = e.rate) == null ? null : s, _this.direction = (c = e.direction) == null ? 0 : c, _this.spread = (u = e.spread) == null ? Math.PI : u, _this.speedMin = (d = e.speedMin) == null ? 100 : d, _this.speedMax = (f = e.speedMax) == null ? _this.speedMin : f, _this.gravity = (p = e.gravity) == null ? S.ZERO : p, _this.damping = (m = e.damping) == null ? 0 : m, _this.scaleStart = (h = e.scaleStart) == null ? 1 : h, _this.scaleEnd = (g = e.scaleEnd) == null ? _this.scaleStart : g, _this.alphaStart = (_ = e.alphaStart) == null ? 1 : _, _this.alphaEnd = (v = e.alphaEnd) == null ? _this.alphaStart : v, _this.localCoords = (y = e.localCoords) != null && y, _this.amount = (b = e.amount) == null ? 16 : b;
         return _this;
     }
-    Object.defineProperty(He.prototype, "amount", {
+    Object.defineProperty(Ve.prototype, "amount", {
         get: function () { return this._amount; },
         set: function (e) { if (!Number.isInteger(e) || e < 0)
             throw Error("Particles2D \"".concat(this.name, "\": amount must be an integer >= 0, got ").concat(e, ".")); this._amount = e, this._count = 0, this._px = new Float64Array(e), this._py = new Float64Array(e), this._vx = new Float64Array(e), this._vy = new Float64Array(e), this._age = new Float64Array(e), this._life = new Float64Array(e); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(He.prototype, "emitting", {
+    Object.defineProperty(Ve.prototype, "emitting", {
         get: function () { return this._emitting; },
         set: function (e) { this._emitting = e, e && (this._acc = 0); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(He.prototype, "aliveCount", {
+    Object.defineProperty(Ve.prototype, "aliveCount", {
         get: function () { return this._count; },
         enumerable: false,
         configurable: true
     });
-    He.prototype.emit = function (e) {
+    Ve.prototype.emit = function (e) {
         if (e === void 0) { e = this._amount; }
         if (this.isInsideTree) {
             this.localCoords || this._computeGlobal();
@@ -1897,8 +1896,8 @@ function We() { return (We = e.n((function () { I(), t.c(), t.o(), Le = new Set(
                 this._spawn();
         }
     };
-    He.prototype.restart = function () { this._count = 0, this._acc = 0, this._running = !1; };
-    He.prototype._internalProcess = function (e) { if (this._simulate(e), this._emitting) {
+    Ve.prototype.restart = function () { this._count = 0, this._acc = 0, this._running = !1; };
+    Ve.prototype._internalProcess = function (e) { if (this._simulate(e), this._emitting) {
         if (this.oneShot)
             this._emitting = !1, this.emit();
         else {
@@ -1909,7 +1908,7 @@ function We() { return (We = e.n((function () { I(), t.c(), t.o(), Le = new Set(
                     this._count < this._amount && this._spawn(), --this._acc;
         }
     } this._running && this._count === 0 && !this._emitting && (this._running = !1, this.finished.emit()); };
-    He.prototype._simulate = function (e) { if (this._count === 0 || e === 0)
+    Ve.prototype._simulate = function (e) { if (this._count === 0 || e === 0)
         return; var t = this._px, n = this._py, r = this._vx, i = this._vy, a = this._age, o = this._life, s = this.gravity.x * e, c = this.gravity.y * e, l = this.damping > 0 ? Math.max(0, 1 - this.damping * e) : 1, u = this._count; for (var d_3 = 0; d_3 < u; d_3++) {
         var f_2 = a[d_3] + e;
         if (f_2 >= o[d_3]) {
@@ -1920,85 +1919,85 @@ function We() { return (We = e.n((function () { I(), t.c(), t.o(), Le = new Set(
         var p_2 = (r[d_3] + s) * l, m_2 = (i[d_3] + c) * l;
         r[d_3] = p_2, i[d_3] = m_2, t[d_3] = t[d_3] + p_2 * e, n[d_3] = n[d_3] + m_2 * e;
     } this._count = u; };
-    He.prototype._spawn = function () { var e = this.tree.fxRng, t = this._count++, n = this.direction + (e.randf() * 2 - 1) * this.spread; if (this.localCoords)
+    Ve.prototype._spawn = function () { var e = this.tree.fxRng, t = this._count++, n = this.direction + (e.randf() * 2 - 1) * this.spread; if (this.localCoords)
         this._px[t] = 0, this._py[t] = 0;
     else {
         var e_53 = this._global;
         this._px[t] = e_53.tx, this._py[t] = e_53.ty, n += Math.atan2(e_53.b, e_53.a);
     } var r = this.speedMin + (this.speedMax - this.speedMin) * e.randf(); this._vx[t] = Math.cos(n) * r, this._vy[t] = Math.sin(n) * r, this._age[t] = 0, this._life[t] = Math.max(1e-6, this.lifetime * (1 - this.lifetimeRandomness * e.randf())), this._running = !0; };
-    He.prototype._computeGlobal = function () { this._computeGlobalInto(this._global); };
-    He.prototype.dumpProps = function () { var e, n; return t.a(t.a({}, _super.prototype.dumpProps.call(this)), {}, { texture: (e = (n = this.texture) == null ? void 0 : n.path) == null ? void 0 : e, emitting: this._emitting || void 0, particles: this._count }); };
-    return He;
-}(N)), Ue = (function (_super) {
-    __extends(Ue, _super);
-    function Ue(e) {
+    Ve.prototype._computeGlobal = function () { this._computeGlobalInto(this._global); };
+    Ve.prototype.dumpProps = function () { var e, n; return t.yr(t.yr({}, _super.prototype.dumpProps.call(this)), {}, { texture: (e = (n = this.texture) == null ? void 0 : n.path) == null ? void 0 : e, emitting: this._emitting || void 0, particles: this._count }); };
+    return Ve;
+}(N)), He = (function (_super) {
+    __extends(He, _super);
+    function He(e) {
         if (e === void 0) { e = {}; }
         var _this = this;
         var n, r, i, a, o, s, c, l, u, d;
-        _this = _super.call(this, e) || this, t.s(_this, "_text", void 0), t.s(_this, "_fontSize", void 0), t.s(_this, "_color", void 0), t.s(_this, "_fontFamily", void 0), t.s(_this, "_fontWeight", void 0), t.s(_this, "_align", void 0), t.s(_this, "_verticalAlign", void 0), t.s(_this, "_stroke", void 0), t.s(_this, "_wrapWidth", void 0), t.s(_this, "_lineHeight", void 0), _this._text = (n = e.text) == null ? "" : n, _this._fontSize = (r = e.fontSize) == null ? 32 : r, _this._color = (i = e.color) == null ? 16777215 : i, _this._fontFamily = (a = e.fontFamily) == null ? "sans-serif" : a, _this._fontWeight = (o = e.fontWeight) == null ? "normal" : o, _this._align = (s = e.align) == null ? "left" : s, _this._verticalAlign = (c = e.verticalAlign) == null ? "top" : c, _this._stroke = (l = e.stroke) == null ? null : l, _this._wrapWidth = (u = e.wrapWidth) == null ? null : u, _this._lineHeight = (d = e.lineHeight) == null ? null : d;
+        _this = _super.call(this, e) || this, t.xr(_this, "_text", void 0), t.xr(_this, "_fontSize", void 0), t.xr(_this, "_color", void 0), t.xr(_this, "_fontFamily", void 0), t.xr(_this, "_fontWeight", void 0), t.xr(_this, "_align", void 0), t.xr(_this, "_verticalAlign", void 0), t.xr(_this, "_stroke", void 0), t.xr(_this, "_wrapWidth", void 0), t.xr(_this, "_lineHeight", void 0), _this._text = (n = e.text) == null ? "" : n, _this._fontSize = (r = e.fontSize) == null ? 32 : r, _this._color = (i = e.color) == null ? 16777215 : i, _this._fontFamily = (a = e.fontFamily) == null ? "sans-serif" : a, _this._fontWeight = (o = e.fontWeight) == null ? "normal" : o, _this._align = (s = e.align) == null ? "left" : s, _this._verticalAlign = (c = e.verticalAlign) == null ? "top" : c, _this._stroke = (l = e.stroke) == null ? null : l, _this._wrapWidth = (u = e.wrapWidth) == null ? null : u, _this._lineHeight = (d = e.lineHeight) == null ? null : d;
         return _this;
     }
-    Object.defineProperty(Ue.prototype, "text", {
+    Object.defineProperty(He.prototype, "text", {
         get: function () { return this._text; },
         set: function (e) { e !== this._text && (this._text = e, this._version++); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ue.prototype, "fontSize", {
+    Object.defineProperty(He.prototype, "fontSize", {
         get: function () { return this._fontSize; },
         set: function (e) { this._fontSize = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ue.prototype, "color", {
+    Object.defineProperty(He.prototype, "color", {
         get: function () { return this._color; },
         set: function (e) { this._color = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ue.prototype, "fontFamily", {
+    Object.defineProperty(He.prototype, "fontFamily", {
         get: function () { return this._fontFamily; },
         set: function (e) { this._fontFamily = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ue.prototype, "fontWeight", {
+    Object.defineProperty(He.prototype, "fontWeight", {
         get: function () { return this._fontWeight; },
         set: function (e) { this._fontWeight = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ue.prototype, "align", {
+    Object.defineProperty(He.prototype, "align", {
         get: function () { return this._align; },
         set: function (e) { this._align = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ue.prototype, "verticalAlign", {
+    Object.defineProperty(He.prototype, "verticalAlign", {
         get: function () { return this._verticalAlign; },
         set: function (e) { this._verticalAlign = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ue.prototype, "stroke", {
+    Object.defineProperty(He.prototype, "stroke", {
         get: function () { return this._stroke; },
         set: function (e) { this._stroke = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ue.prototype, "wrapWidth", {
+    Object.defineProperty(He.prototype, "wrapWidth", {
         get: function () { return this._wrapWidth; },
         set: function (e) { this._wrapWidth = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ue.prototype, "lineHeight", {
+    Object.defineProperty(He.prototype, "lineHeight", {
         get: function () { return this._lineHeight; },
         set: function (e) { this._lineHeight = e, this._version++; },
         enumerable: false,
         configurable: true
     });
-    Ue.prototype.dumpProps = function () { return t.a(t.a({}, _super.prototype.dumpProps.call(this)), {}, { text: this._text, fontSize: this._fontSize === 32 ? void 0 : this._fontSize, align: this._align === "left" ? void 0 : this._align }); };
-    return Ue;
+    He.prototype.dumpProps = function () { return t.yr(t.yr({}, _super.prototype.dumpProps.call(this)), {}, { text: this._text, fontSize: this._fontSize === 32 ? void 0 : this._fontSize, align: this._align === "left" ? void 0 : this._align }); };
+    return He;
 }(N)); })))(); }
-Object.defineProperty(exports, "C", { enumerable: !0, get: function () { return d; } }), Object.defineProperty(exports, "E", { enumerable: !0, get: function () { return _; } }), Object.defineProperty(exports, "S", { enumerable: !0, get: function () { return u; } }), Object.defineProperty(exports, "T", { enumerable: !0, get: function () { return r; } }), Object.defineProperty(exports, "_", { enumerable: !0, get: function () { return A; } }), Object.defineProperty(exports, "a", { enumerable: !0, get: function () { return Be; } }), Object.defineProperty(exports, "b", { enumerable: !0, get: function () { return l; } }), Object.defineProperty(exports, "c", { enumerable: !0, get: function () { return Ae; } }), Object.defineProperty(exports, "d", { enumerable: !0, get: function () { return je; } }), Object.defineProperty(exports, "f", { enumerable: !0, get: function () { return me; } }), Object.defineProperty(exports, "g", { enumerable: !0, get: function () { return N; } }), Object.defineProperty(exports, "h", { enumerable: !0, get: function () { return k; } }), Object.defineProperty(exports, "i", { enumerable: !0, get: function () { return Re; } }), Object.defineProperty(exports, "l", { enumerable: !0, get: function () { return W; } }), Object.defineProperty(exports, "m", { enumerable: !0, get: function () { return D; } }), Object.defineProperty(exports, "n", { enumerable: !0, get: function () { return Ve; } }), Object.defineProperty(exports, "o", { enumerable: !0, get: function () { return We; } }), Object.defineProperty(exports, "p", { enumerable: !0, get: function () { return F; } }), Object.defineProperty(exports, "r", { enumerable: !0, get: function () { return He; } }), Object.defineProperty(exports, "s", { enumerable: !0, get: function () { return Me; } }), Object.defineProperty(exports, "t", { enumerable: !0, get: function () { return Ue; } }), Object.defineProperty(exports, "u", { enumerable: !0, get: function () { return X; } }), Object.defineProperty(exports, "v", { enumerable: !0, get: function () { return w; } }), Object.defineProperty(exports, "w", { enumerable: !0, get: function () { return g; } }), Object.defineProperty(exports, "x", { enumerable: !0, get: function () { return I; } }), Object.defineProperty(exports, "y", { enumerable: !0, get: function () { return C; } });
+Object.defineProperty(exports, "C", { enumerable: !0, get: function () { return g; } }), Object.defineProperty(exports, "S", { enumerable: !0, get: function () { return r; } }), Object.defineProperty(exports, "_", { enumerable: !0, get: function () { return A; } }), Object.defineProperty(exports, "a", { enumerable: !0, get: function () { return ze; } }), Object.defineProperty(exports, "b", { enumerable: !0, get: function () { return u; } }), Object.defineProperty(exports, "c", { enumerable: !0, get: function () { return ke; } }), Object.defineProperty(exports, "d", { enumerable: !0, get: function () { return Ae; } }), Object.defineProperty(exports, "f", { enumerable: !0, get: function () { return pe; } }), Object.defineProperty(exports, "g", { enumerable: !0, get: function () { return N; } }), Object.defineProperty(exports, "h", { enumerable: !0, get: function () { return k; } }), Object.defineProperty(exports, "i", { enumerable: !0, get: function () { return Le; } }), Object.defineProperty(exports, "l", { enumerable: !0, get: function () { return W; } }), Object.defineProperty(exports, "m", { enumerable: !0, get: function () { return E; } }), Object.defineProperty(exports, "n", { enumerable: !0, get: function () { return Be; } }), Object.defineProperty(exports, "o", { enumerable: !0, get: function () { return Ue; } }), Object.defineProperty(exports, "p", { enumerable: !0, get: function () { return F; } }), Object.defineProperty(exports, "r", { enumerable: !0, get: function () { return Ve; } }), Object.defineProperty(exports, "s", { enumerable: !0, get: function () { return je; } }), Object.defineProperty(exports, "t", { enumerable: !0, get: function () { return He; } }), Object.defineProperty(exports, "u", { enumerable: !0, get: function () { return X; } }), Object.defineProperty(exports, "v", { enumerable: !0, get: function () { return l; } }), Object.defineProperty(exports, "x", { enumerable: !0, get: function () { return h; } }), Object.defineProperty(exports, "y", { enumerable: !0, get: function () { return I; } });

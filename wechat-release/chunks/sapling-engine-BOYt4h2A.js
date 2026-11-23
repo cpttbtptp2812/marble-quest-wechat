@@ -23,9 +23,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-OS5i6gdH.js"), n = require("./sapling-engine-Dk_0uYx9.js"), r = require("./sapling-engine-nIouhjEF.js"), i = require("./sapling-engine-BKSSueUl.js"), a = require("./sapling-engine-sX7qVz9U.js"), o = require("./sapling-engine-DdkTJwUg.js"), s = require("./sapling-engine-BIAzTs9D.js"), c = require("./sapling-engine-DRXIDWb4.js");
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-0ptSNjZs.js"), r = require("./sapling-engine-CudxT9as.js"), i = require("./sapling-engine-D-RMTrWW.js"), a = require("./sapling-engine-BKxInvnL.js"), o = require("./sapling-engine-UgL1Y7P9.js"), s = require("./sapling-engine-BKxfCeCE.js"), c = require("./sapling-engine-CGmSt4Cl.js");
 var l, u;
-function d() { return (d = e.n((function () { n.Y(), i.P(), l = (function () {
+function d() { return (d = e.n((function () { n.q(), i.P(), l = (function () {
     function l() {
         this._effectClasses = [], this._tests = [], this._initialized = !1;
     }
@@ -41,7 +41,7 @@ function d() { return (d = e.n((function () { n.Y(), i.P(), l = (function () {
     } return e; };
     l.prototype.returnMaskEffect = function (e) { i.N.return(e); };
     return l;
-}()), u = new l, n.J.handleByList(n.q.MaskEffect, u._effectClasses); })))(); }
+}()), u = new l, n.K.handleByList(n.G.MaskEffect, u._effectClasses); })))(); }
 function f(e, t, n) { var r = p; e.measurable = !0, o.E(e, n, r), t.addBoundsMask(r), e.measurable = !1; }
 var p;
 function m() { return (m = e.n((function () { o.M(), o.D(), p = new o.j; })))(); }
@@ -49,7 +49,7 @@ function ee(e, t, n) { var r = o.O.get(); e.measurable = !0; var i = o.A.get().i
 function te(e, t, n) { return e ? (e !== t && (te(e.parent, t, n), e.updateLocalTransform(), n.append(e.localTransform)), n) : (i.R("Mask bounds, renderable is not inside the root container"), n); }
 function h() { return (h = e.n((function () { o.x(), o.k(), i.L(); })))(); }
 var g;
-function ne() { return (ne = e.n((function () { n.Y(), s.D(), m(), h(), g = (function () {
+function ne() { return (ne = e.n((function () { n.q(), s.D(), m(), h(), g = (function () {
     function g(e) {
         this.priority = 0, this.inverse = !1, this.channel = "red", this.pipe = "alphaMask", e != null && e.mask && this.init(e.mask);
     }
@@ -61,9 +61,9 @@ function ne() { return (ne = e.n((function () { n.Y(), s.D(), m(), h(), g = (fun
     g.prototype.destroy = function () { this.reset(); };
     g.test = function (e) { return e instanceof s.E; };
     return g;
-}()), g.extension = n.q.MaskEffect; })))(); }
+}()), g.extension = n.G.MaskEffect; })))(); }
 var re;
-function ie() { return (ie = e.n((function () { n.Y(), re = (function () {
+function ie() { return (ie = e.n((function () { n.q(), re = (function () {
     function re(e) {
         this.priority = 0, this.pipe = "colorMask", e != null && e.mask && this.init(e.mask);
     }
@@ -71,9 +71,9 @@ function ie() { return (ie = e.n((function () { n.Y(), re = (function () {
     re.prototype.destroy = function () { };
     re.test = function (e) { return typeof e == "number"; };
     return re;
-}()), re.extension = n.q.MaskEffect; })))(); }
+}()), re.extension = n.G.MaskEffect; })))(); }
 var _;
-function ae() { return (ae = e.n((function () { n.Y(), o.h(), m(), h(), _ = (function () {
+function ae() { return (ae = e.n((function () { n.q(), o.h(), m(), h(), _ = (function () {
     function _(e) {
         this.priority = 0, this.pipe = "stencilMask", e != null && e.mask && this.init(e.mask);
     }
@@ -85,7 +85,7 @@ function ae() { return (ae = e.n((function () { n.Y(), o.h(), m(), h(), _ = (fun
     _.prototype.destroy = function () { this.reset(); };
     _.test = function (e) { return e instanceof o.m; };
     return _;
-}()), _.extension = n.q.MaskEffect; })))(); }
+}()), _.extension = n.G.MaskEffect; })))(); }
 function oe() { return (!v || v != null && v.isContextLost()) && (v = n.N.get().createCanvas().getContext("webgl", {})), v; }
 var v;
 function se() { return (se = e.n((function () { n.P(); })))(); }
@@ -139,9 +139,9 @@ var ye, be;
 function xe() { return (xe = e.n((function () { ye = {}, be = {}; })))(); }
 function Se(e, t) { return t ? e.replace("#version 300 es", "") : e; }
 var b, x, Ce, S;
-function we() { return (we = e.n((function () { a.it(), le(), ge(), xe(), t.o(), b = { stripVersion: Se, ensurePrecision: de, addProgramDefines: ue, setProgramName: ve, insertVersion: _e }, x = Object.create(null), Ce = (function () {
+function we() { return (we = e.n((function () { a.it(), le(), ge(), xe(), t.br(), b = { stripVersion: Se, ensurePrecision: de, addProgramDefines: ue, setProgramName: ve, insertVersion: _e }, x = Object.create(null), Ce = (function () {
     function e(n) {
-        n = t.a(t.a({}, e.defaultOptions), n);
+        n = t.yr(t.yr({}, e.defaultOptions), n);
         var r = n.fragment.indexOf("#version 300 es") !== -1, i = { stripVersion: r, ensurePrecision: { requestedFragmentPrecision: n.preferredFragmentPrecision, requestedVertexPrecision: n.preferredVertexPrecision, maxSupportedVertexPrecision: "highp", maxSupportedFragmentPrecision: ce() }, setProgramName: { name: n.name }, addProgramDefines: r, insertVersion: r }, o = n.fragment, s = n.vertex;
         Object.keys(b).forEach(function (e) { var t = i[e]; o = b[e](o, t, !0), s = b[e](s, t, !1); }), this.fragment = o, this.vertex = s, this.transformFeedbackVaryings = n.transformFeedbackVaryings, this._key = a.rt("".concat(this.vertex, ":").concat(this.fragment), "gl-program");
     }
@@ -365,7 +365,7 @@ function Ke() { return (Ke = e.n((function () { n.B(), n.P(), r.y(), Ge(), O = {
     } l && O._applyInverseRotation(o, l, s.width, s.height), o.drawImage(p, s.x, s.y, s.width, s.height, 0, 0, s.width, s.height), o.restore(); var m = t >> 16 & 255, ee = t >> 8 & 255, te = t & 255, h = o.getImageData(0, 0, d, f), g = h.data; for (var e_17 = 0; e_17 < g.length; e_17 += 4)
         g[e_17] = g[e_17] * m / 255, g[e_17 + 1] = g[e_17 + 1] * ee / 255, g[e_17 + 2] = g[e_17 + 2] * te / 255; o.putImageData(h, 0, 0); }, _applyInverseRotation: function (e, t, n, i) { var a = r.v.inv(t), o = r.v.uX(a), s = r.v.uY(a), c = r.v.vX(a), l = r.v.vY(a), u = -Math.min(0, o * n, c * i, o * n + c * i), d = -Math.min(0, s * n, l * i, s * n + l * i); e.transform(o, s, c, l, u, d); } }, O.tintMethod = O.canUseMultiply ? O.tintWithMultiply : O.tintWithPerPixel; })))(); }
 var qe, Je, k;
-function Ye() { return (Ye = e.n((function () { n.Y(), n.I(), n.n(), o.M(), o.D(), s.D(), i.P(), a._t(), a.pt(), a.X(), qe = new o.j, Je = (function (_super) {
+function Ye() { return (Ye = e.n((function () { n.q(), n.I(), n.n(), o.M(), o.D(), s.D(), i.P(), a._t(), a.pt(), a.X(), qe = new o.j, Je = (function (_super) {
     __extends(Je, _super);
     function Je() {
         var _this = this;
@@ -428,9 +428,9 @@ function Ye() { return (Ye = e.n((function () { n.Y(), n.I(), n.n(), o.M(), o.D(
         i.N.return(e[t_14]); e.length = 0; };
     k.prototype.destroy = function () { this.postrender(), this._renderer.runners.postrender.remove(this), this._renderer = null, this._activeMaskStage = null, this._usedEffects = null; };
     return k;
-}()), k.extension = { type: [n.q.WebGLPipes, n.q.WebGPUPipes, n.q.CanvasPipes], name: "alphaMask" }; })))(); }
+}()), k.extension = { type: [n.G.WebGLPipes, n.G.WebGPUPipes, n.G.CanvasPipes], name: "alphaMask" }; })))(); }
 var Xe;
-function Ze() { return (Ze = e.n((function () { n.Y(), Xe = (function () {
+function Ze() { return (Ze = e.n((function () { n.q(), Xe = (function () {
     function Xe(e) {
         this._colorStack = [], this._colorStackIndex = 0, this._currentColor = 0, this._renderer = e;
     }
@@ -440,9 +440,9 @@ function Ze() { return (Ze = e.n((function () { n.Y(), Xe = (function () {
     Xe.prototype.execute = function (e) { this._renderer.colorMask.setMask(e.colorMask); };
     Xe.prototype.destroy = function () { this._renderer = null, this._colorStack = null; };
     return Xe;
-}()), Xe.extension = { type: [n.q.WebGLPipes, n.q.WebGPUPipes], name: "colorMask" }; })))(); }
+}()), Xe.extension = { type: [n.G.WebGLPipes, n.G.WebGPUPipes], name: "colorMask" }; })))(); }
 var Qe;
-function $e() { return ($e = e.n((function () { n.Y(), E(), a.z(), Qe = (function () {
+function $e() { return ($e = e.n((function () { n.q(), E(), a.z(), Qe = (function () {
     function Qe(e) {
         this._maskHash = new WeakMap, this._renderer = e;
     }
@@ -452,7 +452,7 @@ function $e() { return ($e = e.n((function () { n.Y(), E(), a.z(), Qe = (functio
     Qe.prototype.execute = function (e) { var t = this._renderer, n = t.renderTarget.getGpuRenderTarget(t.renderTarget.renderTarget), r = n.maskStackIndex; e.action === "pushMaskBegin" ? (t.renderTarget.ensureDepthStencil(), t.stencil.setStencilMode(a.R.RENDERING_MASK_ADD, r), r++, t.colorMask.setMask(0)) : e.action === "pushMaskEnd" ? (e.inverse ? t.stencil.setStencilMode(a.R.INVERSE_MASK_ACTIVE, r) : t.stencil.setStencilMode(a.R.MASK_ACTIVE, r), t.colorMask.setMask(15)) : e.action === "popMaskBegin" ? (t.colorMask.setMask(0), r === 0 ? (t.renderTarget.clear(null, T.STENCIL), t.stencil.setStencilMode(a.R.DISABLED, r)) : t.stencil.setStencilMode(a.R.RENDERING_MASK_REMOVE, r), r--) : e.action === "popMaskEnd" && (e.inverse ? t.stencil.setStencilMode(a.R.INVERSE_MASK_ACTIVE, r) : t.stencil.setStencilMode(a.R.MASK_ACTIVE, r), t.colorMask.setMask(15)), n.maskStackIndex = r; };
     Qe.prototype.destroy = function () { this._renderer = null, this._maskHash = null; };
     return Qe;
-}()), Qe.extension = { type: [n.q.WebGLPipes, n.q.WebGPUPipes], name: "stencilMask" }; })))(); }
+}()), Qe.extension = { type: [n.G.WebGLPipes, n.G.WebGPUPipes], name: "stencilMask" }; })))(); }
 function et(e, t, n, r, i, a) { var o = a ? 1 : -1; return e.identity(), e.a = 1 / r * 2, e.d = o * (1 / i * 2), e.tx = -1 - t * e.a, e.ty = -o - n * e.d, e; }
 function tt() { return (tt = e.n((function () { })))(); }
 var A;
@@ -466,7 +466,7 @@ function it() { return (it = e.n((function () { rt = (function () {
     return rt;
 }()); })))(); }
 var at;
-function ot() { return (ot = e.n((function () { n.Y(), i.f(), a.F(), nt(), it(), at = (function () {
+function ot() { return (ot = e.n((function () { n.q(), i.f(), a.F(), nt(), it(), at = (function () {
     function at(e) {
         this._boundBufferBases = Object.create(null), this._minBaseLocation = 0, this._nextBindBaseIndex = this._minBaseLocation, this._bindCallId = 0, this._renderer = e, this._managedBuffers = new i.d({ renderer: e, type: "resource", onUnload: this.onBufferUnload.bind(this), name: "glBuffer" });
     }
@@ -501,9 +501,9 @@ function ot() { return (ot = e.n((function () { n.Y(), i.f(), a.F(), nt(), it(),
     at.prototype.createGLBuffer = function (e) { var t = this._gl, n = A.ARRAY_BUFFER; e.descriptor.usage & a.P.INDEX ? n = A.ELEMENT_ARRAY_BUFFER : e.descriptor.usage & a.P.UNIFORM && (n = A.UNIFORM_BUFFER); var r = new rt(t.createBuffer(), n); return e._gpuData[this._renderer.uid] = r, this._managedBuffers.add(e), r; };
     at.prototype.resetState = function () { this._boundBufferBases = Object.create(null); };
     return at;
-}()), at.extension = { type: [n.q.WebGLSystem], name: "buffer" }; })))(); }
+}()), at.extension = { type: [n.G.WebGLSystem], name: "buffer" }; })))(); }
 var j, st;
-function ct() { return (ct = e.n((function () { n.P(), n.Y(), i.L(), t.o(), j = (function () {
+function ct() { return (ct = e.n((function () { n.P(), n.q(), i.L(), t.br(), j = (function () {
     function e(e) {
         this.supports = { uint32Indices: !0, uniformBufferObject: !0, vertexArrayObject: !0, srgbTextures: !0, nonPowOf2wrapping: !0, msaa: !0, nonPowOf2mipmaps: !0 }, this._renderer = e, this.extensions = Object.create(null), this.handleContextLost = this.handleContextLost.bind(this), this.handleContextRestored = this.handleContextRestored.bind(this);
     }
@@ -513,7 +513,7 @@ function ct() { return (ct = e.n((function () { n.P(), n.Y(), i.L(), t.o(), j = 
         configurable: true
     });
     e.prototype.contextChange = function (e) { this.gl = e, this._renderer.gl = e; };
-    e.prototype.init = function (r) { r = t.a(t.a({}, e.defaultOptions), r); var a = this.multiView = r.multiView; if (r.context && a && (i.R("Renderer created with both a context and multiview enabled. Disabling multiView as both cannot work together."), a = !1), this.canvas = a ? n.N.get().createCanvas(this._renderer.canvas.width, this._renderer.canvas.height) : this._renderer.view.canvas, r.context)
+    e.prototype.init = function (r) { r = t.yr(t.yr({}, e.defaultOptions), r); var a = this.multiView = r.multiView; if (r.context && a && (i.R("Renderer created with both a context and multiview enabled. Disabling multiView as both cannot work together."), a = !1), this.canvas = a ? n.N.get().createCanvas(this._renderer.canvas.width, this._renderer.canvas.height) : this._renderer.view.canvas, r.context)
         this.initFromContext(r.context);
     else {
         var o, s;
@@ -528,9 +528,9 @@ function ct() { return (ct = e.n((function () { n.P(), n.Y(), i.L(), t.o(), j = 
     e.prototype.createContext = function (e, t) { var n, r = this.canvas; if (e === 2 && (n = r.getContext("webgl2", t)), !n && (n = r.getContext("webgl", t), !n))
         throw Error("This browser does not support WebGL. Try using the canvas renderer"); this.gl = n, this.initFromContext(this.gl); };
     e.prototype.getExtensions = function () { var e = this.gl, n = { anisotropicFiltering: e.getExtension("EXT_texture_filter_anisotropic"), floatTextureLinear: e.getExtension("OES_texture_float_linear"), s3tc: e.getExtension("WEBGL_compressed_texture_s3tc"), s3tc_sRGB: e.getExtension("WEBGL_compressed_texture_s3tc_srgb"), etc: e.getExtension("WEBGL_compressed_texture_etc"), etc1: e.getExtension("WEBGL_compressed_texture_etc1"), pvrtc: e.getExtension("WEBGL_compressed_texture_pvrtc") || e.getExtension("WEBKIT_WEBGL_compressed_texture_pvrtc"), atc: e.getExtension("WEBGL_compressed_texture_atc"), astc: e.getExtension("WEBGL_compressed_texture_astc"), bptc: e.getExtension("EXT_texture_compression_bptc"), rgtc: e.getExtension("EXT_texture_compression_rgtc"), loseContext: e.getExtension("WEBGL_lose_context") }; if (this.webGLVersion === 1)
-        this.extensions = t.a(t.a({}, n), {}, { drawBuffers: e.getExtension("WEBGL_draw_buffers"), depthTexture: e.getExtension("WEBGL_depth_texture"), vertexArrayObject: e.getExtension("OES_vertex_array_object") || e.getExtension("MOZ_OES_vertex_array_object") || e.getExtension("WEBKIT_OES_vertex_array_object"), uint32ElementIndex: e.getExtension("OES_element_index_uint"), floatTexture: e.getExtension("OES_texture_float"), floatTextureLinear: e.getExtension("OES_texture_float_linear"), textureHalfFloat: e.getExtension("OES_texture_half_float"), textureHalfFloatLinear: e.getExtension("OES_texture_half_float_linear"), vertexAttribDivisorANGLE: e.getExtension("ANGLE_instanced_arrays"), srgb: e.getExtension("EXT_sRGB") });
+        this.extensions = t.yr(t.yr({}, n), {}, { drawBuffers: e.getExtension("WEBGL_draw_buffers"), depthTexture: e.getExtension("WEBGL_depth_texture"), vertexArrayObject: e.getExtension("OES_vertex_array_object") || e.getExtension("MOZ_OES_vertex_array_object") || e.getExtension("WEBKIT_OES_vertex_array_object"), uint32ElementIndex: e.getExtension("OES_element_index_uint"), floatTexture: e.getExtension("OES_texture_float"), floatTextureLinear: e.getExtension("OES_texture_float_linear"), textureHalfFloat: e.getExtension("OES_texture_half_float"), textureHalfFloatLinear: e.getExtension("OES_texture_half_float_linear"), vertexAttribDivisorANGLE: e.getExtension("ANGLE_instanced_arrays"), srgb: e.getExtension("EXT_sRGB") });
     else {
-        this.extensions = t.a(t.a({}, n), {}, { colorBufferFloat: e.getExtension("EXT_color_buffer_float") });
+        this.extensions = t.yr(t.yr({}, n), {}, { colorBufferFloat: e.getExtension("EXT_color_buffer_float") });
         var r_11 = e.getExtension("WEBGL_provoking_vertex");
         r_11 && r_11.provokingVertexWEBGL(r_11.FIRST_VERTEX_CONVENTION_WEBGL);
     } };
@@ -546,7 +546,7 @@ function ct() { return (ct = e.n((function () { n.P(), n.Y(), i.L(), t.o(), j = 
     e.prototype.forceContextLoss = function () { var e; (e = this.extensions.loseContext) == null || e.loseContext(), this._contextLossForced = !0; };
     e.prototype.validateContext = function (e) { var t = e.getContextAttributes(); t && !t.stencil && i.R("Provided WebGL context does not have a stencil buffer, masks may not render correctly"); var n = this.supports, r = this.webGLVersion === 2, a = this.extensions; n.uint32Indices = r || !!a.uint32ElementIndex, n.uniformBufferObject = r, n.vertexArrayObject = r || !!a.vertexArrayObject, n.srgbTextures = r || !!a.srgb, n.nonPowOf2wrapping = r, n.nonPowOf2mipmaps = r, n.msaa = r, n.uint32Indices || i.R("Provided WebGL context does not support 32 index buffer, large scenes may not render correctly"); };
     return e;
-}()), j.extension = { type: [n.q.WebGLSystem], name: "context" }, j.defaultOptions = { context: null, premultipliedAlpha: !0, preserveDrawingBuffer: !1, powerPreference: void 0, preferWebGLVersion: 2, multiView: !1 }, st = j; })))(); }
+}()), j.extension = { type: [n.G.WebGLSystem], name: "context" }, j.defaultOptions = { context: null, premultipliedAlpha: !0, preserveDrawingBuffer: !1, powerPreference: void 0, preferWebGLVersion: 2, multiView: !1 }, st = j; })))(); }
 function lt(e, t) { for (var n_11 in e.attributes) {
     var r_12 = e.attributes[n_11], a_3 = t[n_11];
     a_3 ? (r_12.format != null || (r_12.format = a_3.format), r_12.offset != null || (r_12.offset = a_3.offset), r_12.instance != null || (r_12.instance = a_3.instance)) : r_12.format || i.R("Attribute ".concat(n_11, " is not present in the shader, but is present in the geometry. Unable to infer attribute details."));
@@ -568,7 +568,7 @@ function ft(e) { var t; return (t = pt[e]) == null ? pt.float32 : t; }
 var pt;
 function mt() { return (mt = e.n((function () { F(), pt = { uint8x2: P.UNSIGNED_BYTE, uint8x4: P.UNSIGNED_BYTE, sint8x2: P.BYTE, sint8x4: P.BYTE, unorm8x2: P.UNSIGNED_BYTE, unorm8x4: P.UNSIGNED_BYTE, snorm8x2: P.BYTE, snorm8x4: P.BYTE, uint16x2: P.UNSIGNED_SHORT, uint16x4: P.UNSIGNED_SHORT, sint16x2: P.SHORT, sint16x4: P.SHORT, unorm16x2: P.UNSIGNED_SHORT, unorm16x4: P.UNSIGNED_SHORT, snorm16x2: P.SHORT, snorm16x4: P.SHORT, float16x2: P.HALF_FLOAT, float16x4: P.HALF_FLOAT, float32: P.FLOAT, float32x2: P.FLOAT, float32x3: P.FLOAT, float32x4: P.FLOAT, uint32: P.UNSIGNED_INT, uint32x2: P.UNSIGNED_INT, uint32x3: P.UNSIGNED_INT, uint32x4: P.UNSIGNED_INT, sint32: P.INT, sint32x2: P.INT, sint32x3: P.INT, sint32x4: P.INT }; })))(); }
 var ht, gt, I;
-function _t() { return (_t = e.n((function () { n.Y(), i.f(), a.nt(), dt(), mt(), ht = { "point-list": 0, "line-list": 1, "line-strip": 3, "triangle-list": 4, "triangle-strip": 5 }, gt = (function () {
+function _t() { return (_t = e.n((function () { n.q(), i.f(), a.nt(), dt(), mt(), ht = { "point-list": 0, "line-list": 1, "line-strip": 3, "triangle-list": 4, "triangle-strip": 5 }, gt = (function () {
     function gt() {
         this.vaoCache = Object.create(null);
     }
@@ -652,17 +652,17 @@ function _t() { return (_t = e.n((function () { n.Y(), i.f(), a.nt(), dt(), mt()
     I.prototype.unbind = function () { this.gl.bindVertexArray(null), this._activeVao = null, this._activeGeometry = null; };
     I.prototype.destroy = function () { this._managedGeometries.destroy(), this._renderer = null, this.gl = null, this._activeVao = null, this._activeGeometry = null; };
     return I;
-}()), I.extension = { type: [n.q.WebGLSystem], name: "geometry" }; })))(); }
+}()), I.extension = { type: [n.G.WebGLSystem], name: "geometry" }; })))(); }
 var vt, L, yt;
 function bt() {
     return (bt = e.n((function () {
-        n.Y(), i.L(), a.j(), a.J(), a.K(), a.Ct(), a._t(), we(), t.o(), vt = new a.A({ attributes: { aPosition: [-1, -1, 3, -1, -1, 3] } }), L = (function () {
+        n.q(), i.L(), a.j(), a.J(), a.K(), a.Ct(), a._t(), we(), t.br(), vt = new a.A({ attributes: { aPosition: [-1, -1, 3, -1, -1, 3] } }), L = (function () {
             function e(e) {
                 this.useBackBuffer = !1, this._useBackBufferThisRender = !1, this._renderer = e;
             }
             e.prototype.init = function (n) {
                 if (n === void 0) { n = {}; }
-                var _a = t.a(t.a({}, e.defaultOptions), n), r = _a.useBackBuffer, o = _a.antialias;
+                var _a = t.yr(t.yr({}, e.defaultOptions), n), r = _a.useBackBuffer, o = _a.antialias;
                 this.useBackBuffer = r, this._antialias = o, this._renderer.context.supports.msaa || (i.R("antialiasing, is not supported on when using the back buffer"), this._antialias = !1), this._state = a.G.for2d();
                 var s = new S({ vertex: "\n                attribute vec2 aPosition;\n                out vec2 vUv;\n\n                void main() {\n                    gl_Position = vec4(aPosition, 0.0, 1.0);\n\n                    vUv = (aPosition + 1.0) / 2.0;\n\n                    // flip dem UVs\n                    vUv.y = 1.0 - vUv.y;\n                }", fragment: "\n                in vec2 vUv;\n                out vec4 finalColor;\n\n                uniform sampler2D uTexture;\n\n                void main() {\n                    finalColor = texture(uTexture, vUv);\n                }", name: "big-triangle" });
                 this._bigTriangleShader = new a.q({ glProgram: s, resources: { uTexture: a.gt.WHITE.source } });
@@ -676,19 +676,19 @@ function bt() {
             e.prototype._getBackBufferTexture = function (e) { return this._backBufferTexture = this._backBufferTexture || new a.gt({ source: new a.St({ width: e.width, height: e.height, resolution: e._resolution, antialias: this._antialias }) }), this._backBufferTexture.source.resize(e.width, e.height, e._resolution), this._backBufferTexture; };
             e.prototype.destroy = function () { this._backBufferTexture && (this._backBufferTexture.destroy(), this._backBufferTexture = null); };
             return e;
-        }()), L.extension = { type: [n.q.WebGLSystem], name: "backBuffer", priority: 1 }, L.defaultOptions = { useBackBuffer: !1 }, yt = L;
+        }()), L.extension = { type: [n.G.WebGLSystem], name: "backBuffer", priority: 1 }, L.defaultOptions = { useBackBuffer: !1 }, yt = L;
     })))();
 }
 var R;
-function xt() { return (xt = e.n((function () { n.Y(), R = (function () {
+function xt() { return (xt = e.n((function () { n.q(), R = (function () {
     function R(e) {
         this._colorMaskCache = 15, this._renderer = e;
     }
     R.prototype.setMask = function (e) { this._colorMaskCache !== e && (this._colorMaskCache = e, this._renderer.gl.colorMask(!!(e & 8), !!(e & 4), !!(e & 2), !!(e & 1))); };
     return R;
-}()), R.extension = { type: [n.q.WebGLSystem], name: "colorMask" }; })))(); }
+}()), R.extension = { type: [n.G.WebGLSystem], name: "colorMask" }; })))(); }
 var z;
-function St() { return (St = e.n((function () { n.Y(), z = (function () {
+function St() { return (St = e.n((function () { n.q(), z = (function () {
     function z(e) {
         this.commandFinished = Promise.resolve(), this._renderer = e;
     }
@@ -697,16 +697,16 @@ function St() { return (St = e.n((function () { n.Y(), z = (function () {
     z.prototype.draw = function (e) { var t = this._renderer, n = e.geometry, r = e.shader, i = e.state, a = e.skipSync, o = e.topology, s = e.size, c = e.start, l = e.instanceCount; t.shader.bind(r, a), t.geometry.bind(n, t.shader._activeProgram), i && t.state.set(i), t.geometry.draw(o, s, c, l == null ? n.instanceCount : l); };
     z.prototype.destroy = function () { this._renderer = null; };
     return z;
-}()), z.extension = { type: [n.q.WebGLSystem], name: "encoder" }; })))(); }
+}()), z.extension = { type: [n.G.WebGLSystem], name: "encoder" }; })))(); }
 var B;
-function Ct() { return (Ct = e.n((function () { n.Y(), c.b(), B = (function () {
+function Ct() { return (Ct = e.n((function () { n.q(), c.b(), B = (function () {
     function B(e) {
         this._renderer = e;
     }
     B.prototype.contextChange = function () { var e = this._renderer.gl; this.maxTextures = e.getParameter(e.MAX_TEXTURE_IMAGE_UNITS), this.maxBatchableTextures = c.y(this.maxTextures, e); var t = this._renderer.context.webGLVersion === 2; this.maxUniformBindings = t ? e.getParameter(e.MAX_UNIFORM_BUFFER_BINDINGS) : 0; };
     B.prototype.destroy = function () { };
     return B;
-}()), B.extension = { type: [n.q.WebGLSystem], name: "limits" }; })))(); }
+}()), B.extension = { type: [n.G.WebGLSystem], name: "limits" }; })))(); }
 var wt;
 function Tt() { return (Tt = e.n((function () { a.z(), wt = (function () {
     function wt() {
@@ -717,7 +717,7 @@ function Tt() { return (Tt = e.n((function () { a.z(), wt = (function () {
 var V;
 function Et() { return (Et = e.n((function () { a.z(), V = [], V[a.R.NONE] = void 0, V[a.R.DISABLED] = { stencilWriteMask: 0, stencilReadMask: 0 }, V[a.R.RENDERING_MASK_ADD] = { stencilFront: { compare: "equal", passOp: "increment-clamp" }, stencilBack: { compare: "equal", passOp: "increment-clamp" } }, V[a.R.RENDERING_MASK_REMOVE] = { stencilFront: { compare: "equal", passOp: "decrement-clamp" }, stencilBack: { compare: "equal", passOp: "decrement-clamp" } }, V[a.R.MASK_ACTIVE] = { stencilWriteMask: 0, stencilFront: { compare: "equal", passOp: "keep" }, stencilBack: { compare: "equal", passOp: "keep" } }, V[a.R.INVERSE_MASK_ACTIVE] = { stencilWriteMask: 0, stencilFront: { compare: "not-equal", passOp: "keep" }, stencilBack: { compare: "not-equal", passOp: "keep" } }; })))(); }
 var H;
-function Dt() { return (Dt = e.n((function () { n.Y(), Et(), a.z(), H = (function () {
+function Dt() { return (Dt = e.n((function () { n.q(), Et(), a.z(), H = (function () {
     function H(e) {
         this._stencilCache = { enabled: !1, stencilReference: 0, stencilMode: a.R.NONE }, this._renderer = e, e.renderTarget.onRenderTargetChange.add(this);
     }
@@ -728,7 +728,7 @@ function Dt() { return (Dt = e.n((function () { n.Y(), Et(), a.z(), H = (functio
     H.prototype.setStencilMode = function (e, t) { var n; var r = (n = this._activeGpuRenderTarget) == null ? this._activeGpuRenderTarget = this._renderer.renderTarget.getGpuRenderTarget(this._activeRenderTarget) : n, i = this._gl, o = V[e], s = this._stencilCache; r.stencilMode = e, r.stencilReference = t, e === a.R.DISABLED ? this._stencilCache.enabled && (this._stencilCache.enabled = !1, i.disable(i.STENCIL_TEST)) : (this._stencilCache.enabled || (this._stencilCache.enabled = !0, i.enable(i.STENCIL_TEST)), (e !== s.stencilMode || s.stencilReference !== t) && (s.stencilMode = e, s.stencilReference = t, i.stencilFunc(this._comparisonFuncMapping[o.stencilBack.compare], t, 255), i.stencilOp(i.KEEP, i.KEEP, this._stencilOpsMapping[o.stencilBack.passOp]))); };
     H.prototype.destroy = function () { this._renderer.renderTarget.onRenderTargetChange.remove(this), this._renderer = null, this._gl = null, this._activeRenderTarget = null, this._activeGpuRenderTarget = null; };
     return H;
-}()), H.extension = { type: [n.q.WebGLSystem], name: "stencil" }; })))(); }
+}()), H.extension = { type: [n.G.WebGLSystem], name: "stencil" }; })))(); }
 function Ot(e) { var t = e.map(function (e) { return ({ data: e, offset: 0, size: 0 }); }), n = 0, r = 0; for (var e_33 = 0; e_33 < t.length; e_33++) {
     var i_7 = t[e_33];
     if (n = U[i_7.data.type], !n)
@@ -749,13 +749,13 @@ function At() { return (At = e.n((function () { W(); })))(); }
 function jt(e) { return a.u(e, a.c, kt); }
 function Mt() { return (Mt = e.n((function () { a.d(), a.s(), At(); })))(); }
 var G;
-function Nt() { return (Nt = e.n((function () { n.Y(), a.h(), W(), Mt(), G = (function (_super) {
+function Nt() { return (Nt = e.n((function () { n.q(), a.h(), W(), Mt(), G = (function (_super) {
     __extends(G, _super);
     function G() {
         return _super.call(this, { createUboElements: Ot, generateUboSync: jt }) || this;
     }
     return G;
-}(a.m)), G.extension = { type: [n.q.WebGLSystem], name: "ubo" }; })))(); }
+}(a.m)), G.extension = { type: [n.G.WebGLSystem], name: "ubo" }; })))(); }
 var Pt;
 function Ft() { return (Ft = e.n((function () { r._(), i.L(), a.dt(), E(), Tt(), Pt = (function () {
     function Pt() {
@@ -866,7 +866,7 @@ function Ft() { return (Ft = e.n((function () { r._(), i.L(), a.dt(), E(), Tt(),
     return Pt;
 }()); })))(); }
 var It;
-function Lt() { return (Lt = e.n((function () { n.Y(), a._(), Ft(), It = (function (_super) {
+function Lt() { return (Lt = e.n((function () { n.q(), a._(), Ft(), It = (function (_super) {
     __extends(It, _super);
     function It(e) {
         var _this = this;
@@ -875,7 +875,7 @@ function Lt() { return (Lt = e.n((function () { n.Y(), a._(), Ft(), It = (functi
     }
     It.prototype.resetState = function () { this.adaptor.resetState(); };
     return It;
-}(a.g)), It.extension = { type: [n.q.WebGLSystem], name: "renderTarget" }; })))(); }
+}(a.g)), It.extension = { type: [n.G.WebGLSystem], name: "renderTarget" }; })))(); }
 function Rt(e, t) {
     var n = [], r = ["\n        var g = s.groups;\n        var sS = r.shader;\n        var p = s.glProgram;\n        var ugS = r.uniformGroup;\n        var resources;\n    "], i = !1, o = 0, s = t._getProgramData(e.glProgram);
     for (var c_4 in e.groups) {
@@ -1000,7 +1000,7 @@ function rn(e, t) { var n = Ht(e, e.VERTEX_SHADER, t.vertex), r = Ht(e, e.FRAGME
 } return new Bt(a, s); }
 function an() { return (an = e.n((function () { i.L(), Vt(), Zt(), en(); })))(); }
 var q, J;
-function on() { return (on = e.n((function () { n.Y(), zt(), an(), q = { textureCount: 0, blockIndex: 0 }, J = (function () {
+function on() { return (on = e.n((function () { n.q(), zt(), an(), q = { textureCount: 0, blockIndex: 0 }, J = (function () {
     function J(e) {
         this._activeProgram = null, this._programDataHash = Object.create(null), this._shaderSyncFunctions = Object.create(null), this._renderer = e;
     }
@@ -1033,7 +1033,7 @@ function on() { return (on = e.n((function () { n.Y(), zt(), an(), q = { texture
     J.prototype._generateShaderSync = function (e, t) { return Rt(e, t); };
     J.prototype.resetState = function () { this._activeProgram = null; };
     return J;
-}()), J.extension = { type: [n.q.WebGLSystem], name: "shader" }; })))(); }
+}()), J.extension = { type: [n.G.WebGLSystem], name: "shader" }; })))(); }
 var sn, cn;
 function ln() {
     return (ln = e.n((function () {
@@ -1064,7 +1064,7 @@ function un(e, t) {
 }
 function dn() { return (dn = e.n((function () { a.o(), a.Q(), a.f(), ln(); })))(); }
 var Y;
-function fn() { return (fn = e.n((function () { n.Y(), dn(), Y = (function () {
+function fn() { return (fn = e.n((function () { n.q(), dn(), Y = (function () {
     function Y(e) {
         this._cache = {}, this._uniformGroupSyncHash = {}, this._renderer = e, this.gl = null, this._cache = {};
     }
@@ -1077,7 +1077,7 @@ function fn() { return (fn = e.n((function () { n.Y(), dn(), Y = (function () {
         i.push(e_41), t[e_41] && i.push(t[e_41].type); return i.join("-"); };
     Y.prototype.destroy = function () { this._renderer = null, this._cache = null; };
     return Y;
-}()), Y.extension = { type: [n.q.WebGLSystem], name: "uniformGroup" }; })))(); }
+}()), Y.extension = { type: [n.G.WebGLSystem], name: "uniformGroup" }; })))(); }
 function pn(e) { var t = {}; if (t.normal = [e.ONE, e.ONE_MINUS_SRC_ALPHA], t.add = [e.ONE, e.ONE], t.multiply = [e.DST_COLOR, e.ONE_MINUS_SRC_ALPHA, e.ONE, e.ONE_MINUS_SRC_ALPHA], t.screen = [e.ONE, e.ONE_MINUS_SRC_COLOR, e.ONE, e.ONE_MINUS_SRC_ALPHA], t.none = [0, 0], t["normal-npm"] = [e.SRC_ALPHA, e.ONE_MINUS_SRC_ALPHA, e.ONE, e.ONE_MINUS_SRC_ALPHA], t["add-npm"] = [e.SRC_ALPHA, e.ONE, e.ONE, e.ONE], t["screen-npm"] = [e.SRC_ALPHA, e.ONE_MINUS_SRC_COLOR, e.ONE, e.ONE_MINUS_SRC_ALPHA], t.erase = [e.ZERO, e.ONE_MINUS_SRC_ALPHA], !(e instanceof n.N.get().getWebGLRenderingContext()))
     t.min = [e.ONE, e.ONE, e.ONE, e.ONE, e.MIN, e.MIN], t.max = [e.ONE, e.ONE, e.ONE, e.ONE, e.MAX, e.MAX];
 else {
@@ -1088,7 +1088,7 @@ function mn() { return (mn = e.n((function () { n.P(); })))(); }
 var hn, gn, _n, vn, yn, bn, xn, Sn;
 function Cn() { return (Cn = e.n((function () {
     var _a;
-    n.Y(), a.K(), mn(), _a = a.W, hn = _a.BLEND, gn = _a.OFFSET, _n = _a.CULLING, vn = _a.DEPTH_TEST, yn = _a.WINDING, bn = _a.DEPTH_MASK, xn = (function () {
+    n.q(), a.K(), mn(), _a = a.W, hn = _a.BLEND, gn = _a.OFFSET, _n = _a.CULLING, vn = _a.DEPTH_TEST, yn = _a.WINDING, bn = _a.DEPTH_MASK, xn = (function () {
         function e(e) {
             this._invertFrontFace = !1, this._renderer = e, this.gl = null, this.stateId = 0, this.polygonOffset = 0, this.blendMode = "none", this._blendEq = !1, this.map = [], this.map[hn] = this.setBlend, this.map[gn] = this.setOffset, this.map[_n] = this.setCullFace, this.map[vn] = this.setDepthTest, this.map[yn] = this.setFrontFace, this.map[bn] = this.setDepthMask, this.checks = [], this.defaultState = a.G.for2d(), e.renderTarget.onRenderTargetChange.add(this);
         }
@@ -1124,7 +1124,7 @@ function Cn() { return (Cn = e.n((function () {
         e._checkPolygonOffset = function (e, t) { e.setPolygonOffset(1, t.polygonOffset); };
         e.prototype.destroy = function () { this.gl = null, this.checks.length = 0, this._renderer = null; };
         return e;
-    }()), xn.extension = { type: [n.q.WebGLSystem], name: "state" }, Sn = xn;
+    }()), xn.extension = { type: [n.G.WebGLSystem], name: "state" }, Sn = xn;
 })))(); }
 var wn;
 function Tn() { return (Tn = e.n((function () { F(), wn = (function () {
@@ -1203,16 +1203,16 @@ else
 } e.compare ? (t[i](c, t.TEXTURE_COMPARE_FUNC, Wn[e.compare]), t[i](c, t.TEXTURE_COMPARE_MODE, t.COMPARE_REF_TO_TEXTURE)) : s || t[i](c, t.TEXTURE_COMPARE_MODE, t.NONE); }
 function qn() { return (qn = e.n((function () { Gn(); })))(); }
 function Jn(e) { return { r8unorm: e.RED, r8snorm: e.RED, r8uint: e.RED_INTEGER, r8sint: e.RED_INTEGER, r16uint: e.RED_INTEGER, r16sint: e.RED_INTEGER, r16float: e.RED, rg8unorm: e.RG, rg8snorm: e.RG, rg8uint: e.RG_INTEGER, rg8sint: e.RG_INTEGER, r32uint: e.RED_INTEGER, r32sint: e.RED_INTEGER, r32float: e.RED, rg16uint: e.RG_INTEGER, rg16sint: e.RG_INTEGER, rg16float: e.RG, rgba8unorm: e.RGBA, "rgba8unorm-srgb": e.RGBA, rgba8snorm: e.RGBA, rgba8uint: e.RGBA_INTEGER, rgba8sint: e.RGBA_INTEGER, bgra8unorm: e.RGBA, "bgra8unorm-srgb": e.RGBA, rgb9e5ufloat: e.RGB, rgb10a2unorm: e.RGBA, rg11b10ufloat: e.RGB, rg32uint: e.RG_INTEGER, rg32sint: e.RG_INTEGER, rg32float: e.RG, rgba16uint: e.RGBA_INTEGER, rgba16sint: e.RGBA_INTEGER, rgba16float: e.RGBA, rgba32uint: e.RGBA_INTEGER, rgba32sint: e.RGBA_INTEGER, rgba32float: e.RGBA, stencil8: e.STENCIL_INDEX8, depth16unorm: e.DEPTH_COMPONENT, depth24plus: e.DEPTH_COMPONENT, "depth24plus-stencil8": e.DEPTH_STENCIL, depth32float: e.DEPTH_COMPONENT, "depth32float-stencil8": e.DEPTH_STENCIL }; }
-function Yn(e, r) { var i = {}, a = e.RGBA; return e instanceof n.N.get().getWebGLRenderingContext() ? r.srgb && (i = { "rgba8unorm-srgb": r.srgb.SRGB8_ALPHA8_EXT, "bgra8unorm-srgb": r.srgb.SRGB8_ALPHA8_EXT }) : (i = { "rgba8unorm-srgb": e.SRGB8_ALPHA8, "bgra8unorm-srgb": e.SRGB8_ALPHA8 }, a = e.RGBA8), t.a(t.a(t.a(t.a(t.a(t.a(t.a({ r8unorm: e.R8, r8snorm: e.R8_SNORM, r8uint: e.R8UI, r8sint: e.R8I, r16uint: e.R16UI, r16sint: e.R16I, r16float: e.R16F, rg8unorm: e.RG8, rg8snorm: e.RG8_SNORM, rg8uint: e.RG8UI, rg8sint: e.RG8I, r32uint: e.R32UI, r32sint: e.R32I, r32float: e.R32F, rg16uint: e.RG16UI, rg16sint: e.RG16I, rg16float: e.RG16F, rgba8unorm: e.RGBA }, i), {}, { rgba8snorm: e.RGBA8_SNORM, rgba8uint: e.RGBA8UI, rgba8sint: e.RGBA8I, bgra8unorm: a, rgb9e5ufloat: e.RGB9_E5, rgb10a2unorm: e.RGB10_A2, rg11b10ufloat: e.R11F_G11F_B10F, rg32uint: e.RG32UI, rg32sint: e.RG32I, rg32float: e.RG32F, rgba16uint: e.RGBA16UI, rgba16sint: e.RGBA16I, rgba16float: e.RGBA16F, rgba32uint: e.RGBA32UI, rgba32sint: e.RGBA32I, rgba32float: e.RGBA32F, stencil8: e.STENCIL_INDEX8, depth16unorm: e.DEPTH_COMPONENT16, depth24plus: e.DEPTH_COMPONENT24, "depth24plus-stencil8": e.DEPTH24_STENCIL8, depth32float: e.DEPTH_COMPONENT32F, "depth32float-stencil8": e.DEPTH32F_STENCIL8 }, r.s3tc ? { "bc1-rgba-unorm": r.s3tc.COMPRESSED_RGBA_S3TC_DXT1_EXT, "bc2-rgba-unorm": r.s3tc.COMPRESSED_RGBA_S3TC_DXT3_EXT, "bc3-rgba-unorm": r.s3tc.COMPRESSED_RGBA_S3TC_DXT5_EXT } : {}), r.s3tc_sRGB ? { "bc1-rgba-unorm-srgb": r.s3tc_sRGB.COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT, "bc2-rgba-unorm-srgb": r.s3tc_sRGB.COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT, "bc3-rgba-unorm-srgb": r.s3tc_sRGB.COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT } : {}), r.rgtc ? { "bc4-r-unorm": r.rgtc.COMPRESSED_RED_RGTC1_EXT, "bc4-r-snorm": r.rgtc.COMPRESSED_SIGNED_RED_RGTC1_EXT, "bc5-rg-unorm": r.rgtc.COMPRESSED_RED_GREEN_RGTC2_EXT, "bc5-rg-snorm": r.rgtc.COMPRESSED_SIGNED_RED_GREEN_RGTC2_EXT } : {}), r.bptc ? { "bc6h-rgb-float": r.bptc.COMPRESSED_RGB_BPTC_SIGNED_FLOAT_EXT, "bc6h-rgb-ufloat": r.bptc.COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_EXT, "bc7-rgba-unorm": r.bptc.COMPRESSED_RGBA_BPTC_UNORM_EXT, "bc7-rgba-unorm-srgb": r.bptc.COMPRESSED_SRGB_ALPHA_BPTC_UNORM_EXT } : {}), r.etc ? { "etc2-rgb8unorm": r.etc.COMPRESSED_RGB8_ETC2, "etc2-rgb8unorm-srgb": r.etc.COMPRESSED_SRGB8_ETC2, "etc2-rgb8a1unorm": r.etc.COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2, "etc2-rgb8a1unorm-srgb": r.etc.COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2, "etc2-rgba8unorm": r.etc.COMPRESSED_RGBA8_ETC2_EAC, "etc2-rgba8unorm-srgb": r.etc.COMPRESSED_SRGB8_ALPHA8_ETC2_EAC, "eac-r11unorm": r.etc.COMPRESSED_R11_EAC, "eac-rg11unorm": r.etc.COMPRESSED_SIGNED_RG11_EAC } : {}), r.astc ? { "astc-4x4-unorm": r.astc.COMPRESSED_RGBA_ASTC_4x4_KHR, "astc-4x4-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR, "astc-5x4-unorm": r.astc.COMPRESSED_RGBA_ASTC_5x4_KHR, "astc-5x4-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR, "astc-5x5-unorm": r.astc.COMPRESSED_RGBA_ASTC_5x5_KHR, "astc-5x5-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR, "astc-6x5-unorm": r.astc.COMPRESSED_RGBA_ASTC_6x5_KHR, "astc-6x5-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR, "astc-6x6-unorm": r.astc.COMPRESSED_RGBA_ASTC_6x6_KHR, "astc-6x6-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR, "astc-8x5-unorm": r.astc.COMPRESSED_RGBA_ASTC_8x5_KHR, "astc-8x5-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR, "astc-8x6-unorm": r.astc.COMPRESSED_RGBA_ASTC_8x6_KHR, "astc-8x6-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR, "astc-8x8-unorm": r.astc.COMPRESSED_RGBA_ASTC_8x8_KHR, "astc-8x8-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR, "astc-10x5-unorm": r.astc.COMPRESSED_RGBA_ASTC_10x5_KHR, "astc-10x5-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR, "astc-10x6-unorm": r.astc.COMPRESSED_RGBA_ASTC_10x6_KHR, "astc-10x6-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR, "astc-10x8-unorm": r.astc.COMPRESSED_RGBA_ASTC_10x8_KHR, "astc-10x8-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR, "astc-10x10-unorm": r.astc.COMPRESSED_RGBA_ASTC_10x10_KHR, "astc-10x10-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR, "astc-12x10-unorm": r.astc.COMPRESSED_RGBA_ASTC_12x10_KHR, "astc-12x10-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR, "astc-12x12-unorm": r.astc.COMPRESSED_RGBA_ASTC_12x12_KHR, "astc-12x12-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR } : {}); }
-function Xn() { return (Xn = e.n((function () { n.P(), t.o(); })))(); }
+function Yn(e, r) { var i = {}, a = e.RGBA; return e instanceof n.N.get().getWebGLRenderingContext() ? r.srgb && (i = { "rgba8unorm-srgb": r.srgb.SRGB8_ALPHA8_EXT, "bgra8unorm-srgb": r.srgb.SRGB8_ALPHA8_EXT }) : (i = { "rgba8unorm-srgb": e.SRGB8_ALPHA8, "bgra8unorm-srgb": e.SRGB8_ALPHA8 }, a = e.RGBA8), t.yr(t.yr(t.yr(t.yr(t.yr(t.yr(t.yr({ r8unorm: e.R8, r8snorm: e.R8_SNORM, r8uint: e.R8UI, r8sint: e.R8I, r16uint: e.R16UI, r16sint: e.R16I, r16float: e.R16F, rg8unorm: e.RG8, rg8snorm: e.RG8_SNORM, rg8uint: e.RG8UI, rg8sint: e.RG8I, r32uint: e.R32UI, r32sint: e.R32I, r32float: e.R32F, rg16uint: e.RG16UI, rg16sint: e.RG16I, rg16float: e.RG16F, rgba8unorm: e.RGBA }, i), {}, { rgba8snorm: e.RGBA8_SNORM, rgba8uint: e.RGBA8UI, rgba8sint: e.RGBA8I, bgra8unorm: a, rgb9e5ufloat: e.RGB9_E5, rgb10a2unorm: e.RGB10_A2, rg11b10ufloat: e.R11F_G11F_B10F, rg32uint: e.RG32UI, rg32sint: e.RG32I, rg32float: e.RG32F, rgba16uint: e.RGBA16UI, rgba16sint: e.RGBA16I, rgba16float: e.RGBA16F, rgba32uint: e.RGBA32UI, rgba32sint: e.RGBA32I, rgba32float: e.RGBA32F, stencil8: e.STENCIL_INDEX8, depth16unorm: e.DEPTH_COMPONENT16, depth24plus: e.DEPTH_COMPONENT24, "depth24plus-stencil8": e.DEPTH24_STENCIL8, depth32float: e.DEPTH_COMPONENT32F, "depth32float-stencil8": e.DEPTH32F_STENCIL8 }, r.s3tc ? { "bc1-rgba-unorm": r.s3tc.COMPRESSED_RGBA_S3TC_DXT1_EXT, "bc2-rgba-unorm": r.s3tc.COMPRESSED_RGBA_S3TC_DXT3_EXT, "bc3-rgba-unorm": r.s3tc.COMPRESSED_RGBA_S3TC_DXT5_EXT } : {}), r.s3tc_sRGB ? { "bc1-rgba-unorm-srgb": r.s3tc_sRGB.COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT, "bc2-rgba-unorm-srgb": r.s3tc_sRGB.COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT, "bc3-rgba-unorm-srgb": r.s3tc_sRGB.COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT } : {}), r.rgtc ? { "bc4-r-unorm": r.rgtc.COMPRESSED_RED_RGTC1_EXT, "bc4-r-snorm": r.rgtc.COMPRESSED_SIGNED_RED_RGTC1_EXT, "bc5-rg-unorm": r.rgtc.COMPRESSED_RED_GREEN_RGTC2_EXT, "bc5-rg-snorm": r.rgtc.COMPRESSED_SIGNED_RED_GREEN_RGTC2_EXT } : {}), r.bptc ? { "bc6h-rgb-float": r.bptc.COMPRESSED_RGB_BPTC_SIGNED_FLOAT_EXT, "bc6h-rgb-ufloat": r.bptc.COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_EXT, "bc7-rgba-unorm": r.bptc.COMPRESSED_RGBA_BPTC_UNORM_EXT, "bc7-rgba-unorm-srgb": r.bptc.COMPRESSED_SRGB_ALPHA_BPTC_UNORM_EXT } : {}), r.etc ? { "etc2-rgb8unorm": r.etc.COMPRESSED_RGB8_ETC2, "etc2-rgb8unorm-srgb": r.etc.COMPRESSED_SRGB8_ETC2, "etc2-rgb8a1unorm": r.etc.COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2, "etc2-rgb8a1unorm-srgb": r.etc.COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2, "etc2-rgba8unorm": r.etc.COMPRESSED_RGBA8_ETC2_EAC, "etc2-rgba8unorm-srgb": r.etc.COMPRESSED_SRGB8_ALPHA8_ETC2_EAC, "eac-r11unorm": r.etc.COMPRESSED_R11_EAC, "eac-rg11unorm": r.etc.COMPRESSED_SIGNED_RG11_EAC } : {}), r.astc ? { "astc-4x4-unorm": r.astc.COMPRESSED_RGBA_ASTC_4x4_KHR, "astc-4x4-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR, "astc-5x4-unorm": r.astc.COMPRESSED_RGBA_ASTC_5x4_KHR, "astc-5x4-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR, "astc-5x5-unorm": r.astc.COMPRESSED_RGBA_ASTC_5x5_KHR, "astc-5x5-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR, "astc-6x5-unorm": r.astc.COMPRESSED_RGBA_ASTC_6x5_KHR, "astc-6x5-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR, "astc-6x6-unorm": r.astc.COMPRESSED_RGBA_ASTC_6x6_KHR, "astc-6x6-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR, "astc-8x5-unorm": r.astc.COMPRESSED_RGBA_ASTC_8x5_KHR, "astc-8x5-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR, "astc-8x6-unorm": r.astc.COMPRESSED_RGBA_ASTC_8x6_KHR, "astc-8x6-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR, "astc-8x8-unorm": r.astc.COMPRESSED_RGBA_ASTC_8x8_KHR, "astc-8x8-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR, "astc-10x5-unorm": r.astc.COMPRESSED_RGBA_ASTC_10x5_KHR, "astc-10x5-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR, "astc-10x6-unorm": r.astc.COMPRESSED_RGBA_ASTC_10x6_KHR, "astc-10x6-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR, "astc-10x8-unorm": r.astc.COMPRESSED_RGBA_ASTC_10x8_KHR, "astc-10x8-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR, "astc-10x10-unorm": r.astc.COMPRESSED_RGBA_ASTC_10x10_KHR, "astc-10x10-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR, "astc-12x10-unorm": r.astc.COMPRESSED_RGBA_ASTC_12x10_KHR, "astc-12x10-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR, "astc-12x12-unorm": r.astc.COMPRESSED_RGBA_ASTC_12x12_KHR, "astc-12x12-unorm-srgb": r.astc.COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR } : {}); }
+function Xn() { return (Xn = e.n((function () { n.P(), t.br(); })))(); }
 function Zn(e) { return { r8unorm: e.UNSIGNED_BYTE, r8snorm: e.BYTE, r8uint: e.UNSIGNED_BYTE, r8sint: e.BYTE, r16uint: e.UNSIGNED_SHORT, r16sint: e.SHORT, r16float: e.HALF_FLOAT, rg8unorm: e.UNSIGNED_BYTE, rg8snorm: e.BYTE, rg8uint: e.UNSIGNED_BYTE, rg8sint: e.BYTE, r32uint: e.UNSIGNED_INT, r32sint: e.INT, r32float: e.FLOAT, rg16uint: e.UNSIGNED_SHORT, rg16sint: e.SHORT, rg16float: e.HALF_FLOAT, rgba8unorm: e.UNSIGNED_BYTE, "rgba8unorm-srgb": e.UNSIGNED_BYTE, rgba8snorm: e.BYTE, rgba8uint: e.UNSIGNED_BYTE, rgba8sint: e.BYTE, bgra8unorm: e.UNSIGNED_BYTE, "bgra8unorm-srgb": e.UNSIGNED_BYTE, rgb9e5ufloat: e.UNSIGNED_INT_5_9_9_9_REV, rgb10a2unorm: e.UNSIGNED_INT_2_10_10_10_REV, rg11b10ufloat: e.UNSIGNED_INT_10F_11F_11F_REV, rg32uint: e.UNSIGNED_INT, rg32sint: e.INT, rg32float: e.FLOAT, rgba16uint: e.UNSIGNED_SHORT, rgba16sint: e.SHORT, rgba16float: e.HALF_FLOAT, rgba32uint: e.UNSIGNED_INT, rgba32sint: e.INT, rgba32float: e.FLOAT, stencil8: e.UNSIGNED_BYTE, depth16unorm: e.UNSIGNED_SHORT, depth24plus: e.UNSIGNED_INT, "depth24plus-stencil8": e.UNSIGNED_INT_24_8, depth32float: e.FLOAT, "depth32float-stencil8": e.FLOAT_32_UNSIGNED_INT_24_8_REV }; }
 function Qn(e) { return { "2d": e.TEXTURE_2D, cube: e.TEXTURE_CUBE_MAP, "1d": null, "3d": (e == null ? void 0 : e.TEXTURE_3D) || null, "2d-array": (e == null ? void 0 : e.TEXTURE_2D_ARRAY) || null, "cube-array": (e == null ? void 0 : e.TEXTURE_CUBE_MAP_ARRAY) || null }; }
 var $n, Z, er;
-function tr() { return (tr = e.n((function () { n.P(), n.Y(), i.f(), a._t(), Tn(), On(), jn(), Pn(), Rn(), Vn(), qn(), Xn(), t.o(), $n = 4, Z = (function () {
+function tr() { return (tr = e.n((function () { n.P(), n.q(), i.f(), a._t(), Tn(), On(), jn(), Pn(), Rn(), Vn(), qn(), Xn(), t.br(), $n = 4, Z = (function () {
     function e(n) {
         this._glSamplers = Object.create(null), this._boundTextures = [], this._integerUnits = 0, this._activeTextureLocation = -1, this._boundSamplers = Object.create(null), this._premultiplyAlpha = !1, this._useSeparateSamplers = !1, this._renderer = n, this._managedTextures = new i.d({ renderer: n, type: "resource", onUnload: this.onSourceUnload.bind(this), name: "glTexture" });
-        var r = t.a({ image: Ln, buffer: Dn, video: Bn, compressed: An }, e.uploadExtensions);
-        this._uploads = t.a(t.a({}, r), {}, { cube: Mn(r) });
+        var r = t.yr({ image: Ln, buffer: Dn, video: Bn, compressed: An }, e.uploadExtensions);
+        this._uploads = t.yr(t.yr({}, r), {}, { cube: Mn(r) });
     }
     Object.defineProperty(e.prototype, "managedTextures", {
         get: function () { return Object.values(this._managedTextures.items); },
@@ -1310,11 +1310,11 @@ function tr() { return (tr = e.n((function () { n.P(), n.Y(), i.f(), a._t(), Tn(
     e.prototype.destroy = function () { this._managedTextures.destroy(), this._glSamplers = null, this._boundTextures = null, this._boundSamplers = null, this._mapFormatToInternalFormat = null, this._mapFormatToType = null, this._mapFormatToFormat = null, this._uploads = null, this._renderer = null; };
     e.prototype.resetState = function () { var e = this._renderer.limits.maxTextures; this._activeTextureLocation = -1, this._boundTextures.fill(null), this._integerUnits = e >= 32 ? -1 : (1 << e) - 1, this._boundSamplers = Object.create(null); var t = this._gl; this._premultiplyAlpha = !1, t.pixelStorei(t.UNPACK_PREMULTIPLY_ALPHA_WEBGL, this._premultiplyAlpha); };
     return e;
-}()), Z.extension = { type: [n.q.WebGLSystem], name: "texture" }, Z.uploadExtensions = Object.create(null), er = Z, n.J.handleByMap(n.q.TextureUploaderWebGL, er.uploadExtensions); })))(); }
+}()), Z.extension = { type: [n.G.WebGLSystem], name: "texture" }, Z.uploadExtensions = Object.create(null), er = Z, n.K.handleByMap(n.G.TextureUploaderWebGL, er.uploadExtensions); })))(); }
 var nr, rr, ir, ar, or, sr, cr, lr;
 function ur() { return (ur = e.n((function () {
     var _a;
-    n.Y(), o.n(), s.f(), c.o(), a.U(), a.b(), a.X(), ot(), ct(), _t(), bt(), xt(), St(), Ct(), Dt(), Nt(), Lt(), on(), fn(), Cn(), tr(), nr = __spreadArray(__spreadArray([], a.y, true), [G, yt, st, B, at, er, It, I, Y, J, z, Sn, H, R], false), rr = __spreadArray([], a.v, true), ir = [c.a, s.d, o.t], ar = [], or = [], sr = [], cr = [], n.J.handleByNamedList(n.q.WebGLSystem, ar), n.J.handleByNamedList(n.q.WebGLPipes, or), n.J.handleByNamedList(n.q.WebGLPipesAdaptor, sr), n.J.handleByNamedList(n.q.WebGLLoader, cr), (_a = n.J).add.apply(_a, __spreadArray(__spreadArray(__spreadArray([], nr, false), rr, false), ir, false)), lr = (function (_super) {
+    n.q(), o.n(), s.f(), c.o(), a.U(), a.b(), a.X(), ot(), ct(), _t(), bt(), xt(), St(), Ct(), Dt(), Nt(), Lt(), on(), fn(), Cn(), tr(), nr = __spreadArray(__spreadArray([], a.y, true), [G, yt, st, B, at, er, It, I, Y, J, z, Sn, H, R], false), rr = __spreadArray([], a.v, true), ir = [c.a, s.d, o.t], ar = [], or = [], sr = [], cr = [], n.K.handleByNamedList(n.G.WebGLSystem, ar), n.K.handleByNamedList(n.G.WebGLPipes, or), n.K.handleByNamedList(n.G.WebGLPipesAdaptor, sr), n.K.handleByNamedList(n.G.WebGLLoader, cr), (_a = n.K).add.apply(_a, __spreadArray(__spreadArray(__spreadArray([], nr, false), rr, false), ir, false)), lr = (function (_super) {
         __extends(lr, _super);
         function lr() {
             var e = { name: "webgl", type: a.Y.WEBGL, systems: ar, renderPipes: or, renderPipeAdaptors: sr, loaders: cr };
@@ -1339,11 +1339,11 @@ function pr() { return (pr = e.n((function () { $(); })))(); }
 function mr(e) { return a.u(e, a.l, fr); }
 function hr() { return (hr = e.n((function () { a.d(), a.s(), pr(); })))(); }
 var gr;
-function _r() { return (_r = e.n((function () { n.Y(), a.h(), $(), hr(), gr = (function (_super) {
+function _r() { return (_r = e.n((function () { n.q(), a.h(), $(), hr(), gr = (function (_super) {
     __extends(gr, _super);
     function gr() {
         return _super.call(this, { createUboElements: dr, generateUboSync: mr }) || this;
     }
     return gr;
-}(a.m)), gr.extension = { type: [n.q.WebGPUSystem], name: "ubo" }; })))(); }
+}(a.m)), gr.extension = { type: [n.G.WebGPUSystem], name: "ubo" }; })))(); }
 Object.defineProperty(exports, "A", { enumerable: !0, get: function () { return ze; } }), Object.defineProperty(exports, "B", { enumerable: !0, get: function () { return ie; } }), Object.defineProperty(exports, "C", { enumerable: !0, get: function () { return O; } }), Object.defineProperty(exports, "D", { enumerable: !0, get: function () { return T; } }), Object.defineProperty(exports, "E", { enumerable: !0, get: function () { return He; } }), Object.defineProperty(exports, "F", { enumerable: !0, get: function () { return oe; } }), Object.defineProperty(exports, "H", { enumerable: !0, get: function () { return ne; } }), Object.defineProperty(exports, "I", { enumerable: !0, get: function () { return se; } }), Object.defineProperty(exports, "L", { enumerable: !0, get: function () { return _; } }), Object.defineProperty(exports, "M", { enumerable: !0, get: function () { return Le; } }), Object.defineProperty(exports, "N", { enumerable: !0, get: function () { return S; } }), Object.defineProperty(exports, "O", { enumerable: !0, get: function () { return E; } }), Object.defineProperty(exports, "P", { enumerable: !0, get: function () { return we; } }), Object.defineProperty(exports, "R", { enumerable: !0, get: function () { return ae; } }), Object.defineProperty(exports, "S", { enumerable: !0, get: function () { return Ye; } }), Object.defineProperty(exports, "T", { enumerable: !0, get: function () { return Be; } }), Object.defineProperty(exports, "U", { enumerable: !0, get: function () { return u; } }), Object.defineProperty(exports, "V", { enumerable: !0, get: function () { return g; } }), Object.defineProperty(exports, "W", { enumerable: !0, get: function () { return d; } }), Object.defineProperty(exports, "_", { enumerable: !0, get: function () { return Qe; } }), Object.defineProperty(exports, "a", { enumerable: !0, get: function () { return lr; } }), Object.defineProperty(exports, "b", { enumerable: !0, get: function () { return Ze; } }), Object.defineProperty(exports, "c", { enumerable: !0, get: function () { return fn; } }), Object.defineProperty(exports, "d", { enumerable: !0, get: function () { return G; } }), Object.defineProperty(exports, "f", { enumerable: !0, get: function () { return Nt; } }), Object.defineProperty(exports, "g", { enumerable: !0, get: function () { return tt; } }), Object.defineProperty(exports, "h", { enumerable: !0, get: function () { return et; } }), Object.defineProperty(exports, "i", { enumerable: !0, get: function () { return $; } }), Object.defineProperty(exports, "j", { enumerable: !0, get: function () { return Ie; } }), Object.defineProperty(exports, "k", { enumerable: !0, get: function () { return Re; } }), Object.defineProperty(exports, "l", { enumerable: !0, get: function () { return J; } }), Object.defineProperty(exports, "m", { enumerable: !0, get: function () { return W; } }), Object.defineProperty(exports, "n", { enumerable: !0, get: function () { return _r; } }), Object.defineProperty(exports, "o", { enumerable: !0, get: function () { return ur; } }), Object.defineProperty(exports, "p", { enumerable: !0, get: function () { return U; } }), Object.defineProperty(exports, "r", { enumerable: !0, get: function () { return Q; } }), Object.defineProperty(exports, "s", { enumerable: !0, get: function () { return Y; } }), Object.defineProperty(exports, "t", { enumerable: !0, get: function () { return gr; } }), Object.defineProperty(exports, "u", { enumerable: !0, get: function () { return on; } }), Object.defineProperty(exports, "v", { enumerable: !0, get: function () { return $e; } }), Object.defineProperty(exports, "w", { enumerable: !0, get: function () { return Ke; } }), Object.defineProperty(exports, "x", { enumerable: !0, get: function () { return k; } }), Object.defineProperty(exports, "y", { enumerable: !0, get: function () { return Xe; } }), Object.defineProperty(exports, "z", { enumerable: !0, get: function () { return re; } });

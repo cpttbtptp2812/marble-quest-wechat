@@ -1,4 +1,0 @@
-(function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-Dk_0uYx9.js"), n = require("./sapling-engine-nIouhjEF.js"), r = require("./sapling-engine-sX7qVz9U.js"), i = require("./sapling-engine-DdkTJwUg.js"), a = require("./sapling-engine-6sEQUsKX.js"), o = require("./sapling-engine-BIAzTs9D.js"), s = require("./sapling-engine-DRXIDWb4.js"), c = require("./sapling-engine-DkqQT0bo.js");
-function l() { return (l = e.n((function () { t.K(), t.U(), t.Y(), s.C(), o.T(), t.P(), n.x(), n._(), s.v(), s.s(), a.o(), r.J(), r.S(), r.lt(), r._t(), r.at(), i.h(), c.n(), o.b(), o.S(), o.c(), o.a(), o.n(), o.D(), o.g(), t.H(), t.J.add(t.G, t.W); })))(); }
-Object.defineProperty(exports, "t", { enumerable: !0, get: function () { return l; } });
