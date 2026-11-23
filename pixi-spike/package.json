@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "PixiJS 8 + Sapling2D rendering and physics migration spike for Marble Quest",
+  "description": "Marble Quest - PixiJS rendering with Nape.js + Nape-Pixi ready-made physics",
   "engines": {
     "node": ">=24"
   },
@@ -13,12 +13,14 @@
     "build:wechat": "vite build -c vite.wechat.config.ts && node scripts/fix-wechat-minify.js && node scripts/transpile-wechat-es5.js && node --check dist-wechat/game.js && node scripts/check-wechat-package.js && node scripts/publish-wechat-folder.js",
     "dev:wechat": "vite build -c vite.wechat.config.ts --watch",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && npm run build && npm run build:wechat"
+    "check": "npm run typecheck && npm run test:nape && npm run build && npm run build:wechat",
+    "test:nape": "node scripts/test-nape-physics.mjs"
   },
   "dependencies": {
     "pixi.js": "~8.22.0",
-    "planck": "^1.5.0",
-    "sapling2d": "0.6.0"
+    "sapling2d": "0.6.0",
+    "@newkrok/nape-js": "3.43.5",
+    "@newkrok/nape-pixi": "0.1.4"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

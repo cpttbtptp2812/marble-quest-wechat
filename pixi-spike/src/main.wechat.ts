@@ -1,21 +1,12 @@
 import './prelude.wechat'
 import { Viewport, v } from 'sapling2d'
 import { startGame } from 'sapling2d/wechat'
-import { ArenaScene, gameOptions } from './game'
+import { ArenaScene, gameOptions } from './game-nape'
 
-const BUILD_ID = '2026-11-23-R7'
+const BUILD_ID = '2026-11-23-NAPE-1'
 
-type WeChatTouch = { identifier: number; clientX: number; clientY: number }
-type WeChatTouchEvent = { changedTouches: WeChatTouch[] }
-type WeChatTouchApi = {
-  onTouchStart: (callback: (event: WeChatTouchEvent) => void) => void
-  onTouchMove: (callback: (event: WeChatTouchEvent) => void) => void
-  onTouchEnd: (callback: (event: WeChatTouchEvent) => void) => void
-  onTouchCancel: (callback: (event: WeChatTouchEvent) => void) => void
-}
-
-// Use at least 2x and at most 3x backing resolution. Some DevTools
-// simulators report DPR=1 even when the preview is displayed much larger.
+// Use native DPR, capped at 3x. The game scene itself uses "keep" aspect,
+// so the complete design canvas and all controls stay visible on phones.
 Object.defineProperty(Viewport.prototype, 'renderResolution', {
   configurable: true,
   get() {
@@ -24,70 +15,58 @@ Object.defineProperty(Viewport.prototype, 'renderResolution', {
   },
 })
 
-console.log('[MarbleQuest Pixi][' + BUILD_ID + '] calling startGame')
+console.log('[MarbleQuest][' + BUILD_ID + '] booting Pixi + Nape')
 
 void startGame(gameOptions).then((game) => {
-  const log = (message: string) => console.log('[MarbleQuest Pixi][' + BUILD_ID + '] ' + message)
+  const log = (message: string) => console.log('[MarbleQuest][' + BUILD_ID + '] ' + message)
   const viewport = game.tree.viewport
   const canvas = (game.platform as unknown as { canvas?: { width: number; height: number } }).canvas
   const canvasSize = canvas ? canvas.width + 'x' + canvas.height : 'unknown'
   const scene = game.scene as ArenaScene
 
-  // Bypass engine hit-testing for gameplay. WeChat global touch listeners are
-  // reliable on both DevTools and devices; map raw window pixels to design
-  // coordinates through the same Viewport transform used by the renderer.
-  const touchApi = wx as unknown as WeChatTouchApi
-  const touchPosition = (touch: WeChatTouch) =>
-    viewport.screenToDesign(v(touch.clientX, touch.clientY))
-
-  touchApi.onTouchStart((event) => {
-    for (const touch of event.changedTouches) {
-      scene.handlePointerDown(touch.identifier, touchPosition(touch))
-    }
+  // Use Sapling2D's official WeChat platform input adapter. It already
+  // converts wx touches into pointerdown/move/up/cancel events in logical
+  // window pixels; only one coordinate transform is applied here.
+  const platform = game.platform as unknown as {
+    onInput: (callback: (event: { type: string; pointerId: number; x: number; y: number }) => void) => () => void
+  }
+  const unsubscribeInput = platform.onInput((event) => {
+    const point = viewport.screenToDesign(v(event.x, event.y))
+    if (event.type === 'pointerdown') scene.handlePointerDown(event.pointerId, point)
+    else if (event.type === 'pointermove') scene.handlePointerMove(event.pointerId, point)
+    else if (event.type === 'pointerup') scene.handlePointerUp(event.pointerId, point)
+    else if (event.type === 'pointercancel') scene.handlePointerCancel(event.pointerId)
   })
-  touchApi.onTouchMove((event) => {
-    for (const touch of event.changedTouches) {
-      scene.handlePointerMove(touch.identifier, touchPosition(touch))
-    }
-  })
-  touchApi.onTouchEnd((event) => {
-    for (const touch of event.changedTouches) {
-      scene.handlePointerUp(touch.identifier, touchPosition(touch))
-    }
-  })
-  touchApi.onTouchCancel((event) => {
-    for (const touch of event.changedTouches) {
-      scene.handlePointerCancel(touch.identifier)
-    }
-  })
-  log('native WeChat touch listeners attached')
 
   const bootInfo =
-    'DPR ' + viewport.screen.pixelRatio + '/' + viewport.renderResolution +
-    'x  CANVAS ' + canvasSize +
-    '  DESIGN ' + viewport.designWidth + 'x' + viewport.designHeight
-  log('started; screen=' + viewport.screen.width + 'x' + viewport.screen.height +
-    ' deviceDPR=' + viewport.screen.pixelRatio +
-    ' renderDPR=' + viewport.renderResolution +
+    'NAPE ' + '3.43.5' +
+    ' · DPR ' + viewport.screen.pixelRatio + '/' + viewport.renderResolution +
+    'x · CANVAS ' + canvasSize
+  scene.setDiagnostics(bootInfo + ' · INPUT READY')
+  log('platform input subscribed')
+  log('screen=' + viewport.screen.width + 'x' + viewport.screen.height +
+    ' dpr=' + viewport.screen.pixelRatio +
+    ' renderDpr=' + viewport.renderResolution +
     ' canvas=' + canvasSize +
     ' design=' + viewport.designWidth + 'x' + viewport.designHeight +
     ' scale=' + viewport.scale.toFixed(3))
-  scene.setDiagnostics(bootInfo + '  WAIT FPS')
 
-  // Show and log the real frame metrics. The debug line is rendered on-screen.
   const report = () => {
     const stats = game.frameStats
-    const fps = stats.fps
-    const logic = stats.logicAvg
-    const render = stats.renderAvg
-    const marbles = game.tree.getNodesInGroup('marbles').length
-    const line = 'FPS ' + fps.toFixed(0) + ' CPU ' + logic.toFixed(1) +
-      ' GPU ' + render.toFixed(1) + ' ORB ' + marbles + ' SHOT ' + scene.shotsFired + ' ' + scene.inputState
+    const line = 'FPS ' + stats.fps.toFixed(0) +
+      ' CPU ' + stats.logicAvg.toFixed(1) +
+      ' GPU ' + stats.renderAvg.toFixed(1) +
+      ' ORB ' + scene.marbles.length +
+      ' SHOT ' + scene.shotsFired + ' ' + scene.inputState
     scene.setDiagnostics(line)
     log(line)
     game.resetFrameStats()
   }
-  setInterval(report, 1000)
+  const timer = setInterval(report, 1000)
+  ;(scene as ArenaScene & { __disposeInput?: () => void }).__disposeInput = () => {
+    clearInterval(timer)
+    unsubscribeInput()
+  }
 }).catch((error: unknown) => {
   let detail = ''
   try {
@@ -95,6 +74,6 @@ void startGame(gameOptions).then((game) => {
   } catch (_ignored) {
     detail = 'unknown startGame failure'
   }
-  console.error('[MarbleQuest Pixi][' + BUILD_ID + '] startGame failed: ' + detail)
+  console.error('[MarbleQuest][' + BUILD_ID + '] startGame failed: ' + detail)
   if (typeof GameGlobal !== 'undefined') GameGlobal.__marbleQuestLastError = detail
 })
