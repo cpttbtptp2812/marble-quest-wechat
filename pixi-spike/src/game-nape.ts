@@ -266,22 +266,34 @@ export class ArenaScene extends Scene {
     }
   }
 
+  #trayMetrics() {
+    const safe = this.tree.viewport.safeRect
+    const left = Math.max(18, safe.left + 12)
+    const right = Math.min(WIDTH - 18, safe.right - 12)
+    const width = Math.max(720, right - left)
+    // Keep the entire tray above the phone's home-indicator area.
+    const safeBottom = Math.min(HEIGHT - 96, safe.bottom - 96)
+    const panelY = Math.max(500, safeBottom - 96)
+    const gap = 9
+    const cardW = Math.min(194, (width - 36 - gap * 5) / 6)
+    const total = cardW * 6 + gap * 5
+    const startX = left + (width - total) / 2
+    return { left, right, width, panelY, gap, cardW, startX }
+  }
+
   #layoutHud(): void {
-    // Use the full design area in "keep" mode. The tray is intentionally
-    // kept inside y=690..790, not positioned against the physical Home bar.
-    this.trayPanel.position = v(20, 688)
-    this.trayPanel.size = v(1400, 100)
-    this.trayTitle.position = v(40, 696)
-    this.message.position = v(720, 654)
-    const cardW = 214
-    const gap = 11
-    const startX = 28
+    const m = this.#trayMetrics()
+    this.trayPanel.position = v(m.left, m.panelY)
+    this.trayPanel.size = v(m.width, 96)
+    this.trayTitle.position = v(m.left + 18, m.panelY + 8)
+    this.message.position = v((m.left + m.right) / 2, m.panelY - 28)
+
     for (let i = 0; i < this.#cards.length; i++) {
       const card = this.#cards[i]!
-      const x = startX + i * (cardW + gap)
-      card.bg.position = v(x, 733)
-      card.bg.size = v(cardW, 46)
-      card.label.position = v(x + cardW / 2, 756)
+      const x = m.startX + i * (m.cardW + m.gap)
+      card.bg.position = v(x, m.panelY + 36)
+      card.bg.size = v(m.cardW, 46)
+      card.label.position = v(x + m.cardW / 2, m.panelY + 59)
     }
   }
 
@@ -308,13 +320,11 @@ export class ArenaScene extends Scene {
     if (this.#activePointerId !== null) return
     this.#activePointerId = pointerId
 
-    if (position.y >= 688 && position.y <= 798) {
-      const startX = 28
-      const cardW = 214
-      const gap = 11
-      const index = Math.floor((position.x - startX) / (cardW + gap))
-      const cardStart = startX + index * (cardW + gap)
-      if (index >= 0 && index < ORDER.length && position.x >= cardStart && position.x <= cardStart + cardW) {
+    const tray = this.#trayMetrics()
+    if (position.y >= tray.panelY - 8 && position.y <= tray.panelY + 96) {
+      const index = Math.floor((position.x - tray.startX) / (tray.cardW + tray.gap))
+      const cardStart = tray.startX + index * (tray.cardW + tray.gap)
+      if (index >= 0 && index < ORDER.length && position.x >= cardStart && position.x <= cardStart + tray.cardW) {
         this.selected = ORDER[index]!
         this.#refreshCards()
         this.setMessage(ELEMENTS[this.selected].name + ' 已装填。点击左/右场地发射。')
@@ -572,9 +582,9 @@ export class ArenaScene extends Scene {
 
 export const gameOptions = {
   main: ArenaScene,
-  // "keep" keeps the complete 1440×810 game page visible on phones instead
-  // of cropping controls under a taller / narrower viewport.
-  design: { width: WIDTH, height: HEIGHT, aspect: 'keep' as const },
+  // Expand preserves the complete design and avoids letterboxing on wide
+  // landscape devices; HUD controls are positioned from the live safe rect.
+  design: { width: WIDTH, height: HEIGHT, aspect: 'expand' as const },
   background: 0x080d24,
   pauseOnBackground: true,
   storagePrefix: 'marble-quest-nape:',
