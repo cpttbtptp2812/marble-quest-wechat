@@ -1,0 +1,28 @@
+name: Pixi Spike Build
+
+on:
+  push:
+    branches: [feature/pixi-sapling-spike]
+    paths:
+      - 'pixi-spike/**'
+      - '.github/workflows/pixi-spike.yml'
+  pull_request:
+    paths:
+      - 'pixi-spike/**'
+      - '.github/workflows/pixi-spike.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pixi-spike
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install
+      - name: Typecheck and build browser preview + WeChat Mini Game
+        run: npm run check
