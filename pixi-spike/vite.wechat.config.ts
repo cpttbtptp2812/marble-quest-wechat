@@ -65,8 +65,31 @@ const injectWechatNavigatorAtEntry: Plugin = {
   name: 'marble-quest:wechat-navigator-entry-bootstrap',
   enforce: 'post' as const,
   renderChunk(code, chunk) {
-    if (!chunk.isEntry || chunk.fileName !== 'game.js') return null
-    return `${wechatNavigatorBootstrap}\n${code}`
+    // Pixi's Safari/Chrome checks assume DOMAdapter.getNavigator() always
+    // returns an object. In WeChat's game context it may be undefined even
+    // when globalThis.navigator exists. Here it is used only for UA detection.
+    if (chunk.fileName.includes('sapling-engine-DbC_')) {
+      const safariCheck = 'var e = n.N.get().getNavigator().userAgent;'
+      const chromeCheck = 'n.N.get().getNavigator().userAgent.toLowerCase().indexOf("chrome")'
+      if (!code.includes(safariCheck) || !code.includes(chromeCheck)) {
+        this.error('Expected Pixi navigator feature-detection code was not found; refusing an unverified compatibility patch.')
+      }
+      code = code
+        .replace(
+          safariCheck,
+          'var e = String((n.N.get().getNavigator() || {}).userAgent || "");',
+        )
+        .replace(
+          chromeCheck,
+          'String((n.N.get().getNavigator() || {}).userAgent || "").toLowerCase().indexOf("chrome")',
+        )
+      return code
+    }
+
+    if (chunk.isEntry && chunk.fileName === 'game.js') {
+      return `${wechatNavigatorBootstrap}\\n${code}`
+    }
+    return null
   },
 }
 
