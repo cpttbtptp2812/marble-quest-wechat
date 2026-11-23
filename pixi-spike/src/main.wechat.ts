@@ -1,17 +1,17 @@
 import './prelude.wechat'
-import { Viewport, v } from 'sapling2d'
+import { Viewport } from 'sapling2d'
 import { startGame } from 'sapling2d/wechat'
 import { ArenaScene, gameOptions } from './game-nape'
 
-const BUILD_ID = '2026-11-23-NAPE-1'
+const BUILD_ID = '2026-11-23-NAPE-2'
 
-// Use native DPR, capped at 3x. The game scene itself uses "keep" aspect,
-// so the complete design canvas and all controls stay visible on phones.
+// Follow Sapling2D's mobile render budget: use the device DPR, capped at 2x.
+// This avoids forcing 2–3x rendering on lower-resolution / slower phones.
 Object.defineProperty(Viewport.prototype, 'renderResolution', {
   configurable: true,
   get() {
     const dpr = Number(this.screen.pixelRatio) || 1
-    return Math.min(Math.max(dpr, 2), 3)
+    return Math.min(dpr, 2)
   },
 })
 
@@ -24,26 +24,15 @@ void startGame(gameOptions).then((game) => {
   const canvasSize = canvas ? canvas.width + 'x' + canvas.height : 'unknown'
   const scene = game.scene as ArenaScene
 
-  // Use Sapling2D's official WeChat platform input adapter. It already
-  // converts wx touches into pointerdown/move/up/cancel events in logical
-  // window pixels; only one coordinate transform is applied here.
-  const platform = game.platform as unknown as {
-    onInput: (callback: (event: { type: string; pointerId: number; x: number; y: number }) => void) => () => void
-  }
-  const unsubscribeInput = platform.onInput((event) => {
-    const point = viewport.screenToDesign(v(event.x, event.y))
-    if (event.type === 'pointerdown') scene.handlePointerDown(event.pointerId, point)
-    else if (event.type === 'pointermove') scene.handlePointerMove(event.pointerId, point)
-    else if (event.type === 'pointerup') scene.handlePointerUp(event.pointerId, point)
-    else if (event.type === 'pointercancel') scene.handlePointerCancel(event.pointerId)
-  })
-
+  // Raw WeChat touch events are subscribed once by Sapling2D's Game runtime.
+  // ArenaScene receives normalized design-space pointer events through its
+  // invisible input surface, including captured drag and release events.
   const bootInfo =
     'NAPE ' + '3.43.5' +
     ' · DPR ' + viewport.screen.pixelRatio + '/' + viewport.renderResolution +
     'x · CANVAS ' + canvasSize
   scene.setDiagnostics(bootInfo + ' · INPUT READY')
-  log('platform input subscribed')
+  log('Sapling pointer pipeline ready')
   log('screen=' + viewport.screen.width + 'x' + viewport.screen.height +
     ' dpr=' + viewport.screen.pixelRatio +
     ' renderDpr=' + viewport.renderResolution +
@@ -62,11 +51,7 @@ void startGame(gameOptions).then((game) => {
     log(line)
     game.resetFrameStats()
   }
-  const timer = setInterval(report, 1000)
-  ;(scene as ArenaScene & { __disposeInput?: () => void }).__disposeInput = () => {
-    clearInterval(timer)
-    unsubscribeInput()
-  }
+  setInterval(report, 1000)
 }).catch((error: unknown) => {
   let detail = ''
   try {
