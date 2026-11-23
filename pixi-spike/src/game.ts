@@ -1,5 +1,5 @@
 import {
-  CanvasLayer, circle, CollisionShape2D, ColorRect, Ease, Label, Node, Node2D, rect,
+  CanvasLayer, circle, CollisionShape2D, ColorRect, Ease, Label, Node, rect,
   RigidBody2D, Scene, StaticBody2D, rectangle, v, type Vector2,
 } from 'sapling2d'
 import { AimArt, AmbientArt, BackdropArt, CannonArt, ELEMENTS, FusionArt, MothArt, MuzzleFlashArt, OrbArt, PillarArt, TrailArt, type Element, type FusionStyle } from './art'
@@ -122,25 +122,6 @@ class MothBoss extends StaticBody2D {
   }
 }
 
-/**
- * One transparent, full-arena input surface owns all touch gestures.
- * WeChat touch events are routed once here, then dispatched by design-space
- * coordinates. This avoids relying on overlapping per-label hit regions.
- */
-class ArenaInputSurface extends Node2D {
-  constructor(arena: ArenaScene) {
-    super({
-      name: 'ArenaInputSurface',
-      zIndex: 99999,
-      inputPickable: true,
-      hitArea: rect(-260, -140, 1960, 1090),
-    })
-    this.pointerDown.connect((event) => arena.handlePointerDown(event.pointerId, event.position), this)
-    this.pointerMove.connect((event) => arena.handlePointerMove(event.pointerId, event.position), this)
-    this.pointerUp.connect((event) => arena.handlePointerUp(event.pointerId, event.position), this)
-  }
-}
-
 function makeWall(position: Vector2, width: number, height: number): StaticBody2D {
   const wall = new StaticBody2D({ position, friction: 0.08, bounce: 0.85 })
   wall.add(new CollisionShape2D({ shape: rectangle(width, height) }))
@@ -201,8 +182,7 @@ export class ArenaScene extends Scene {
     hud.add(new Label({ text: 'MOONLIT SANCTUARY', fontSize: 16, fontWeight: 'bold', color: 0xcbb6ff, align: 'center', position: v(720, 30) }))
     hud.add(new Label({ text: '发射 · 定身 · 主动碰撞 · 元素共鸣', fontSize: 15, color: 0xe7e0ff, align: 'center', position: v(720, 54) }))
     hud.add(new ColorRect({ position: v(1110, 24), size: v(306, 54), color: 0x151b3a, alpha: 0.82 }))
-    const reset = hud.add(new Label({ text: '↻ 重置试炼', fontSize: 19, color: 0xffe4ba, align: 'center', position: v(1262, 51), inputPickable: true, hitArea: rect(-70, -24, 140, 48) }))
-    reset.clicked.connect(() => this.resetTrial(), this)
+    hud.add(new Label({ text: '↻ 重置试炼', fontSize: 19, color: 0xffe4ba, align: 'center', position: v(1262, 51) }))
 
     hud.add(new Label({ text: '月蚀蝶后', fontSize: 17, fontWeight: 'bold', color: 0xffe0bb, align: 'center', position: v(720, 100) }))
     this.bossFill = hud.add(new ColorRect({ position: v(555, 121), size: v(330, 9), color: 0xa78be9 }))
@@ -219,7 +199,6 @@ export class ArenaScene extends Scene {
     this.updateBossBar()
     this.#refreshCards()
     // Added last and on the HUD layer so it reliably receives all touches.
-    hud.add(new ArenaInputSurface(this))
     this.#layoutHud()
     this.tree.viewport.resized.connect(() => this.#layoutHud(), this)
   }
@@ -257,29 +236,36 @@ export class ArenaScene extends Scene {
     }
   }
 
-  #layoutHud(): void {
+  #trayMetrics() {
     const safe = this.tree.viewport.safeRect
     const left = Math.max(18, safe.left + 12)
     const right = Math.min(WIDTH - 18, safe.right - 12)
     const width = Math.max(720, right - left)
-    const bottom = Math.min(HEIGHT - 12, safe.bottom - 12)
-    const panelY = Math.max(620, bottom - 104)
-
-    this.trayPanel.position = v(left, panelY)
-    this.trayPanel.size = v(width, 96)
-    this.trayTitle.position = v(left + 18, panelY + 8)
-    this.message.position = v((left + right) / 2, panelY - 28)
-
+    // Reserve a generous bottom strip for the WeChat home indicator and
+    // simulator controls. Do not trust safeArea alone: some DevTools builds
+    // report the whole window as safe while drawing the home bar over it.
+    const safeBottom = Math.min(HEIGHT - 96, safe.bottom - 96)
+    const panelY = Math.max(520, safeBottom - 96)
     const gap = 9
     const cardW = Math.min(194, (width - 36 - gap * 5) / 6)
     const total = cardW * 6 + gap * 5
     const startX = left + (width - total) / 2
+    return { left, right, width, panelY, gap, cardW, startX }
+  }
+
+  #layoutHud(): void {
+    const m = this.#trayMetrics()
+    this.trayPanel.position = v(m.left, m.panelY)
+    this.trayPanel.size = v(m.width, 96)
+    this.trayTitle.position = v(m.left + 18, m.panelY + 8)
+    this.message.position = v((m.left + m.right) / 2, m.panelY - 28)
+
     for (let i = 0; i < this.#cards.length; i++) {
       const card = this.#cards[i]!
-      const x = startX + i * (cardW + gap)
-      card.bg.position = v(x, panelY + 36)
-      card.bg.size = v(cardW, 46)
-      card.label.position = v(x + cardW / 2, panelY + 59)
+      const x = m.startX + i * (m.cardW + m.gap)
+      card.bg.position = v(x, m.panelY + 36)
+      card.bg.size = v(m.cardW, 46)
+      card.label.position = v(x + m.cardW / 2, m.panelY + 59)
     }
   }
   #symbol(element: Element): string {
@@ -301,9 +287,8 @@ export class ArenaScene extends Scene {
   }
 
   #isTrayPoint(position: Vector2): boolean {
-    const safe = this.tree.viewport.safeRect
-    const bottom = Math.min(HEIGHT - 12, safe.bottom - 12)
-    return position.y >= bottom - 104
+    const m = this.#trayMetrics()
+    return position.y >= m.panelY - 12 && position.y <= m.panelY + 102
   }
 
   handlePointerDown(pointerId: number, position: Vector2): void {
@@ -311,16 +296,10 @@ export class ArenaScene extends Scene {
     this.#activePointerId = pointerId
 
     if (this.#isTrayPoint(position)) {
-      const safe = this.tree.viewport.safeRect
-      const left = Math.max(18, safe.left + 12)
-      const right = Math.min(WIDTH - 18, safe.right - 12)
-      const width = Math.max(720, right - left)
-      const gap = 9
-      const cardW = Math.min(194, (width - 36 - gap * 5) / 6)
-      const total = cardW * 6 + gap * 5
-      const startX = left + (width - total) / 2
-      const index = Math.floor((position.x - startX) / (cardW + gap))
-      if (index >= 0 && index < ORDER.length && position.x <= startX + index * (cardW + gap) + cardW) {
+      const m = this.#trayMetrics()
+      const index = Math.floor((position.x - m.startX) / (m.cardW + m.gap))
+      const cardStart = m.startX + index * (m.cardW + m.gap)
+      if (index >= 0 && index < ORDER.length && position.x <= cardStart + m.cardW) {
         this.selected = ORDER[index]!
         this.#refreshCards()
         this.setMessage(ELEMENTS[this.selected].name + ' 已装填。点击场地发射，拖动可瞄准。')
