@@ -50,8 +50,10 @@ export class NapeArenaPhysics {
       this.projectileType,
       this.anchorType,
       (callback) => {
-        const orb = this.#bodyFromInteractor(callback.int1)
-        const anchor = this.#bodyFromInteractor(callback.int2)
+        const first = this.#bodyFromInteractor(callback.int1)
+        const second = this.#bodyFromInteractor(callback.int2)
+        const orb = first?.userData.kind === 'orb' ? first : second?.userData.kind === 'orb' ? second : null
+        const anchor = first?.userData.kind === 'anchor' ? first : second?.userData.kind === 'anchor' ? second : null
         if (orb && anchor && orb !== anchor) {
           this.#contacts.push({ kind: 'orb-anchor', orb, anchor })
         }
@@ -64,8 +66,10 @@ export class NapeArenaPhysics {
       this.projectileType,
       this.bossType,
       (callback) => {
-        const orb = this.#bodyFromInteractor(callback.int1)
-        const boss = this.#bodyFromInteractor(callback.int2)
+        const first = this.#bodyFromInteractor(callback.int1)
+        const second = this.#bodyFromInteractor(callback.int2)
+        const orb = first?.userData.kind === 'orb' ? first : second?.userData.kind === 'orb' ? second : null
+        const boss = first?.userData.kind === 'boss' ? first : second?.userData.kind === 'boss' ? second : null
         if (orb && boss && orb !== boss) {
           this.#contacts.push({ kind: 'orb-boss', orb, boss })
         }
@@ -93,6 +97,7 @@ export class NapeArenaPhysics {
 
   addBossBody(x: number, y: number, radius: number): Body {
     const body = this.addStaticCircle(x, y, radius)
+    body.userData.kind = 'boss'
     body.cbTypes.add(this.bossType)
     return body
   }
@@ -112,6 +117,7 @@ export class NapeArenaPhysics {
   ): Body {
     const body = new Body(BodyType.DYNAMIC, new Vec2(x, y))
     body.shapes.add(new Circle(radius, undefined, this.#projectileMaterial.copy()))
+    body.userData.kind = 'orb'
     body.mass = mass
     body.isBullet = true
     body.cbTypes.add(this.projectileType)
@@ -132,6 +138,7 @@ export class NapeArenaPhysics {
 
   freeze(body: Body): { x: number; y: number } {
     const saved = { x: body.velocity.x, y: body.velocity.y }
+    body.userData.kind = 'anchor'
     body.cbTypes.remove(this.projectileType)
     body.cbTypes.add(this.anchorType)
     body.type = BodyType.KINEMATIC
@@ -141,6 +148,7 @@ export class NapeArenaPhysics {
   }
 
   release(body: Body, velocityX: number, velocityY: number): void {
+    body.userData.kind = 'orb'
     body.cbTypes.remove(this.anchorType)
     body.cbTypes.add(this.projectileType)
     body.type = BodyType.DYNAMIC
