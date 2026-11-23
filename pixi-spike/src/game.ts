@@ -139,6 +139,7 @@ export class ArenaScene extends Scene {
   rightCannon!: CannonArt
   boss!: MothBoss
   message!: Label
+  diagnosticLabel!: Label
   bossFill!: ColorRect
   bossLabel!: Label
   bossDefeated = false
@@ -181,6 +182,9 @@ export class ArenaScene extends Scene {
     this.bossFill = hud.add(new ColorRect({ position: v(555, 121), size: v(330, 9), color: 0xa78be9 }))
     this.bossLabel = hud.add(new Label({ text: '月核护盾 · 先用两颗球制造元素融合', fontSize: 14, color: 0xe1d4ff, align: 'center', position: v(720, 145) }))
     this.message = hud.add(new Label({ text: '从任意一侧拖动瞄准并发射。飞行中点击空白处可定身，再用另一颗球主动撞击。', fontSize: 17, color: 0xe8e6ff, align: 'center', position: v(720, 616) }))
+    // Visible build / renderer diagnostics: no need to hunt through DevTools console.
+    hud.add(new ColorRect({ position: v(1030, 166), size: v(380, 34), color: 0x070d21, alpha: 0.92 }))
+    this.diagnosticLabel = hud.add(new Label({ text: 'PIXIJ BUILD 1123-R3 · WAITING FOR START', fontSize: 13, fontWeight: 'bold', color: 0x9feaff, align: 'center', position: v(1220, 183) }))
     hud.add(new ColorRect({ position: v(20, 700), size: v(1400, 95), color: 0x101a36, alpha: 0.97 }))
     hud.add(new Label({ text: '选择任意弹珠 · 左右炮台均可装填', fontSize: 14, color: 0x9cb9d7, position: v(40, 704) }))
     this.#createOrbCards(hud)
@@ -360,6 +364,7 @@ export class ArenaScene extends Scene {
     label.createTween().to(label, { y: label.y - 46, alpha: 0 }, 0.75).call(() => label.queueFree())
   }
   setMessage(text: string): void { this.message.text = text }
+  setDiagnostics(text: string): void { this.diagnosticLabel.text = text }
   resetTrial(): void {
     this.anchors.forEach((x) => x.queueFree())
     this.marbles.forEach((x) => x.queueFree())
