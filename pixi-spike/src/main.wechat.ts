@@ -1,9 +1,18 @@
 import './prelude.wechat'
-import { Viewport } from 'sapling2d'
+import { Viewport, v } from 'sapling2d'
 import { startGame } from 'sapling2d/wechat'
 import { ArenaScene, gameOptions } from './game'
 
-const BUILD_ID = '2026-11-23-R5'
+const BUILD_ID = '2026-11-23-R7'
+
+type WeChatTouch = { identifier: number; clientX: number; clientY: number }
+type WeChatTouchEvent = { changedTouches: WeChatTouch[] }
+type WeChatTouchApi = {
+  onTouchStart: (callback: (event: WeChatTouchEvent) => void) => void
+  onTouchMove: (callback: (event: WeChatTouchEvent) => void) => void
+  onTouchEnd: (callback: (event: WeChatTouchEvent) => void) => void
+  onTouchCancel: (callback: (event: WeChatTouchEvent) => void) => void
+}
 
 // Use at least 2x and at most 3x backing resolution. Some DevTools
 // simulators report DPR=1 even when the preview is displayed much larger.
@@ -23,6 +32,35 @@ void startGame(gameOptions).then((game) => {
   const canvas = (game.platform as unknown as { canvas?: { width: number; height: number } }).canvas
   const canvasSize = canvas ? canvas.width + 'x' + canvas.height : 'unknown'
   const scene = game.scene as ArenaScene
+
+  // Bypass engine hit-testing for gameplay. WeChat global touch listeners are
+  // reliable on both DevTools and devices; map raw window pixels to design
+  // coordinates through the same Viewport transform used by the renderer.
+  const touchApi = wx as unknown as WeChatTouchApi
+  const touchPosition = (touch: WeChatTouch) =>
+    viewport.screenToDesign(v(touch.clientX, touch.clientY))
+
+  touchApi.onTouchStart((event) => {
+    for (const touch of event.changedTouches) {
+      scene.handlePointerDown(touch.identifier, touchPosition(touch))
+    }
+  })
+  touchApi.onTouchMove((event) => {
+    for (const touch of event.changedTouches) {
+      scene.handlePointerMove(touch.identifier, touchPosition(touch))
+    }
+  })
+  touchApi.onTouchEnd((event) => {
+    for (const touch of event.changedTouches) {
+      scene.handlePointerUp(touch.identifier, touchPosition(touch))
+    }
+  })
+  touchApi.onTouchCancel((event) => {
+    for (const touch of event.changedTouches) {
+      scene.handlePointerCancel(touch.identifier)
+    }
+  })
+  log('native WeChat touch listeners attached')
 
   const bootInfo =
     'DPR ' + viewport.screen.pixelRatio + '/' + viewport.renderResolution +
