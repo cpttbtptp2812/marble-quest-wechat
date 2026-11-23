@@ -11,6 +11,13 @@ on:
       - 'pixi-spike/**'
       - '.github/workflows/pixi-spike.yml'
 
+permissions:
+  contents: write
+
+concurrency:
+  group: pixi-wechat-release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,6 +26,8 @@ jobs:
         working-directory: pixi-spike
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - uses: actions/setup-node@v4
         with:
           node-version: 24
@@ -27,10 +36,24 @@ jobs:
       - name: Typecheck and build browser preview + WeChat Mini Game
         run: npm run check
 
+      - name: Commit direct-import package to main
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git -C .. config user.name "github-actions[bot]"
+          git -C .. config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C .. add wechat-release/
+          if ! git -C .. diff --cached --quiet; then
+            git -C .. commit -m "build: publish WeChat Mini Game in wechat-release"
+            git -C .. pull --rebase origin main
+            git -C .. push origin HEAD:main
+          else
+            echo "wechat-release is already up to date"
+          fi
+
       - name: Upload WeChat DevTools package
         uses: actions/upload-artifact@v4
         with:
-          name: marble-quest-pixi-wechat-build
-          path: pixi-spike/dist-wechat/
+          name: marble-quest-wechat-release
+          path: wechat-release/
           if-no-files-found: error
           retention-days: 14
