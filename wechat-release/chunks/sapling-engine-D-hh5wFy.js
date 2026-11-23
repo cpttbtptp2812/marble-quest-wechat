@@ -23,7 +23,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-0ptSNjZs.js"), r = require("./sapling-engine-D-RMTrWW.js"), i = require("./sapling-engine-BKxInvnL.js"), a = require("./sapling-engine-BOYt4h2A.js");
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-E6YpPtHn.js"), r = require("./sapling-engine-DbC_V8gI.js"), i = require("./sapling-engine-lHNhdQUz.js"), a = require("./sapling-engine-Dihp4nr7.js");
 function o() { return (o = e.n((function () { n.q(), a.H(), a.B(), a.R(), i.xt(), i.dt(), i.lt(), i.st(), i.at(), n.K.add(a.V, a.z, a.L, i.ot, i.ct, i.ut, i.bt); })))(); }
 function s(e, t, n) { var r = 2166136261; for (var n_1 = 0; n_1 < t; n_1++)
     r ^= e[n_1].uid, r = Math.imul(r, 16777619), r >>>= 0; return l[r] || c(e, t, r, n); }

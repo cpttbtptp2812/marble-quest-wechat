@@ -1,5 +1,5 @@
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-0ptSNjZs.js"), n = require("./sapling-engine-UgL1Y7P9.js"), r = require("./sapling-engine-BKxfCeCE.js"), i = require("./sapling-engine-CGmSt4Cl.js");
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./sapling-engine-E6YpPtHn.js"), n = require("./sapling-engine-BAPCBAVM.js"), r = require("./sapling-engine-D7PD7dB2.js"), i = require("./sapling-engine-D-hh5wFy.js");
 function a(e, t, n) { return e + (t - e) * n; }
 function o(e, t, n) { var r = t - e; return r > Math.PI ? r -= v : r < -Math.PI && (r += v), e + r * n; }
 function s(e, t, n, r) { var i = e.sprite, a = e.offsetX, o = e.offsetY; if (a !== 0 || o !== 0) {

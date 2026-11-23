@@ -59,7 +59,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-B3pi7VKU.js"), r = require("./sapling-engine-0ptSNjZs.js"), i = require("./sapling-engine-CudxT9as.js"), a = require("./sapling-engine-D-RMTrWW.js"), o = require("./sapling-engine-BKxInvnL.js"), s = require("./sapling-engine-UgL1Y7P9.js"), c = require("./sapling-engine-BOYt4h2A.js"), l = require("./sapling-engine-BKxfCeCE.js"), u = require("./sapling-engine-CGmSt4Cl.js"), d = require("./sapling-engine-CLKaLt8k.js"), f = require("./sapling-engine-B5jYv3Ps.js");
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-z5rgo-_C.js"), r = require("./sapling-engine-E6YpPtHn.js"), i = require("./sapling-engine-BXH-PsI2.js"), a = require("./sapling-engine-DbC_V8gI.js"), o = require("./sapling-engine-lHNhdQUz.js"), s = require("./sapling-engine-BAPCBAVM.js"), c = require("./sapling-engine-Dihp4nr7.js"), l = require("./sapling-engine-D7PD7dB2.js"), u = require("./sapling-engine-D-hh5wFy.js"), d = require("./sapling-engine-DEUdDAgy.js"), f = require("./sapling-engine-CDClN5Qk.js");
 function p(e, t) { var n = e.now(), r = t(), i = n > 0x9184e72a000 ? 1e3 : 1, a = 0, o = !1; return function () { var s = e.now(); if (!o) {
     var e_1 = t() - r;
     if (e_1 >= 1e3) {
@@ -496,8 +496,8 @@ function q() { return (q = e.n((function () { n.y(), n.o(), u.d(), u.t(), f.t(),
         var t = this._layerOrder;
         if (t.length === 0 && this._layers.size === 0)
             return;
-        n.x(t);
-        var r = n.C(t), i = this._sceneOrder;
+        n.S(t);
+        var r = n.w(t), i = this._sceneOrder;
         i.length = 0;
         for (var e_28 = 0; e_28 < t.length; e_28++)
             e_28 === r && i.push(this._worldContainer), i.push(this._layers.get(t[e_28]).container);

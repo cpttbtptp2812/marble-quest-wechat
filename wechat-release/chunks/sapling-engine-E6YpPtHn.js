@@ -59,7 +59,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-BaQMQODF.js"), r = require("./sapling-engine-CudxT9as.js"), i = require("./sapling-engine-D-RMTrWW.js"), a = require("./sapling-engine-BKxInvnL.js"), o = require("./sapling-engine-UgL1Y7P9.js"), s = require("./pixi-vendor-C_INTMxb.js"), c = require("./sapling-engine-BOYt4h2A.js"), l = require("./sapling-engine-BKxfCeCE.js");
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-BaQMQODF.js"), r = require("./sapling-engine-BXH-PsI2.js"), i = require("./sapling-engine-DbC_V8gI.js"), a = require("./sapling-engine-lHNhdQUz.js"), o = require("./sapling-engine-BAPCBAVM.js"), s = require("./pixi-vendor-C_INTMxb.js"), c = require("./sapling-engine-Dihp4nr7.js"), l = require("./sapling-engine-D7PD7dB2.js");
 var u, d, f, p;
 function m() { return (m = e.n((function () { t.br(), u = (function (e) { return (e.Application = "application", e.WebGLPipes = "webgl-pipes", e.WebGLPipesAdaptor = "webgl-pipes-adaptor", e.WebGLSystem = "webgl-system", e.WebGLLoader = "webgl-loader", e.WebGPUPipes = "webgpu-pipes", e.WebGPUPipesAdaptor = "webgpu-pipes-adaptor", e.WebGPUSystem = "webgpu-system", e.WebGPULoader = "webgpu-loader", e.CanvasSystem = "canvas-system", e.CanvasPipesAdaptor = "canvas-pipes-adaptor", e.CanvasPipes = "canvas-pipes", e.CanvasLoader = "canvas-loader", e.Asset = "asset", e.LoadParser = "load-parser", e.ResolveParser = "resolve-parser", e.CacheParser = "cache-parser", e.DetectionParser = "detection-parser", e.MaskEffect = "mask-effect", e.BlendMode = "blend-mode", e.TextureSource = "texture-source", e.TextureUploaderWebGL = "texture-uploader-webgl", e.TextureUploaderWebGPU = "texture-uploader-webgpu", e.Environment = "environment", e.ShapeBuilder = "shape-builder", e.Batcher = "batcher", e); })(u || {}), d = function (e) { if (typeof e == "function" || typeof e == "object" && e.extension) {
     if (!e.extension)
@@ -115,7 +115,7 @@ function g() {
     var _this = this;
     return (g = e.n((function () { m(), h = { extension: { type: u.Environment, name: "browser", priority: -1 }, test: function () { return !0; }, load: function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4, Promise.resolve().then(function () { return require("./vendor-DWJNgchK.js"); }).then(function (e) { return (e.i(), e.r); })];
+                case 0: return [4, Promise.resolve().then(function () { return require("./vendor-CBtsVi5t.js"); }).then(function (e) { return (e.i(), e.r); })];
                 case 1:
                     _a.sent();
                     return [2];
@@ -127,7 +127,7 @@ function v() {
     var _this = this;
     return (v = e.n((function () { m(), _ = { extension: { type: u.Environment, name: "webworker", priority: 0 }, test: function () { return typeof self < "u" && self.WorkerGlobalScope !== void 0; }, load: function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4, Promise.resolve().then(function () { return require("./vendor-DWJNgchK.js"); }).then(function (e) { return (e.t(), e.n); })];
+                case 0: return [4, Promise.resolve().then(function () { return require("./vendor-CBtsVi5t.js"); }).then(function (e) { return (e.t(), e.n); })];
                 case 1:
                     _a.sent();
                     return [2];

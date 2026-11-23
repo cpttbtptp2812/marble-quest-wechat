@@ -59,7 +59,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 (function () { var e = typeof wx < "u"; function t(e, t) { } typeof GameGlobal < "u" && (GameGlobal.__saplingLog = t), e && wx.onError && wx.onError(function (e) { e && e.message, e && e.stack; }); })();
-var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-BaQMQODF.js"), r = require("./sapling-engine-0ptSNjZs.js"), i = require("./sapling-engine-CudxT9as.js"), a = require("./sapling-engine-D-RMTrWW.js"), o = require("./sapling-engine-UgL1Y7P9.js"), s = require("./sapling-engine-BOYt4h2A.js"), c = require("./sapling-engine-BKxfCeCE.js"), l = require("./sapling-engine-CGmSt4Cl.js");
+var e = require("./rolldown-runtime-8PkXcCTM.js"), t = require("./nape-physics-tjC3J-kx.js"), n = require("./sapling-engine-BaQMQODF.js"), r = require("./sapling-engine-E6YpPtHn.js"), i = require("./sapling-engine-BXH-PsI2.js"), a = require("./sapling-engine-DbC_V8gI.js"), o = require("./sapling-engine-BAPCBAVM.js"), s = require("./sapling-engine-Dihp4nr7.js"), c = require("./sapling-engine-D7PD7dB2.js"), l = require("./sapling-engine-D-hh5wFy.js");
 function u(e) { return e.endsWith("int"); }
 function d() { return (d = e.n((function () { })))(); }
 function f(e) { var t = p[e]; return t === void 0 && (p[e] = a.X("resource")), t; }
