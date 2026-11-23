@@ -89,23 +89,29 @@ const injectWechatNavigatorAtEntry: Plugin = {
     }
 
     const filePath = join(chunksDir, targets[0])
-    const safariCheck = 'var e = n.N.get().getNavigator().userAgent;'
-    const chromeCheck = 'n.N.get().getNavigator().userAgent.toLowerCase().indexOf("chrome")'
+    const chromePattern = /([A-Za-z_$][\\w$]*\\.N\\.get\\(\\)\\.getNavigator\\(\\))\\.userAgent\\.toLowerCase\\(\\)/g
+    const safariPattern = /([A-Za-z_$][\\w$]*\\.N\\.get\\(\\)\\.getNavigator\\(\\))\\.userAgent/g
     let code = readFileSync(filePath, 'utf8')
-    if (!code.includes(safariCheck) || !code.includes(chromeCheck)) {
-      this.error('Expected Pixi navigator feature-detection code was not found in ' + targets[0])
+    const chromeMatches = code.match(chromePattern) || []
+    const safariMatches = code.match(safariPattern) || []
+    if (chromeMatches.length < 1 || safariMatches.length < 2) {
+      const context = code.match(/.{0,80}getNavigator.{0,120}/g) || []
+      this.error(
+        'Unexpected Pixi navigator feature-detection code in ' +
+        targets[0] + ': ' + context.join(' | '),
+      )
     }
 
     code = code
       .replace(
-        safariCheck,
-        'var e = String((n.N.get().getNavigator() || {}).userAgent || "");',
+        chromePattern,
+        'String(($1 || {}).userAgent || "").toLowerCase()',
       )
       .replace(
-        chromeCheck,
-        'String((n.N.get().getNavigator() || {}).userAgent || "").toLowerCase().indexOf("chrome")',
+        safariPattern,
+        'String(($1 || {}).userAgent || "")',
       )
-    if (code.includes('n.N.get().getNavigator().userAgent')) {
+    if (/\\.getNavigator\\(\\)\\.userAgent/.test(code)) {
       this.error('Unsafe Pixi user-agent dereference remains in ' + targets[0])
     }
     writeFileSync(filePath, code, 'utf8')
