@@ -552,7 +552,7 @@ function Se() {
 }
 var X, Z;
 function Ce() { return (Ce = e.n((function () { n.P(), r._(), X = null, Z = null; })))(); }
-function we() { var e = n.N.get().getNavigator().userAgent; return /^((?!chrome|android).)*safari/i.test(e); }
+function we() { var e = (n.N.get().getNavigator() || { userAgent: "" }).userAgent; return /^((?!chrome|android).)*safari/i.test(e); }
 function Te() { return (Te = e.n((function () { n.P(); })))(); }
 function Ee(e) { var t = !1; for (var n_4 in e)
     if (e[n_4] == null) {
@@ -569,7 +569,7 @@ function Oe() { return (Oe = e.n((function () { })))(); }
 function ke(e) {
     var _a;
     if (!Q) {
-        if (n.N.get().getNavigator().userAgent.toLowerCase().indexOf("chrome") > -1) {
+        if ((n.N.get().getNavigator() || { userAgent: "" }).userAgent.toLowerCase().indexOf("chrome") > -1) {
             var t_6 = ["%c  %c  %c  %c  %c PixiJS %c v".concat(q, " (").concat(e, ") http://www.pixijs.com/\n\n"), "background: #E72264; padding:5px 0;", "background: #6CA2EA; padding:5px 0;", "background: #B5D33D; padding:5px 0;", "background: #FED23F; padding:5px 0;", "color: #FFFFFF; background: #E72264; padding:5px 0;", "color: #E72264; background: #FFFFFF; padding:5px 0;"];
             (_a = globalThis.console).log.apply(_a, t_6);
         }
