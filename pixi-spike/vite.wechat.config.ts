@@ -61,6 +61,50 @@ const wechatNavigatorBootstrap = `;(function () {
       host.navigator = navigatorShim;
     }
   }
+
+  // Pixi's Ticker calls the global RAF directly. Some WeChat DevTools/runtime
+  // versions expose it on GameGlobal (or only provide timer APIs), so normalize
+  // the global pair before any Sapling/Pixi chunk starts the ticker.
+  var gameGlobal = typeof GameGlobal !== 'undefined' ? GameGlobal : host;
+  var nativeRequestFrame =
+    typeof host.requestAnimationFrame === 'function' ? host.requestAnimationFrame :
+    (typeof gameGlobal.requestAnimationFrame === 'function' ? gameGlobal.requestAnimationFrame :
+    (typeof wx !== 'undefined' && typeof wx.requestAnimationFrame === 'function' ? wx.requestAnimationFrame : null));
+  var nativeCancelFrame =
+    typeof host.cancelAnimationFrame === 'function' ? host.cancelAnimationFrame :
+    (typeof gameGlobal.cancelAnimationFrame === 'function' ? gameGlobal.cancelAnimationFrame :
+    (typeof wx !== 'undefined' && typeof wx.cancelAnimationFrame === 'function' ? wx.cancelAnimationFrame : null));
+
+  if (typeof host.requestAnimationFrame !== 'function') {
+    host.requestAnimationFrame = nativeRequestFrame
+      ? function (callback) { return nativeRequestFrame.call(gameGlobal, callback); }
+      : function (callback) {
+          var now = host.performance && typeof host.performance.now === 'function'
+            ? host.performance.now()
+            : Date.now();
+          return host.setTimeout(function () {
+            var timestamp = host.performance && typeof host.performance.now === 'function'
+              ? host.performance.now()
+              : Date.now();
+            callback(timestamp > now ? timestamp : now + 16);
+          }, 16);
+        };
+  }
+  if (typeof host.cancelAnimationFrame !== 'function') {
+    host.cancelAnimationFrame = nativeCancelFrame
+      ? function (requestId) { return nativeCancelFrame.call(gameGlobal, requestId); }
+      : function (requestId) { return host.clearTimeout(requestId); };
+  }
+
+  // Keep the game global aligned when globalThis and GameGlobal are distinct.
+  if (gameGlobal !== host) {
+    if (typeof gameGlobal.requestAnimationFrame !== 'function') {
+      gameGlobal.requestAnimationFrame = host.requestAnimationFrame;
+    }
+    if (typeof gameGlobal.cancelAnimationFrame !== 'function') {
+      gameGlobal.cancelAnimationFrame = host.cancelAnimationFrame;
+    }
+  }
 })();`
 
 const injectWechatNavigatorAtEntry: Plugin = {
