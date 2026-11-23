@@ -2,7 +2,7 @@ name: Pixi Spike Build
 
 on:
   push:
-    branches: [main, feature/pixi-sapling-spike]
+    branches: [main, feature/pixi-sapling-spike, feature/nape-ready-made-physics]
     paths:
       - 'pixi-spike/**'
       - '.github/workflows/pixi-spike.yml'
