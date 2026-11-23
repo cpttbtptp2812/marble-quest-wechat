@@ -30,8 +30,10 @@ export class NapeArenaPhysics {
   readonly stepper = new FixedStepper({
     hz: 60,
     maxStepsPerFrame: 4,
-    velocityIterations: 10,
-    positionIterations: 10,
+    // Eight solver iterations retain stable marble contacts while reducing
+    // CPU cost on mid-range mobile devices. Fixed 60 Hz simulation is kept.
+    velocityIterations: 8,
+    positionIterations: 8,
   })
   readonly binding = new BodySpriteBinding({ stepper: this.stepper })
 
