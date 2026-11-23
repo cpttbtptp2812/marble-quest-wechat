@@ -556,7 +556,7 @@ export class ArenaScene extends Scene {
       this.physics.removeBody(anchor.body)
       anchor.queueFree()
     })
-    this.marbles.forEach((marble) => this.removeMarble(marble))
+    this.marbles.slice().forEach((marble) => this.removeMarble(marble))
     this.anchors = []
     this.marbles = []
     this.boss.hp = 100
