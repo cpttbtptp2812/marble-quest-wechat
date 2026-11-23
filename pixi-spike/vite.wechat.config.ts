@@ -133,7 +133,7 @@ const injectWechatNavigatorAtEntry: Plugin = {
     }
 
     const filePath = join(chunksDir, targets[0])
-    const navigatorGetter = /([A-Za-z_$][\\w$]*\\.N\\.get\\(\\)\\.getNavigator\\(\\))/g
+    const navigatorGetter = /([A-Za-z_$][\w$]*\.N\.get\(\)\.getNavigator\(\))/g
     let pixiCode = readFileSync(filePath, 'utf8')
     const getterMatches = pixiCode.match(navigatorGetter) || []
     if (getterMatches.length < 2) {
@@ -148,7 +148,7 @@ const injectWechatNavigatorAtEntry: Plugin = {
       navigatorGetter,
       '($1 || { userAgent: "" })',
     )
-    const fallbackCount = (pixiCode.match(/\\|\\| \\{ userAgent: "" \\}/g) || []).length
+    const fallbackCount = (pixiCode.match(/\|\| \{ userAgent: "" \}/g) || []).length
     if (fallbackCount < getterMatches.length) {
       this.error('Unable to guard every Pixi navigator getter in ' + targets[0])
     }
@@ -201,11 +201,11 @@ var cancelAnimationFrame = __mqFrameApi
     for (const name of chunkFiles) {
       const chunkPath = join(chunksDir, name)
       let chunkCode = readFileSync(chunkPath, 'utf8')
-      if (!/\\brequestAnimationFrame\\b|\\bcancelAnimationFrame\\b/.test(chunkCode)) {
+      if (!/\brequestAnimationFrame\b|\bcancelAnimationFrame\b/.test(chunkCode)) {
         continue
       }
       if (!chunkCode.includes('MARBLEQUEST_MODULE_RAF')) {
-        if (/\\b(?:var|let|const|function)\\s+requestAnimationFrame\\b/.test(chunkCode)) {
+        if (/\b(?:var|let|const|function)\s+requestAnimationFrame\b/.test(chunkCode)) {
           this.error('Unexpected local requestAnimationFrame declaration in ' + name)
         }
         chunkCode = moduleFrameShim + chunkCode
