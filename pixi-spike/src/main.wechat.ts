@@ -3,7 +3,7 @@ import { Viewport } from 'sapling2d'
 import { startGame } from 'sapling2d/wechat'
 import { ArenaScene, gameOptions } from './game-nape'
 
-const BUILD_ID = '2026-11-23-NAPE-3'
+const BUILD_ID = '2026-11-23-NAPE-4'
 
 // Follow Sapling2D's mobile render budget: use the device DPR, capped at 2x.
 // This avoids forcing 2–3x rendering on lower-resolution / slower phones.
