@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "PixiJS 8 + Sapling2D rendering and physics migration spike for Marble Quest",
+  "description": "Marble Quest - PixiJS rendering with Nape.js + Nape-Pixi ready-made physics",
   "engines": {
     "node": ">=24"
   },
@@ -18,7 +18,9 @@
   "dependencies": {
     "pixi.js": "~8.22.0",
     "planck": "^1.5.0",
-    "sapling2d": "0.6.0"
+    "sapling2d": "0.6.0",
+    "@newkrok/nape-js": "3.43.5",
+    "@newkrok/nape-pixi": "0.1.4"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
