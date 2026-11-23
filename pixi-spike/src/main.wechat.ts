@@ -63,7 +63,6 @@ void startGame(gameOptions).then((game) => {
     game.resetFrameStats()
   }
   const timer = setInterval(report, 1000)
-  game.tree.setFocused // keep tree reference live for platform-lifetime cleanup in debug sessions
   ;(scene as ArenaScene & { __disposeInput?: () => void }).__disposeInput = () => {
     clearInterval(timer)
     unsubscribeInput()
