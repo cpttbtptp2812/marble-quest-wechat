@@ -169,6 +169,26 @@ export class ArenaScene extends Scene {
     this.#refreshCards()
     this.#layoutHud()
     this.tree.viewport.resized.connect(() => this.#layoutHud(), this)
+
+    // Use Sapling2D's normal pointer pipeline for both browser and WeChat.
+    // The platform already normalizes touch coordinates and captures a
+    // pointer from down through move/up; no second wx listener or manual
+    // screen-to-design conversion is required in either platform entry.
+    const inputSurface = this.add(new Node2D({
+      name: 'ArenaInputSurface',
+      inputPickable: true,
+      hitArea: rect(0, 0, WIDTH, HEIGHT),
+      zIndex: 10000,
+    }))
+    inputSurface.pointerDown.connect((event) => {
+      this.handlePointerDown(event.pointerId, event.position)
+    })
+    inputSurface.pointerMove.connect((event) => {
+      this.handlePointerMove(event.pointerId, event.position)
+    })
+    inputSurface.pointerUp.connect((event) => {
+      this.handlePointerUp(event.pointerId, event.position)
+    })
   }
 
   override process(dt: number): void {
