@@ -25,7 +25,7 @@
 
 ## 本地运行（浏览器预览）
 
-需要 Node.js >= 20.19。
+需要 Node.js >= 24（Planck 1.5.1 的运行时要求）。
 
 ```bash
 npm install
