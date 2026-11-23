@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "build:wechat": "vite build -c vite.wechat.config.ts && node scripts/fix-wechat-minify.js && node --check dist-wechat/game.js",
+    "build:wechat": "vite build -c vite.wechat.config.ts && node scripts/fix-wechat-minify.js && node --check dist-wechat/game.js && node scripts/check-wechat-package.js",
     "dev:wechat": "vite build -c vite.wechat.config.ts --watch",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run build && npm run build:wechat"
