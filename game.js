@@ -6,9 +6,10 @@ const ctx = canvas.getContext('2d');
 const W = 960, H = 540;
 let scale=1, ox=0, oy=0, dpr=1;
 const engine=Matter.Engine.create({enableSleeping:true});
-engine.gravity.x=0; engine.gravity.y=0.72;
 engine.positionIterations=8; engine.velocityIterations=6;
 const world=engine.world;
+// Matter.js 0.14.2 stores gravity on World (not Engine).
+world.gravity.x=0; world.gravity.y=0.72; world.gravity.scale=0.001;
 const C=['#ff805f','#78dcff','#ffd071','#b59aff','#70e4bf','#df91ff'];
 const names=['烈焰','极寒','陨星','雷暴','裂变','虚空'];
 const radii=[13,14,19,12,13,16], speeds=[13.5,12.5,10.5,15,13,11.5], damages=[16,13,25,15,14,22];
@@ -90,7 +91,9 @@ function rr(x,y,w,h,r,color){
 }
 function draw(){
  ctx.setTransform(scale,0,0,scale,ox,oy);ctx.clearRect(-ox/scale,-oy/scale,canvas.width/scale,canvas.height/scale);
- const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#101f43');g.addColorStop(1,'#0b1430');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ // Extend the background to the full device viewport on wide landscape screens.
+ const viewX=-ox/scale, viewY=-oy/scale, viewW=canvas.width/scale, viewH=canvas.height/scale;
+ const g=ctx.createLinearGradient(0,viewY,0,viewY+viewH);g.addColorStop(0,'#101f43');g.addColorStop(1,'#0b1430');ctx.fillStyle=g;ctx.fillRect(viewX,viewY,viewW,viewH);
  for(let i=0;i<75;i++){ctx.fillStyle='rgba(190,215,255,.3)';ctx.fillRect(i*137%W,i*83%H,2,2);}
  rr(18,16,924,508,22,'rgba(15,29,62,.72)');ctx.strokeStyle='rgba(130,170,245,.25)';ctx.strokeRect(30,28,900,484);
  rr(310,292,340,15,7,'#314d7b');rr(370,358,220,13,6,'#263f6b');
