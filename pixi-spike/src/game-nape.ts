@@ -48,6 +48,7 @@ export class Marble extends Node2D {
   age = 0
   fused = false
   hitBoss = false
+  private trailClock = 0
   constructor(
     readonly arena: ArenaScene,
     readonly element: Element,
@@ -59,7 +60,13 @@ export class Marble extends Node2D {
   }
   override process(dt: number): void {
     this.age += dt
-    this.trail.addPoint(this.position)
+    // 30 Hz trail sampling is visually smooth for fast marbles and halves
+    // per-frame point churn without touching canvas/render resolution.
+    this.trailClock += dt
+    if (this.trailClock >= 1 / 30) {
+      this.trailClock %= 1 / 30
+      this.trail.addPoint(this.position)
+    }
     if (this.age > 12 || this.x < -120 || this.x > WIDTH + 120 || this.y > HEIGHT + 140 || this.y < -180) {
       this.arena.removeMarble(this)
     }
