@@ -89,12 +89,10 @@ const injectWechatNavigatorAtEntry: Plugin = {
     }
 
     const filePath = join(chunksDir, targets[0])
-    const chromePattern = /([A-Za-z_$][\w$]*\.N\.get\(\)\.getNavigator\(\))\.userAgent\.toLowerCase\(\)/g
-    const safariPattern = /([A-Za-z_$][\w$]*\.N\.get\(\)\.getNavigator\(\))\.userAgent/g
+    const navigatorGetter = /([A-Za-z_$][\w$]*\.N\.get\(\)\.getNavigator\(\))/g
     let code = readFileSync(filePath, 'utf8')
-    const chromeMatches = code.match(chromePattern) || []
-    const safariMatches = code.match(safariPattern) || []
-    if (chromeMatches.length < 1 || safariMatches.length < 2) {
+    const getterMatches = code.match(navigatorGetter) || []
+    if (getterMatches.length < 2) {
       const context = code.match(/.{0,80}getNavigator.{0,120}/g) || []
       this.error(
         'Unexpected Pixi navigator feature-detection code in ' +
@@ -102,18 +100,19 @@ const injectWechatNavigatorAtEntry: Plugin = {
       )
     }
 
-    code = code
-      .replace(
-        chromePattern,
-        'String(($1 || {}).userAgent || "").toLowerCase()',
-      )
-      .replace(
-        safariPattern,
-        'String(($1 || {}).userAgent || "")',
-      )
-    if (/\.getNavigator\(\)\.userAgent/.test(code)) {
-      this.error('Unsafe Pixi user-agent dereference remains in ' + targets[0])
+    code = code.replace(
+      navigatorGetter,
+      '($1 || { userAgent: "" })',
+    )
+    const fallbackCount = (code.match(/\|\| \{ userAgent: "" \}/g) || []).length
+    if (fallbackCount < getterMatches.length) {
+      this.error('Unable to guard every Pixi navigator getter in ' + targets[0])
     }
+    writeFileSync(filePath, code, 'utf8')
+    console.log(
+      '[wechat-user-agent] guarded ' + getterMatches.length +
+      ' Pixi navigator reads in ' + targets[0],
+    )
     writeFileSync(filePath, code, 'utf8')
     console.log('[wechat-user-agent] guarded Safari/Chrome checks in ' + targets[0])
   },
