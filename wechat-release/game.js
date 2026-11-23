@@ -47,7 +47,7 @@ var S, C, w, T, ee;
 function te() { return (te = e.n((function () { s.i(), c.o(), h(), n.Sr(), _(), b(), S = new WeakMap, C = new WeakMap, w = new WeakMap, T = new WeakSet, ee = (function () {
     function ee() {
         var _this = this;
-        m(this, T), n.xr(this, "space", new n.ir(new n.J(0, 560))), n.xr(this, "stepper", new c.a({ hz: 60, maxStepsPerFrame: 4, velocityIterations: 10, positionIterations: 10 })), n.xr(this, "binding", new c.s({ stepper: this.stepper })), n.xr(this, "projectileType", new n.rn), n.xr(this, "anchorType", new n.rn), n.xr(this, "bossType", new n.rn), g(this, S, []), g(this, C, new n.qt(.68, .12, .18, 1)), g(this, w, new n.qt(.72, .14, .2, 1)), this.space.listeners.add(new s.n(s.r.BEGIN, s.t.COLLISION, this.projectileType, this.anchorType, function (e) { var t = v(T, _this, x).call(_this, e.int1), n = v(T, _this, x).call(_this, e.int2), r = (t == null ? void 0 : t.userData.kind) === "orb" ? t : (n == null ? void 0 : n.userData.kind) === "orb" ? n : null, i = (t == null ? void 0 : t.userData.kind) === "anchor" ? t : (n == null ? void 0 : n.userData.kind) === "anchor" ? n : null; r && i && r !== i && y(S, _this).push({ kind: "orb-anchor", orb: r, anchor: i }); })), this.space.listeners.add(new s.n(s.r.BEGIN, s.t.COLLISION, this.projectileType, this.bossType, function (e) { var t = v(T, _this, x).call(_this, e.int1), n = v(T, _this, x).call(_this, e.int2), r = (t == null ? void 0 : t.userData.kind) === "orb" ? t : (n == null ? void 0 : n.userData.kind) === "orb" ? n : null, i = (t == null ? void 0 : t.userData.kind) === "boss" ? t : (n == null ? void 0 : n.userData.kind) === "boss" ? n : null; r && i && r !== i && y(S, _this).push({ kind: "orb-boss", orb: r, boss: i }); }));
+        m(this, T), n.xr(this, "space", new n.ir(new n.J(0, 560))), n.xr(this, "stepper", new c.a({ hz: 60, maxStepsPerFrame: 4, velocityIterations: 8, positionIterations: 8 })), n.xr(this, "binding", new c.s({ stepper: this.stepper })), n.xr(this, "projectileType", new n.rn), n.xr(this, "anchorType", new n.rn), n.xr(this, "bossType", new n.rn), g(this, S, []), g(this, C, new n.qt(.68, .12, .18, 1)), g(this, w, new n.qt(.72, .14, .2, 1)), this.space.listeners.add(new s.n(s.r.BEGIN, s.t.COLLISION, this.projectileType, this.anchorType, function (e) { var t = v(T, _this, x).call(_this, e.int1), n = v(T, _this, x).call(_this, e.int2), r = (t == null ? void 0 : t.userData.kind) === "orb" ? t : (n == null ? void 0 : n.userData.kind) === "orb" ? n : null, i = (t == null ? void 0 : t.userData.kind) === "anchor" ? t : (n == null ? void 0 : n.userData.kind) === "anchor" ? n : null; r && i && r !== i && y(S, _this).push({ kind: "orb-anchor", orb: r, anchor: i }); })), this.space.listeners.add(new s.n(s.r.BEGIN, s.t.COLLISION, this.projectileType, this.bossType, function (e) { var t = v(T, _this, x).call(_this, e.int1), n = v(T, _this, x).call(_this, e.int2), r = (t == null ? void 0 : t.userData.kind) === "orb" ? t : (n == null ? void 0 : n.userData.kind) === "orb" ? n : null, i = (t == null ? void 0 : t.userData.kind) === "boss" ? t : (n == null ? void 0 : n.userData.kind) === "boss" ? n : null; r && i && r !== i && y(S, _this).push({ kind: "orb-boss", orb: r, boss: i }); }));
     }
     ee.prototype.addStaticBox = function (e, t, r, i) { var a = new n.i(n.pn.STATIC, new n.J(e, t)); return a.shapes.add(new n.it(n.it.box(r, i), y(w, this).copy())), a.space = this.space, a; };
     ee.prototype.addStaticCircle = function (e, t, r) { var i = new n.i(n.pn.STATIC, new n.J(e, t)); return i.shapes.add(new n.y(r, void 0, y(w, this).copy())), i.space = this.space, i; };
@@ -292,16 +292,21 @@ function B() { return (B = e.n((function () { o.t(), t.l(), t.t(), n.Sr(), n.br(
     return L;
 }(r.g)), le = (function () {
     function le() {
-        n.xr(this, "display", new a.t);
+        n.xr(this, "display", void 0), n.xr(this, "stars", void 0), n.xr(this, "runes", void 0);
+        var e = new i.m;
+        this.display = e, this.stars = new a.t, this.runes = new a.t, e.addChild(this.stars, this.runes);
+        var t = this.stars;
+        for (var e_4 = 0; e_4 < 28; e_4++) {
+            var n_12 = 44 + (e_4 * 179 + 1800) % 1350, r_7 = 88 + (e_4 * 97 + 720) % 560, i_4 = .28 + .42 * (.5 + .5 * Math.sin(e_4 * 1.7)), a_2 = e_4 % 7 == 0 ? 2.8 : e_4 % 3 == 0 ? 1.8 : 1.15, o_2 = e_4 % 6 == 0 ? 16768167 : e_4 % 3 == 0 ? 10414847 : 13219071;
+            t.circle(n_12, r_7, a_2 * 3.2).fill({ color: o_2, alpha: i_4 * .07 }), t.circle(n_12, r_7, a_2).fill({ color: o_2, alpha: i_4 * .8 }), e_4 % 9 == 0 && (t.moveTo(n_12 - 6, r_7).lineTo(n_12 + 6, r_7).stroke({ color: 14350335, width: 1, alpha: i_4 * .58 }), t.moveTo(n_12, r_7 - 6).lineTo(n_12, r_7 + 6).stroke({ color: 14350335, width: 1, alpha: i_4 * .58 }));
+        }
+        for (var e_5 = 0; e_5 < 3; e_5++) {
+            var t_7 = e_5 * Math.PI * 2 / 3, n_13 = 720 + Math.cos(t_7) * 144, r_8 = 224 + Math.sin(t_7) * 72;
+            this.runes.circle(n_13, r_8, 4.5).fill({ color: 11856639, alpha: .55 }), this.runes.circle(n_13, r_8, 10).stroke({ color: 10980329, width: 1, alpha: .28 });
+        }
     }
-    le.prototype.sync = function (e) { var t = this.display; t.clear(); for (var n_12 = 0; n_12 < 28; n_12++) {
-        var r_7 = 44 + (n_12 * 179 + Math.sin(e.phase * (.14 + n_12 % 4 * .025) + n_12) * 34 + 1800) % 1350, i_4 = 88 + (n_12 * 97 + Math.cos(e.phase * (.11 + n_12 % 3 * .035) + n_12 * 2) * 22 + 720) % 560, a_2 = .28 + .42 * (.5 + .5 * Math.sin(e.phase * (1.1 + n_12 % 5 * .22) + n_12)), o_2 = n_12 % 7 == 0 ? 2.8 : n_12 % 3 == 0 ? 1.8 : 1.15, s_1 = n_12 % 6 == 0 ? 16768167 : n_12 % 3 == 0 ? 10414847 : 13219071;
-        t.circle(r_7, i_4, o_2 * 3.2).fill({ color: s_1, alpha: a_2 * .07 }), t.circle(r_7, i_4, o_2).fill({ color: s_1, alpha: a_2 * .8 }), n_12 % 9 == 0 && (t.moveTo(r_7 - 6, i_4).lineTo(r_7 + 6, i_4).stroke({ color: 14350335, width: 1, alpha: a_2 * .58 }), t.moveTo(r_7, i_4 - 6).lineTo(r_7, i_4 + 6).stroke({ color: 14350335, width: 1, alpha: a_2 * .58 }));
-    } var n = e.phase * .18; for (var e_4 = 0; e_4 < 3; e_4++) {
-        var r_8 = n + e_4 * Math.PI * 2 / 3, i_5 = 720 + Math.cos(r_8) * 144, a_3 = 224 + Math.sin(r_8) * 72;
-        t.circle(i_5, a_3, 4.5).fill({ color: 11856639, alpha: .55 }), t.circle(i_5, a_3, 10).stroke({ color: 10980329, width: 1, alpha: .28 });
-    } };
-    le.prototype.destroy = function () { this.display.destroy(); };
+    le.prototype.sync = function (e) { this.stars.alpha = .94 + Math.sin(e.phase * .65) * .06, this.runes.rotation = e.phase * .18; };
+    le.prototype.destroy = function () { this.display.destroy({ children: !0 }); };
     return le;
 }()), t.a(L, function () { return new le; }), R = (function (_super) {
     __extends(R, _super);
@@ -318,9 +323,9 @@ function B() { return (B = e.n((function () { o.t(), t.l(), t.t(), n.Sr(), n.br(
         n.xr(this, "display", new a.t);
         var t = this.display;
         t.circle(0, 0, 15).fill({ color: 16777215, alpha: .94 }), t.circle(0, 0, 32).fill({ color: e.color, alpha: .38 }), t.circle(0, 0, 48).stroke({ color: e.color, width: 5, alpha: .72 });
-        for (var n_13 = 0; n_13 < 12; n_13++) {
-            var r_9 = n_13 / 12 * Math.PI * 2, i_6 = 54 + n_13 % 3 * 12;
-            t.moveTo(Math.cos(r_9) * 24, Math.sin(r_9) * 24).lineTo(Math.cos(r_9) * i_6, Math.sin(r_9) * i_6).stroke({ color: n_13 % 2 ? 16777215 : e.color, width: n_13 % 3 == 0 ? 3 : 1.8, alpha: .85 });
+        for (var n_14 = 0; n_14 < 12; n_14++) {
+            var r_9 = n_14 / 12 * Math.PI * 2, i_5 = 54 + n_14 % 3 * 12;
+            t.moveTo(Math.cos(r_9) * 24, Math.sin(r_9) * 24).lineTo(Math.cos(r_9) * i_5, Math.sin(r_9) * i_5).stroke({ color: n_14 % 2 ? 16777215 : e.color, width: n_14 % 3 == 0 ? 3 : 1.8, alpha: .85 });
         }
     }
     ue.prototype.sync = function (e) { var t = e.age / .24; this.display.scale.set(1 + t * .75), this.display.alpha = 1 - t; };
@@ -332,21 +337,20 @@ function B() { return (B = e.n((function () { o.t(), t.l(), t.t(), n.Sr(), n.br(
         if (t === void 0) { t = {}; }
         var _this = this;
         var r;
-        _this = _super.call(this, { zIndex: (r = t.zIndex) == null ? 2 : r, blendMode: "add" }) || this, n.xr(_this, "color", void 0), n.xr(_this, "points", []), _this.color = e;
+        _this = _super.call(this, { zIndex: (r = t.zIndex) == null ? 2 : r, blendMode: "add" }) || this, n.xr(_this, "color", void 0), n.xr(_this, "points", []), n.xr(_this, "revision", 0), _this.color = e;
         return _this;
     }
-    z.prototype.addPoint = function (e) { var t = this.points[this.points.length - 1]; t && Math.hypot(e.x - t.x, e.y - t.y) < 4 || (this.points.push(e), this.points.length > 15 && this.points.shift()); };
-    z.prototype.clear = function () { this.points.length = 0; };
+    z.prototype.addPoint = function (e) { var t = this.points[this.points.length - 1]; t && Math.hypot(e.x - t.x, e.y - t.y) < 4 || (this.points.push(e), this.points.length > 12 && this.points.shift(), this.revision++); };
+    z.prototype.clear = function () { this.points.length = 0, this.revision++; };
     return z;
 }(r.g)), de = (function () {
     function de() {
-        n.xr(this, "display", new a.t);
+        n.xr(this, "display", new a.t), n.xr(this, "lastRevision", -1);
     }
-    de.prototype.sync = function (e) { var t = this.display; t.clear(); var n = e.points; if (n.length < 2)
-        return; for (var r_10 = 1; r_10 < n.length; r_10++) {
-        var i_7 = r_10 / (n.length - 1), a_4 = n[r_10 - 1], o_3 = n[r_10];
-        t.moveTo(a_4.x, a_4.y).lineTo(o_3.x, o_3.y).stroke({ color: e.color, width: 3 + i_7 * 8, alpha: i_7 * .18 }), t.circle(o_3.x, o_3.y, 2 + i_7 * 4).fill({ color: e.color, alpha: i_7 * .22 });
-    } var r = n[n.length - 1]; t.circle(r.x, r.y, 11).fill({ color: e.color, alpha: .14 }), t.circle(r.x, r.y, 5).fill({ color: 16777215, alpha: .32 }); };
+    de.prototype.sync = function (e) { if (this.lastRevision === e.revision)
+        return; this.lastRevision = e.revision; var t = this.display; t.clear(); var n = e.points; if (n.length < 2)
+        return; t.moveTo(n[0].x, n[0].y); for (var e_6 = 1; e_6 < n.length; e_6++)
+        t.lineTo(n[e_6].x, n[e_6].y); t.stroke({ color: e.color, width: 6, alpha: .24 }); var r = n[n.length - 1]; t.circle(r.x, r.y, 10).fill({ color: e.color, alpha: .14 }), t.circle(r.x, r.y, 4.5).fill({ color: 16777215, alpha: .32 }); };
     de.prototype.destroy = function () { this.display.destroy(); };
     return de;
 }()), t.a(z, function () { return new de; }); })))(); }
@@ -354,55 +358,55 @@ function V(e, t, n) { return e.set(v(e, t), n), n; }
 function H() { return (H = e.n((function () { })))(); }
 function fe(e, t) { var n; return (n = De[[e, t].sort().join("+")]) == null ? { name: "\u661F\u754C\u5171\u9E23", color: 16114431, style: "nova", damage: 24 } : n; }
 function pe(e) { if (e.kind === "orb-anchor") {
-    var t_7 = this.marbles.find(function (t) { return t.body === e.orb; }), n_14 = this.anchors.find(function (t) { return t.body === e.anchor; });
-    t_7 && n_14 && this.fuse(t_7, n_14);
+    var t_8 = this.marbles.find(function (t) { return t.body === e.orb; }), n_15 = this.anchors.find(function (t) { return t.body === e.anchor; });
+    t_8 && n_15 && this.fuse(t_8, n_15);
     return;
 } var t = this.marbles.find(function (t) { return t.body === e.orb; }); t && !t.hitBoss && this.boss.shieldOpen > 0 ? (t.hitBoss = !0, this.boss.receiveHit(t)) : t && !t.hitBoss && (t.hitBoss = !0, this.floatText(this.boss.position.add(r.C(0, -65)), "\u62A4\u76FE\u5438\u6536", 12562175)); }
 function me(e, t, n, i) { this.physics.addStaticBox(e.x, e.y, t, n); var a = new r.g({ position: e, zIndex: 1 }); a.add(new M(t, n, i)), this.add(a); }
 function he(e, t, n) { this.physics.addStaticBox(e.x, e.y, t, n); var i = new r.g({ position: e, zIndex: 2 }); i.add(new r.p({ position: r.C(-t / 2, -n / 2), size: r.C(t, n), color: 7379145 })), i.add(new r.p({ position: r.C(-t / 2 + 7, -n / 2 + 3), size: r.C(t - 14, 4), color: 13104639 })), this.add(i); }
 function ge() { var e = this.add(new t.c({ name: "HUD" })); e.add(new r.p({ position: r.C(24, 20), size: r.C(390, 58), color: 1186617, alpha: .92 })), e.add(new r.t({ text: "MARBLE QUEST", fontSize: 29, fontWeight: "bold", color: 15852799, position: r.C(44, 24) })), e.add(new r.t({ text: "\u661F\u754C\u795E\u6BBF \u00B7 \u53CC\u70AE\u53F0\u5F39\u73E0\u8BD5\u70BC", fontSize: 14, color: 10997224, position: r.C(45, 56) })), e.add(new r.p({ position: r.C(520, 24), size: r.C(400, 54), color: 1383226, alpha: .82 })), e.add(new r.t({ text: "MOONLIT SANCTUARY", fontSize: 16, fontWeight: "bold", color: 13350655, align: "center", position: r.C(720, 30) })), e.add(new r.t({ text: "\u53D1\u5C04 \u00B7 \u5B9A\u8EAB \u00B7 \u4E3B\u52A8\u78B0\u649E \u00B7 \u5143\u7D20\u5171\u9E23", fontSize: 15, color: 15196415, align: "center", position: r.C(720, 54) })), e.add(new r.p({ position: r.C(1110, 24), size: r.C(306, 54), color: 1383226, alpha: .82 })), e.add(new r.t({ text: "\u21BB \u91CD\u7F6E\u8BD5\u70BC", fontSize: 19, color: 16770234, align: "center", position: r.C(1262, 51) })), e.add(new r.t({ text: "\u6708\u8680\u8776\u540E", fontSize: 17, fontWeight: "bold", color: 16769211, align: "center", position: r.C(720, 100) })), this.bossFill = e.add(new r.p({ position: r.C(555, 121), size: r.C(330, 9), color: 10980329 })), this.bossLabel = e.add(new r.t({ text: "\u6708\u6838\u62A4\u76FE \u00B7 \u5148\u7528\u4E24\u9897\u7403\u5236\u9020\u5143\u7D20\u878D\u5408", fontSize: 14, color: 14800127, align: "center", position: r.C(720, 145) })), this.message = e.add(new r.t({ text: "\u9009\u4E00\u79CD\u5F39\u73E0\uFF0C\u7136\u540E\u70B9\u51FB\u5DE6/\u53F3\u573A\u5730\u53D1\u5C04\uFF1B\u6309\u4F4F\u62D6\u52A8\u53EF\u4EE5\u7784\u51C6\u3002\u70B9\u51FB\u98DE\u884C\u4E2D\u7684\u7403\u5B9A\u8EAB\u3002", fontSize: 18, color: 15920639, align: "center", position: r.C(720, 640), wrapWidth: 1180 })), e.add(new r.p({ position: r.C(1030, 166), size: r.C(380, 36), color: 462113, alpha: .94 })), this.diagnosticLabel = e.add(new r.t({ text: "NAPE PHYSICS \u00B7 WAITING FOR INPUT", fontSize: 13, fontWeight: "bold", color: 10480383, align: "center", position: r.C(1220, 184) })), this.trayPanel = e.add(new r.p({ position: r.C(20, 688), size: r.C(1400, 100), color: 1055286, alpha: .98 })), this.trayTitle = e.add(new r.t({ text: "\u9009\u62E9\u5F39\u73E0\u5C5E\u6027 \u00B7 \u5DE6\u53F3\u53CC\u70AE\u53F0\u5747\u53EF\u53D1\u5C04", fontSize: 16, fontWeight: "bold", color: 12768498, position: r.C(40, 696) })), v(Q, this, ve).call(this, e), v(Q, this, _e).call(this); }
-function _e() { for (var e_5 = 0; e_5 < 9; e_5++) {
-    var t_8 = 210 + e_5 * 128;
-    this.add(new r.t({ text: e_5 % 2 ? "\u2727" : "\u25C7", fontSize: 23, color: 8228545, alpha: .56, position: r.C(t_8, 662) }));
+function _e() { for (var e_7 = 0; e_7 < 9; e_7++) {
+    var t_9 = 210 + e_7 * 128;
+    this.add(new r.t({ text: e_7 % 2 ? "\u2727" : "\u25C7", fontSize: 23, color: 8228545, alpha: .56, position: r.C(t_9, 662) }));
 } }
-function ve(e) { for (var t_9 = 0; t_9 < G.length; t_9++) {
-    var n_15 = G[t_9], i_8 = O[n_15], a_5 = 28 + t_9 * 225, o_4 = e.add(new r.p({ position: r.C(a_5, 733), size: r.C(214, 46), color: 1714504, alpha: .98 })), s_2 = e.add(new r.t({ text: v(Q, this, xe).call(this, n_15) + "  " + i_8.name, fontSize: 17, fontWeight: "bold", color: i_8.light, align: "center", position: r.C(a_5 + 107, 756) }));
-    y(Z, this).push({ element: n_15, label: s_2, bg: o_4 });
+function ve(e) { for (var t_10 = 0; t_10 < G.length; t_10++) {
+    var n_16 = G[t_10], i_6 = O[n_16], a_3 = 28 + t_10 * 225, o_3 = e.add(new r.p({ position: r.C(a_3, 733), size: r.C(214, 46), color: 1714504, alpha: .98 })), s_1 = e.add(new r.t({ text: v(Q, this, xe).call(this, n_16) + "  " + i_6.name, fontSize: 17, fontWeight: "bold", color: i_6.light, align: "center", position: r.C(a_3 + 107, 756) }));
+    y(Z, this).push({ element: n_16, label: s_1, bg: o_3 });
 } }
 function ye() { var e = this.tree.viewport.safeRect, t = Math.max(18, e.left + 12), n = Math.min(1422, e.right - 12), r = Math.max(720, n - t), i = Math.min(714, e.bottom - 96), a = Math.max(500, i - 96), o = Math.min(194, (r - 36 - 45) / 6); return { left: t, right: n, width: r, panelY: a, gap: 9, cardW: o, startX: t + (r - (o * 6 + 45)) / 2 }; }
-function be() { var e = v(Q, this, ye).call(this); this.trayPanel.position = r.C(e.left, e.panelY), this.trayPanel.size = r.C(e.width, 96), this.trayTitle.position = r.C(e.left + 18, e.panelY + 8), this.message.position = r.C((e.left + e.right) / 2, e.panelY - 28); for (var t_10 = 0; t_10 < y(Z, this).length; t_10++) {
-    var n_16 = y(Z, this)[t_10], i_9 = e.startX + t_10 * (e.cardW + e.gap);
-    n_16.bg.position = r.C(i_9, e.panelY + 36), n_16.bg.size = r.C(e.cardW, 46), n_16.label.position = r.C(i_9 + e.cardW / 2, e.panelY + 59);
+function be() { var e = v(Q, this, ye).call(this); this.trayPanel.position = r.C(e.left, e.panelY), this.trayPanel.size = r.C(e.width, 96), this.trayTitle.position = r.C(e.left + 18, e.panelY + 8), this.message.position = r.C((e.left + e.right) / 2, e.panelY - 28); for (var t_11 = 0; t_11 < y(Z, this).length; t_11++) {
+    var n_17 = y(Z, this)[t_11], i_7 = e.startX + t_11 * (e.cardW + e.gap);
+    n_17.bg.position = r.C(i_7, e.panelY + 36), n_17.bg.size = r.C(e.cardW, 46), n_17.label.position = r.C(i_7 + e.cardW / 2, e.panelY + 59);
 } }
 function xe(e) { return { fire: "\u2726", ice: "\u2744", heavy: "\u25C8", lightning: "\u03DF", split: "\u2727", void: "\u25C9" }[e]; }
 function Se() { for (var _i = 0, _a = y(Z, this); _i < _a.length; _i++) {
-    var e_6 = _a[_i];
-    e_6.bg.color = e_6.element === this.selected ? 3556206 : 1714504, e_6.label.color = e_6.element === this.selected ? 16777215 : O[e_6.element].light;
+    var e_8 = _a[_i];
+    e_8.bg.color = e_8.element === this.selected ? 3556206 : 1714504, e_8.label.color = e_8.element === this.selected ? 16777215 : O[e_8.element].light;
 } }
 function Ce() { return this.aimSide === "left" ? r.C(128, 632) : r.C(1312, 632); }
 function we() { return r.C(720, 245); }
 function Te() { var e = this.aimPoint; if (!e)
     return; var t = v(Q, this, Ce).call(this), n = e.x - t.x, i = e.y - t.y, a = Math.hypot(n, i); if (a < 30) {
-    var e_7 = v(Q, this, we).call(this);
-    n = e_7.x - t.x, i = e_7.y - t.y, a = Math.hypot(n, i);
-} var o = n / a, s = i / a, c = this.aimSide === "left" ? this.leftCannon : this.rightCannon; c.aimAngle = Math.atan2(s, o) + Math.PI / 2; var l = O[this.selected].speed, u = []; for (var e_8 = 0; e_8 < 16; e_8++) {
-    var n_17 = e_8 * .065;
-    u.push(r.C(t.x + o * l * n_17, t.y + s * l * n_17 + 280 * n_17 * n_17));
+    var e_9 = v(Q, this, we).call(this);
+    n = e_9.x - t.x, i = e_9.y - t.y, a = Math.hypot(n, i);
+} var o = n / a, s = i / a, c = this.aimSide === "left" ? this.leftCannon : this.rightCannon; c.aimAngle = Math.atan2(s, o) + Math.PI / 2; var l = O[this.selected].speed, u = []; for (var e_10 = 0; e_10 < 16; e_10++) {
+    var n_18 = e_10 * .065;
+    u.push(r.C(t.x + o * l * n_18, t.y + s * l * n_18 + 280 * n_18 * n_18));
 } this.aimGuide.points = u; }
 function Ee(e) { var t; if (this.bossDefeated)
     return; var n = v(Q, this, Ce).call(this), i = e.x - n.x, a = e.y - n.y, o = Math.hypot(i, a); if (o < 30) {
-    var e_9 = v(Q, this, we).call(this);
-    i = e_9.x - n.x, a = e_9.y - n.y, o = Math.hypot(i, a);
+    var e_11 = v(Q, this, we).call(this);
+    i = e_11.x - n.x, a = e_11.y - n.y, o = Math.hypot(i, a);
 } var s = i / o, c = a / o, l = O[this.selected], u = r.C(n.x + s * 72, n.y + c * 72), d = l.speed, f = this.add(new z(l.color, { zIndex: 2 })); this.add(new R(l.color, { position: u, rotation: Math.atan2(c, s), zIndex: 5 })); var p = this.physics.launchOrb(u.x, u.y, l.radius, l.mass, s * d, c * d), m = this.add(new K(this, this.selected, p, f)); this.physics.bind(p, m), this.marbles.push(m), V(Y, this, (t = y(Y, this), t++, t)), this.aimSide === "left" ? this.leftCannon.recoil = 1 : this.rightCannon.recoil = 1, V(X, this, "SHOT " + y(Y, this)), this.setDiagnostics(y(X, this)), this.setMessage(O[this.selected].name + " \u5DF2\u53D1\u5C04\uFF01\u70B9\u51FB\u98DE\u884C\u5F39\u73E0\u53EF\u5B9A\u8EAB\u3002"); }
 var U, W, G, De, K, Oe, ke, q, J, Y, X, Z, Q, Ae, je;
 function Me() { return (Me = e.n((function () { t.l(), te(), B(), n.Sr(), h(), _(), b(), H(), U = 1440, W = 810, G = ["fire", "ice", "heavy", "lightning", "split", "void"], De = { "fire+fire": { name: "\u53CC\u65E5\u8000\u6591", color: 16751186, style: "plasma", damage: 38 }, "ice+ice": { name: "\u6781\u5149\u51B0\u73AF", color: 11071487, style: "ice", damage: 28 }, "heavy+heavy": { name: "\u53CC\u661F\u5760\u51FB", color: 16766346, style: "nova", damage: 48 }, "lightning+lightning": { name: "\u5929\u7A79\u96F7\u66B4", color: 12952575, style: "storm", damage: 34 }, "split+split": { name: "\u7FE1\u7FE0\u661F\u7FA4", color: 10420169, style: "shards", damage: 32 }, "void+void": { name: "\u6C38\u591C\u5947\u70B9", color: 13673215, style: "eclipse", damage: 48 }, "fire+ice": { name: "\u661F\u96FE\u84B8\u6C7D\u73AF", color: 14022911, style: "steam", damage: 26 }, "fire+heavy": { name: "\u7194\u6838\u9668\u7206", color: 16753756, style: "nova", damage: 42 }, "fire+lightning": { name: "\u65E5\u5195\u7B49\u79BB\u5B50", color: 16761974, style: "plasma", damage: 42 }, "fire+split": { name: "\u7130\u7FBD\u661F\u7F51", color: 16757883, style: "shards", damage: 28 }, "fire+void": { name: "\u6697\u65E5\u541E\u7130", color: 14261503, style: "eclipse", damage: 38 }, "ice+heavy": { name: "\u51B0\u5DDD\u788E\u661F", color: 12121599, style: "ice", damage: 38 }, "ice+lightning": { name: "\u6781\u5149\u68F1\u955C", color: 11203839, style: "storm", damage: 32 }, "ice+split": { name: "\u971C\u6676\u82B1\u51A0", color: 12909311, style: "shards", damage: 28 }, "ice+void": { name: "\u96F6\u5EA6\u88C2\u9699", color: 12962047, style: "eclipse", damage: 34 }, "heavy+lightning": { name: "\u96F7\u94F8\u51B2\u51FB", color: 14996479, style: "storm", damage: 42 }, "heavy+split": { name: "\u661F\u9668\u5F39\u7247", color: 16769443, style: "shards", damage: 34 }, "heavy+void": { name: "\u5F15\u529B\u574D\u7F29", color: 13673215, style: "eclipse", damage: 44 }, "lightning+split": { name: "\u5343\u9E1F\u7535\u7F51", color: 14207231, style: "storm", damage: 30 }, "lightning+void": { name: "\u865A\u7A7A\u98CE\u66B4", color: 14005759, style: "eclipse", damage: 40 }, "split+void": { name: "\u6697\u661F\u8702\u7FA4", color: 14071295, style: "shards", damage: 34 } }, K = (function (_super) {
     __extends(K, _super);
     function K(e, t, i, a) {
         var _this = this;
-        _this = _super.call(this, { name: "NapeMarble-" + t, position: r.C(i.position.x, i.position.y), zIndex: 4 }) || this, n.xr(_this, "arena", void 0), n.xr(_this, "element", void 0), n.xr(_this, "body", void 0), n.xr(_this, "trail", void 0), n.xr(_this, "age", 0), n.xr(_this, "fused", !1), n.xr(_this, "hitBoss", !1), _this.arena = e, _this.element = t, _this.body = i, _this.trail = a, _this.add(new A(t, O[t].radius));
+        _this = _super.call(this, { name: "NapeMarble-" + t, position: r.C(i.position.x, i.position.y), zIndex: 4 }) || this, n.xr(_this, "arena", void 0), n.xr(_this, "element", void 0), n.xr(_this, "body", void 0), n.xr(_this, "trail", void 0), n.xr(_this, "age", 0), n.xr(_this, "fused", !1), n.xr(_this, "hitBoss", !1), n.xr(_this, "trailClock", 0), _this.arena = e, _this.element = t, _this.body = i, _this.trail = a, _this.add(new A(t, O[t].radius));
         return _this;
     }
-    K.prototype.process = function (e) { this.age += e, this.trail.addPoint(this.position), (this.age > 12 || this.x < -120 || this.x > 1560 || this.y > 950 || this.y < -180) && this.arena.removeMarble(this); };
+    K.prototype.process = function (e) { this.age += e, this.trailClock += e, this.trailClock >= 1 / 30 && (this.trailClock %= 1 / 30, this.trail.addPoint(this.position)), (this.age > 12 || this.x < -120 || this.x > 1560 || this.y > 950 || this.y < -180) && this.arena.removeMarble(this); };
     return K;
 }(r.g)), Oe = (function (_super) {
     __extends(Oe, _super);
@@ -445,14 +449,14 @@ function Me() { return (Me = e.n((function () { t.l(), te(), B(), n.Sr(), h(), _
         var t = this.add(new r.g({ name: "ArenaInputSurface", inputPickable: !0, hitArea: r.x(0, 0, U, W), zIndex: 1e4 }));
         t.pointerDown.connect(function (e) { _this.handlePointerDown(e.pointerId, e.position); }), t.pointerMove.connect(function (e) { _this.handlePointerMove(e.pointerId, e.position); }), t.pointerUp.connect(function (e) { _this.handlePointerUp(e.pointerId, e.position); });
     };
-    Ae.prototype.process = function (e) { var t = this.physics.step(e); for (var _i = 0, t_11 = t; _i < t_11.length; _i++) {
-        var e_10 = t_11[_i];
-        v(Q, this, pe).call(this, e_10);
+    Ae.prototype.process = function (e) { var t = this.physics.step(e); for (var _i = 0, t_12 = t; _i < t_12.length; _i++) {
+        var e_12 = t_12[_i];
+        v(Q, this, pe).call(this, e_12);
     } };
     Ae.prototype.handlePointerDown = function (e, t) { if (y(q, this) !== null)
         return; V(q, this, e); var n = v(Q, this, ye).call(this); if (t.y >= n.panelY - 8 && t.y <= n.panelY + 96) {
-        var e_11 = Math.floor((t.x - n.startX) / (n.cardW + n.gap)), r_11 = n.startX + e_11 * (n.cardW + n.gap);
-        e_11 >= 0 && e_11 < G.length && t.x >= r_11 && t.x <= r_11 + n.cardW && (this.selected = G[e_11], v(Q, this, Se).call(this), this.setMessage(O[this.selected].name + " \u5DF2\u88C5\u586B\u3002\u70B9\u51FB\u5DE6/\u53F3\u573A\u5730\u53D1\u5C04\u3002"), V(X, this, "SELECT " + this.selected)), V(J, this, "ui"), this.setDiagnostics(y(X, this));
+        var e_13 = Math.floor((t.x - n.startX) / (n.cardW + n.gap)), r_10 = n.startX + e_13 * (n.cardW + n.gap);
+        e_13 >= 0 && e_13 < G.length && t.x >= r_10 && t.x <= r_10 + n.cardW && (this.selected = G[e_13], v(Q, this, Se).call(this), this.setMessage(O[this.selected].name + " \u5DF2\u88C5\u586B\u3002\u70B9\u51FB\u5DE6/\u53F3\u573A\u5730\u53D1\u5C04\u3002"), V(X, this, "SELECT " + this.selected)), V(J, this, "ui"), this.setDiagnostics(y(X, this));
         return;
     } if (t.x >= 1150 && t.y <= 92) {
         this.resetTrial(), V(J, this, "ui");
