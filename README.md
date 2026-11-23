@@ -78,3 +78,18 @@ Mock 测试用于检查启动、Canvas 首帧、离屏背景缓存和基础触�
 - 物理参数、移动端帧率、触控判定与屏幕适配仍需在目标设备上迭代。
 - 暂不包含线上排行榜、云存档、广告、支付和联机功能。
 - 正式发布需要自己的微信小游戏 AppID，并按微信平台要求完成类目、隐私与内容审核。
+
+
+## Pixi 微信小游戏（当前开发版本）
+
+新版微信小游戏的源码在 `pixi-spike/`。每次 `main` 构建成功后，GitHub Actions 会把不含 Node/Vite 构建脚本的纯发布文件同步到 `wechat-release/`。
+
+**微信开发者工具请导入仓库根目录下的 `wechat-release/`，不要导入仓库根目录或 `pixi-spike/`。**
+
+同步最新发布包：
+
+```bash
+git pull --ff-only origin main
+```
+
+然后在微信开发者工具中重新打开 `wechat-release/`。
