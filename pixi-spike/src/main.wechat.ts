@@ -43,8 +43,8 @@ void startGame(gameOptions).then((game) => {
     const logic = stats.logicAvg
     const render = stats.renderAvg
     const marbles = game.tree.getNodesInGroup('marbles').length
-    const line = 'FPS ' + fps.toFixed(0) + '  CPU ' + logic.toFixed(1) +
-      'ms  GPU ' + render.toFixed(1) + 'ms  ORBS ' + marbles
+    const line = 'FPS ' + fps.toFixed(0) + ' CPU ' + logic.toFixed(1) +
+      ' GPU ' + render.toFixed(1) + ' ORB ' + marbles + ' SHOT ' + scene.shotsFired + ' ' + scene.inputState
     scene.setDiagnostics(line)
     log(line)
     game.resetFrameStats()
