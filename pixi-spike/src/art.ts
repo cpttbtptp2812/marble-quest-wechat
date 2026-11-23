@@ -251,7 +251,7 @@ class MuzzleFlashContent implements NodeContent<MuzzleFlashArt> {
   }
   destroy(): void { this.display.destroy() }
 }
-registerNodeContent(MuzzleFlashArt, () => new MuzzleFlashContent())
+registerNodeContent(MuzzleFlashArt, (node) => new MuzzleFlashContent(node))
 
 /** GPU-side drawn trail. Samples are world coordinates and are supplied by the marble. */
 export class TrailArt extends Node2D {
